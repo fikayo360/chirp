@@ -1,0 +1,30 @@
+export const userFollowing = [
+    {
+        name:'jaxx'  
+    },
+    {
+        name:'jaxx'  
+    },
+    {
+        name:'jaxx'  
+    },
+    {
+        name:'jaxx'  
+    },
+    {
+        name:'jaxx'  
+    },
+    {
+        name:'jaxx'  
+    },
+    {
+        name:'jaxx'  
+    },
+    {
+        name:'jaxx'  
+    }, 
+    {
+        name:'jaxx'  
+    },
+
+]
