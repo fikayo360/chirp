@@ -21,7 +21,7 @@ import Profile from './screens/profile';
 export default function App() {
   return (
     <>
-    <Article/>
+    <Home/>
     </>
   );
 }

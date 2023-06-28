@@ -13,10 +13,11 @@ const register = async(req,res) => {
         throw new customError.BadRequestError('incorrect email')
     }
 
-    const foundUser = User.findOne(username)
-    const foundEmail = User.findOne(email)
+    const foundUser = await User.findOne({username})
+    
+    const foundEmail = await User.findOne({email})
 
-    if (!foundUser || !foundEmail){
+    if (foundEmail || foundUser) {
         throw new customError.BadRequestError('that user already exists')
     }
 
@@ -25,7 +26,7 @@ const register = async(req,res) => {
         const tokenUser = createTokenUser(savedUser)
         attachCookiesToResponse({res,user:tokenUser})
         res.status(StatusCodes.OK).json({user:tokenUser})
-        sendEmailConfirmation(process.env.EMAIL,savedUser.email)
+       // sendEmailConfirmation(process.env.EMAIL,savedUser.email)
     }
     catch(err){
         throw new customError.BadRequestError(err)
@@ -34,8 +35,9 @@ const register = async(req,res) => {
 
 const login = async (req,res) => {
     const {username,password} = req.body
+    
     try{
-        const foundUser  = User.findOne({username})
+        const foundUser  = await User.findOne({username})
         if(!foundUser){
             throw new customError.NotFoundError('user does not exist')
         }
