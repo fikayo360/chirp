@@ -42,25 +42,20 @@ const login = async (req,res) => {
     if (!username || !password){
         return res.status(500).json("pls ensure fields are not empty ")
       }
-    
     try{  
-    let foundUser = await User.findOne({username})
+    const foundUser = await User.findOne({username})
     if(!foundUser){
         throw new customError.NotFoundError('user does not exist')
     }
-
-    /*
-     if(!bcrypt.compareSync(password,foundUser.password)){
-    throw new customError.UnauthenticatedError('wrong password')
-    }
-    ({password,...others} = foundUser._doc)
-
-    const tokenUser = createTokenUser(others)
-    attachCookiesToResponse({res,user:tokenUser})
-    res.status(StatusCodes.OK).json({user:others})
-     */
-
-   
+    
+    if(!bcrypt.compareSync(password,foundUser.password)){
+        throw new customError.UnauthenticatedError('wrong password')
+     }
+     const { password: foundUserPassword, ...others } = foundUser._doc;
+     const tokenUser = createTokenUser(others);
+     attachCookiesToResponse({ res, user: tokenUser });
+     res.status(StatusCodes.OK).json({ user: others });
+    
     }
     catch(err){
         throw new customError.BadRequestError(err)
