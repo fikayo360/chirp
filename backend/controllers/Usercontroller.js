@@ -1,5 +1,8 @@
 const User = require('../models/User')
 const bcrypt = require("bcrypt")
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 const {validateEmail }= require('../utils/validateEmail')
 const customError = require('../errors')
 const { StatusCodes } = require('http-status-codes');
@@ -7,7 +10,7 @@ const { attachCookiesToResponse, createTokenUser } = require('../utils');
 const {sendEmailConfirmation} = require('../utils/sendEmail')
 
 const register = async(req,res) => {
-    const {username,email,password} = req.body
+    const {username,email,password,securityPhrase} = req.body
 
     if(validateEmail(email) === false){
         throw new customError.BadRequestError('incorrect email')
@@ -26,7 +29,7 @@ const register = async(req,res) => {
     }
 
     try{
-        const savedUser  = await User.create({username,email, password: bcrypt.hashSync(password, 10)})
+        const savedUser  = await User.create({username,email, password: bcrypt.hashSync(password, 10),securityPhrase})
         const tokenUser = createTokenUser(savedUser)
         attachCookiesToResponse({res,user:tokenUser})
         res.status(StatusCodes.OK).json({user:tokenUser})
@@ -63,19 +66,51 @@ const login = async (req,res) => {
 }
 
 const forgotPassword = async (req,res) => {
-    const {securityPhrase} = req.body
+    const {emailaddress} = req.body
     try{
-        const sessionUser = req.username
-        const founduser = User.findOne({sessionUser})
+        // Implement the logic to verify the user's email and generate/reset the reset token
+        const founduser = User.findOne({emailaddress})
         if(!founduser){
-            throw new customError.NotFoundError('session user not found')
+            throw new customError.NotFoundError('user not found')
+        }
+       
+        // function genreating reset token
+        function generateToken(email, expiresIn) {
+        const secretKey = process.env.JWT_SECRET; 
+        const token = jwt.sign({ email }, secretKey, { expiresIn });
+        return token;
+         }
+        
+        // Send the reset token via email to the user's email address
+        const sendResetToken = (email) => {
+            let tokenData = generateToken()
+            let transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true,
+                auth: {
+                    user:process.env.EMAIL,
+                    pass: process.env.EMAILPASS
+                }
+            })
+            let mailOptions = {
+                from: process.env.EMAIL,
+                to: email,
+                subject: 'password reset',
+                text: `use the following to reset your password ${tokenData.token} it expires in ${tokenData.expires}`
+            }
+           
+           transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+            console.log('Error sending email:', error);
+            } else {
+            console.log('Email sent:', info.response);
+            }
+        });
         }
 
-        if(founduser.securityPhrase !== securityPhrase){
-            throw new customError.BadRequestError('incorrect security phrase')
-        }else{
-            res.staus(StatusCodes.OK).json('correct credentials')
-        }
+        sendResetToken(emailaddress)
+        res.json({ message: 'Reset token sent successfully' });
     }
     catch(err){
         throw new customError.BadRequestError(err)
@@ -83,18 +118,37 @@ const forgotPassword = async (req,res) => {
 }
 
 const changePassword = async (req,res) => {
-    const {newPassword} = req.body
-    const sessionUser = req.username
-    try{
-        const found = User.findOne({sessionUser})
-        if (!found){throw new customError.NotFoundError('sesseion user not found')}
-        found.password = newPassword
-        found.save()
-        res.staus(StatusCodes.OK).json('password changed succesfully')
-    }
-    catch(err){
+    const {token,newPassword} = req.body
+    function verifyResetToken(resetToken) {
+        try {
+          const secretKey = process.env.JWT_SECRET; 
+          const decodedToken = jwt.verify(resetToken, secretKey);
+          const userEmail = decodedToken.email;
+          return userEmail;
+        } catch (error) {
+            if (error.name === 'TokenExpiredError') {
+                console.log('Token expired');
+              } else {
+                console.log('Token verification failed:', error.message);
+              }
+        }
+      }
+      
+      try{
+        const tokenValid = verifyResetToken(token)
+        if(tokenValid){
+            const tokenUser = await User.findOne({emailaddress:tokenValid.email})
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            tokenUser.password = hashedPassword;
+            tokenUser.resetToken = undefined;
+            //tokenUser.resetTokenExpiresAt = undefined;
+            await tokenUser.save();
+            res.json({ message: 'password updated successfully' });
+        }
+      }
+      catch(err){
         throw new customError.BadRequestError(err)
-    }
+      }
 }
 
 const findFriend = async (req,res) => {
