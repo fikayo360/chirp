@@ -29,7 +29,7 @@ const register = async(req,res) => {
     }
 
     try{
-        const savedUser  = await User.create({username,email, password: bcrypt.hashSync(password, 10),securityPhrase})
+        const savedUser  = await User.create({username,email, password: bcrypt.hashSync(password, 10)})
         const tokenUser = createTokenUser(savedUser)
         attachCookiesToResponse({res,user:tokenUser})
         res.status(StatusCodes.OK).json({user:tokenUser})
@@ -67,14 +67,11 @@ const login = async (req,res) => {
 
 const forgotPassword = async (req,res) => {
     const {emailaddress} = req.body
+    const founduser = User.findOne({emailaddress})
+    if(!founduser){
+        throw new customError.NotFoundError('user not found')
+    }
     try{
-        // Implement the logic to verify the user's email and generate/reset the reset token
-        const founduser = User.findOne({emailaddress})
-        if(!founduser){
-            throw new customError.NotFoundError('user not found')
-        }
-       
-        // function genreating reset token
         function generateToken(email, expiresIn) {
         const secretKey = process.env.JWT_SECRET; 
         const token = jwt.sign({ email }, secretKey, { expiresIn });
@@ -97,9 +94,11 @@ const forgotPassword = async (req,res) => {
                 from: process.env.EMAIL,
                 to: email,
                 subject: 'password reset',
-                text: `use the following to reset your password ${tokenData.token} it expires in ${tokenData.expires}`
+                text: `use the following to reset your password ${tokenData}`
             }
            
+            founduser.resettoken = tokenData
+            founduser.save()
            transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
             console.log('Error sending email:', error);
@@ -110,7 +109,7 @@ const forgotPassword = async (req,res) => {
         }
 
         sendResetToken(emailaddress)
-        res.json({ message: 'Reset token sent successfully' });
+        res.status(200).json({ message: 'Reset token sent successfully' });
     }
     catch(err){
         throw new customError.BadRequestError(err)
@@ -124,12 +123,12 @@ const changePassword = async (req,res) => {
           const secretKey = process.env.JWT_SECRET; 
           const decodedToken = jwt.verify(resetToken, secretKey);
           const userEmail = decodedToken.email;
-          return userEmail;
+        
         } catch (error) {
             if (error.name === 'TokenExpiredError') {
-                console.log('Token expired');
+                res.status(400).json('Token expired');
               } else {
-                console.log('Token verification failed:', error.message);
+                res.status(400).json('Token verification failed:', error.message);
               }
         }
       }
@@ -140,8 +139,7 @@ const changePassword = async (req,res) => {
             const tokenUser = await User.findOne({emailaddress:tokenValid.email})
             const hashedPassword = await bcrypt.hash(newPassword, 10);
             tokenUser.password = hashedPassword;
-            tokenUser.resetToken = undefined;
-            //tokenUser.resetTokenExpiresAt = undefined;
+            tokenUser.resettoken = undefined;
             await tokenUser.save();
             res.json({ message: 'password updated successfully' });
         }
