@@ -13,6 +13,10 @@ const register = async(req,res) => {
         throw new customError.BadRequestError('incorrect email')
     }
 
+    if (!username && !email && !password){
+        return res.status(500).json("pls ensure fields are not empty ")
+      }
+
     const foundUser = await User.findOne({username})
     
     const foundEmail = await User.findOne({email})
@@ -35,9 +39,11 @@ const register = async(req,res) => {
 
 const login = async (req,res) => {
     const {username,password} = req.body
-    
+    if (!username  && !password){
+        return res.status(500).json("pls ensure fields are not empty ")
+      }
     try{
-        const foundUser  = await User.findOne({username})
+        const foundUser = await User.findOne({username})
         if(!foundUser){
             throw new customError.NotFoundError('user does not exist')
         }
@@ -48,7 +54,7 @@ const login = async (req,res) => {
 
         const tokenUser = createTokenUser(others)
         attachCookiesToResponse({res,user:tokenUser})
-        res.staus(StatusCodes.OK).json({user:others})
+        res.status(StatusCodes.OK).json({user:others})
     }
     catch(err){
         throw new customError.BadRequestError(err)
