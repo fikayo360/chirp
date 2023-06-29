@@ -214,7 +214,7 @@ const aroundYou = async (req,res) => {
     try{
         const sessionUser = await User.findOne(req.username)
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
-        let aroundYou = []
+        let aroundYouu = []
         const sameZip = await User.find({'zipcode':sessionUser.zipcode})
         const sameStates = await User.find({'state':sessionUser.state})
         aroundYou = [...sameZip,...sameStates]
