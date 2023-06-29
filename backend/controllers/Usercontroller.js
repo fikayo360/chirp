@@ -237,15 +237,18 @@ const completeProfile = async (req,res) => {
 const following = async (req,res) => {
     try{
         const sessionUser = await User.findOne({username:req.user.username})
+        console.log(sessionUser)
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
-        let following = []
-        sessionUser.friends.map((friend)=> {
-            let foundFriend = User.findOne({username:friend.username})
-            following =  [...foundFriend]
-        })
-        if (!following){
-            return res.status(500).json("no friends found")
-        }
+        const following = await Promise.all(
+            sessionUser.friends.map(async (friend) => {
+              const foundFriend = await User.findOne({ username: friend })
+              const { password, ...others } = foundFriend._doc
+              return others
+            })
+          );
+          
+          console.log(following);
+        
         res.status(StatusCodes.OK).json(following)
     }catch(err){
         throw new customError.BadRequestError(err)
