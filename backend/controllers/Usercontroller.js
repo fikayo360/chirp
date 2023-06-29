@@ -170,10 +170,10 @@ const findFriend = async (req,res) => {
 }
 
 const follow = async (req,res) => {
-    const {friendName} = req.query
+    const {friendName} = req.params
     let newFriends = []
     try{
-        const sessionUser = await User.findOne(req.username)
+        const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
         if(friendName === sessionUser.username){throw new customError.BadRequestError('cant add yourself')}
 
@@ -191,9 +191,10 @@ const follow = async (req,res) => {
 }
 
 const unFollow = async (req,res) => {
-    const {friendName} = req.query
+    const sessionUser = await User.findOne({username:req.user.username})
+    const {friendName} = req.params
     try{
-        const sessionUser = await User.findOne(req.username)
+      
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
         if(sessionUser.friends.includes(friendName)){
             let newUsers = sessionUser.friends.filter(item => item !== friendName)
@@ -245,7 +246,7 @@ const followers = async(req,res) => {
                 followers.push(user)
             }
         })
-        res.status(StatusCodes.Ok).json(followers)
+        res.status(StatusCodes.OK).json(followers)
     }catch(err){
         throw new customError.BadRequestError(err) 
     }
