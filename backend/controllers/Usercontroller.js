@@ -212,7 +212,7 @@ const unFollow = async (req,res) => {
 
 const aroundYou = async (req,res) => {
     try{
-        const sessionUser = await User.findOne(req.username)
+        const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
         let aroundYou = []
         const sameZip = await User.find({'zipcode':sessionUser.zipcode})
@@ -224,11 +224,28 @@ const aroundYou = async (req,res) => {
     }
 }
 
+ /*
+const completeProfile = async (req,res) => {
+    try{
+
+    }catch(err){
+
+    }
+}
+  */
+
 const following = async (req,res) => {
     try{
-        const sessionUser = await User.findOne(req.username)
+        const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
-        let following =  [...sessionUser.friends]
+        let following = []
+        sessionUser.friends.map((friend)=> {
+            let foundFriend = User.findOne({username:friend.username})
+            following =  [...foundFriend]
+        })
+        if (!following){
+            res.status(500).json("no friends found")
+        }
         res.status(Status.Ok).json(following)
     }catch(err){
         throw new customError.BadRequestError(err)
@@ -237,7 +254,7 @@ const following = async (req,res) => {
 
 const followers = async(req,res) => {
     try{
-        const sessionUser = await User.findOne(req.username)
+        const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
         const allUsers = User.find()
         let followers = []

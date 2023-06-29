@@ -46,9 +46,6 @@ const UserSchema = new mongoose.Schema({
   },
   zipcode:{
     type:String
-  },
-  securityPhrase:{
-    type:String
   }
 },
 { timestamps: true }
