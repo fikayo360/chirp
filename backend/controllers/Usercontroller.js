@@ -56,8 +56,8 @@ const login = async (req,res) => {
      }
      const { password: foundUserPassword, ...others } = foundUser._doc;
      const tokenUser = createTokenUser(others);
-     attachCookiesToResponse({ res, user: tokenUser });
-     res.status(StatusCodes.OK).json({ user: others });
+     let cookie = attachCookiesToResponse({ res, user: tokenUser });
+     res.status(StatusCodes.OK).json({ user: others,cookie });
     
     }
     catch(err){
@@ -150,15 +150,23 @@ const changePassword = async (req,res) => {
 }
 
 const findFriend = async (req,res) => {
-    const {friendName} = req.query
+    const { username } = req.body
+    
     try{
-        const friend = await User.findOne({friendName})
-        if(!friend) {throw new customError.NotFoundError('user not found ')}
-        res.status(StatusCodes.OK).json(friend)
+        const foundUser = await User.findOne({username})
+        if(!foundUser){
+            throw new customError.NotFoundError('user does not exist')
+        }
+        const { password, ...others } = foundUser._doc;
+        res.status(StatusCodes.OK).json(others)
     }
     catch(err){
         throw new customError.BadRequestError(err)
     }
+    /*
+    
+    */
+    
 }
 
 const follow = async (req,res) => {
@@ -173,7 +181,7 @@ const follow = async (req,res) => {
             newFriends = [...sessionUser.friends,friendName]
             sessionUser.friends = newFriends
             sessionUser.save()
-            res.status(StatusCodes.Ok).json(`${friendName} added succesfully`)
+            res.status(StatusCodes.OK).json(`${friendName} added succesfully`)
         }else{
             throw new customError.BadRequestError('error occured while adding friend')
         }
@@ -191,7 +199,7 @@ const unFollow = async (req,res) => {
             let newUsers = sessionUser.friends.filter(item => item !== friendName)
             sessionUser.friends = newUsers
             sessionUser.save()
-            res.status(StatusCodes.Ok).json(`${friendName} removed succesfully`)
+            res.status(StatusCodes.OK).json(`${friendName} removed succesfully`)
         }
         else{
             throw new customError.BadRequestError('error occured while removing friend')
