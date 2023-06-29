@@ -10,7 +10,7 @@ const { attachCookiesToResponse, createTokenUser } = require('../utils');
 const {sendEmailConfirmation} = require('../utils/sendEmail')
 
 const register = async(req,res) => {
-    const {username,email,password,securityPhrase} = req.body
+    const {username,email,password,state,zipcode} = req.body
 
     if(validateEmail(email) === false){
         throw new customError.BadRequestError('incorrect email')
@@ -29,7 +29,7 @@ const register = async(req,res) => {
     }
 
     try{
-        const savedUser  = await User.create({username,email, password: bcrypt.hashSync(password, 10)})
+        const savedUser  = await User.create({username,email, password: bcrypt.hashSync(password, 10),state,zipcode})
         const tokenUser = createTokenUser(savedUser)
         attachCookiesToResponse({res,user:tokenUser})
         res.status(StatusCodes.OK).json({user:tokenUser})
@@ -96,9 +96,7 @@ const forgotPassword = async (req,res) => {
                 subject: 'password reset',
                 text: `use the following to reset your password ${tokenData}`
             }
-           
-            founduser.resettoken = tokenData
-            founduser.save()
+        
            transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
             console.log('Error sending email:', error);
@@ -109,6 +107,8 @@ const forgotPassword = async (req,res) => {
         }
 
         sendResetToken(emailaddress)
+        founduser.resettoken = tokenData
+        founduser.save()
         res.status(200).json({ message: 'Reset token sent successfully' });
     }
     catch(err){
@@ -215,29 +215,42 @@ const aroundYou = async (req,res) => {
         const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
         let aroundYou = []
-        const sameZip = await User.find({'zipcode':sessionUser.zipcode})
-        const sameStates = await User.find({'state':sessionUser.state})
-        aroundYou = [...sameZip,...sameStates]
-        res.status(Status.Ok).json(aroundYou)
+        const sameZip = await User.find({zipcode:sessionUser.zipcode})
+        const filteredSameZip = sameZip.filter((user) => user._id.toString() !== sessionUser._id.toString());
+        const sameStates = await User.find({state:sessionUser.state})
+        const filteredSameStates = sameStates.filter((user) => user._id.toString() !== sessionUser._id.toString());
+        aroundYou = [...filteredSameZip,...filteredSameStates]
+        res.status(StatusCodes.OK).json(aroundYou)
     }catch(err){
         throw new customError.BadRequestError(err)
     }
 }
 
- /*
+ 
 const completeProfile = async (req,res) => {
+    const {phonenumber,profilepic,Bio,country,state,zipcode} = req.body
     try{
-
+          const sessionUser = await User.findOne({username:req.user.username})
+          let foundUser = await User.findOne({username:sessionUser.username})         
+           Object.assign(foundUser,{
+            phonenumber:phonenumber,
+            profilepic:profilepic,
+            Bio: Bio,
+            country: country,
+            state: state,
+            zipcode: zipcode
+          })
+          foundUser.save()
+          res.status(StatusCodes.OK).json(`${sessionUser.username} profile updated `)
     }catch(err){
-
+        throw new customError.BadRequestError(err)
     }
 }
-  */
+  
 
 const following = async (req,res) => {
     try{
         const sessionUser = await User.findOne({username:req.user.username})
-        console.log(sessionUser)
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
         const following = await Promise.all(
             sessionUser.friends.map(async (friend) => {
@@ -259,17 +272,25 @@ const followers = async(req,res) => {
     try{
         const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
-        const allUsers = User.find()
-        let followers = []
-        allUsers.forEach((user,index) => {
-            if(user.friends.includes(sessionUser.username)){
-                followers.push(user)
+        
+         User.find({}, (err, users) => {
+            if (err) {
+              console.error('Error retrieving users:', err);
+              return;
             }
-        })
-        res.status(StatusCodes.OK).json(followers)
+            
+            let followers= []
+            users.map((user) => {
+                if(user.friends.includes(sessionUser.username)){
+                    const { password, ...others } = user._doc
+                    followers.push(others)
+                }
+            })
+            res.status(StatusCodes.OK).json(followers)
+          });
     }catch(err){
         throw new customError.BadRequestError(err) 
     }
 }
 
-module.exports = {register,login,forgotPassword,changePassword,findFriend,follow,unFollow,aroundYou,following,followers}
+module.exports = {register,login,forgotPassword,changePassword,findFriend,follow,unFollow,aroundYou,following,followers,completeProfile}
