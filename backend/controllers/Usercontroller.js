@@ -244,9 +244,9 @@ const following = async (req,res) => {
             following =  [...foundFriend]
         })
         if (!following){
-            res.status(500).json("no friends found")
+            return res.status(500).json("no friends found")
         }
-        res.status(Status.Ok).json(following)
+        res.status(StatusCodes.OK).json(following)
     }catch(err){
         throw new customError.BadRequestError(err)
     }
