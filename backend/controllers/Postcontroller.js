@@ -10,7 +10,7 @@ const publishPost = async(req,res) => {
         const sessionUser = await User.findOne(req.username)
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
         const newPost = Post.create({'userId':sessionUser._id,postImg,postAuthor,postTitle,postBody})
-        res.status(StatusCodes.Ok).json('post created succesfully')
+        res.status(StatusCodes.OK).json('post created succesfully')
     }catch(err){
         throw new customError.BadRequestError(err)
     }
@@ -32,7 +32,7 @@ const getFriendsPost = async(req,res) => {
         FriendsPost = [...todaysPost,...allFriendPosts]
         })
 
-        res.status(StatusCodes.Ok).json(FriendsPost)
+        res.status(StatusCodes.OK).json(FriendsPost)
     }
        catch(err){
         throw new customError.BadRequestError(err)
@@ -46,7 +46,7 @@ const commentPost = async(req,res) => {
         let currentPost = Post.findById(PostId)
         currentPost.PostComments.shift(newComment)
         currentPost.save()
-        res.status(StatusCodes.Ok).json('comment added succesfully')
+        res.status(StatusCodes.OK).json('comment added succesfully')
     }catch(err){
         throw new customError.BadRequestError(err)
     }
@@ -64,7 +64,7 @@ const likePost = async(req,res) => {
     })
         currentPost.PostLikes.push(newlike)
         currentPost.save()
-        res.status(StatusCodes.Ok).json('like added succesfully')
+        res.status(StatusCodes.OK).json('like added succesfully')
     }catch(err){       
         throw new customError.BadRequestError(err)
     }

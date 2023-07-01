@@ -16,7 +16,11 @@ const authUser = async (req, res, next) => {
     req.user = {username,userId}
     next();
   } catch (error) {
-    throw new CustomError.UnauthenticatedError('Authentication invalid');
+    if (error.name === 'TokenExpiredError') {
+      res.status(400).json('Token expired');
+    } else{
+    throw new CustomError.UnauthenticatedError('Authentication invalid')
+    }
   }  
 };
 

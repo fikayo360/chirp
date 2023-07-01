@@ -1,6 +1,7 @@
 const axios = require('axios')
 const customError = require('../errors')
 const { StatusCodes } = require('http-status-codes');
+// install and import node js newsapi package
 
 
 const getTopStories = async (req,res) => {
@@ -19,7 +20,7 @@ const getTopStories = async (req,res) => {
 }
 
 const getNewsByCategory = async (req,res) => {
-    const {category} = req.query
+    const {category} = req.params
     try{
         const newsItems  = await axios.get(`${process.env.NEWSBASEURL}?
         access_key=${process.env.API_KEY}
