@@ -6,7 +6,7 @@ const {authUser} = require('../middleware/auth')
 
 router.route("/createSavedPost").post(authUser,createSavedPost)
 router.route("/getSavedPosts").get(authUser,getSavedPosts)
-router.route("/DeleteSavedPost").delete(authUser,deleteSavedPost)
+router.route("/deleteSavedPost/:savedpostId").delete(authUser,deleteSavedPost)
 
 
 module.exports = router
