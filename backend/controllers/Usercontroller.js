@@ -1,9 +1,7 @@
 const User = require('../models/User')
 const bcrypt = require("bcrypt")
-const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
 const {validateEmail }= require('../utils/validateEmail')
+const {sendResetToken} = require('../utils/sendResetToken')
 const customError = require('../errors')
 const { StatusCodes } = require('http-status-codes');
 const { attachCookiesToResponse, createTokenUser } = require('../utils');
@@ -67,48 +65,14 @@ const login = async (req,res) => {
 
 const forgotPassword = async (req,res) => {
     const {emailaddress} = req.body
-    function generateToken(email, expiresIn) {
-        const secretKey = process.env.JWT_SECRET; 
-        const token = jwt.sign({ email }, secretKey, { expiresIn });
-        return token;
-     }
-     const sendResetToken = (email) => {
-        let tokenData = generateToken(email,process.env.JWT_LIFETIME)
-        let founduser = User.findOne({emailaddress: email})
-        if(!founduser){
-            throw new customError.NotFoundError('user not found')
-        }
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true,
-            auth: {
-                user:process.env.EMAIL,
-                pass: process.env.EMAIL_PASSWORD,
-            }
-        })
-        let mailOptions = {
-            from: process.env.EMAIL,
-            to: founduser.email,
-            subject: 'password reset',
-            text: ` pls copy this token and use to reset your password ${tokenData}`
-        }
-    
-       transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-        console.log('Error sending email:', error);
-        } else {
-        console.log('Email sent:', info.response);
-        founduser.resettoken = tokenData
-        founduser.save()
-        }
-    });
-    }
-    
+    const sessionUser = await User.findOne({username:req.user.username})
     try{
-        sendResetToken(emailaddress)
-        res.status(200).json({ message: 'Reset token sent successfully' });
+        if(sessionUser.email === emailaddress){
+            sendResetToken(sessionUser.email)
+            res.status(200).json('Reset token sent successfully');
+        }else{
+            res.status(500).json( 'pls input ur emailaddress' );
+        }
     }
     catch(err){
         throw new customError.BadRequestError(err)
@@ -121,7 +85,6 @@ const changePassword = async (req,res) => {
         try {
           const secretKey = process.env.JWT_SECRET; 
           const decodedToken = jwt.verify(resetToken, secretKey);
-          const userEmail = decodedToken.email;
         
         } catch (error) {
             if (error.name === 'TokenExpiredError') {
@@ -130,17 +93,18 @@ const changePassword = async (req,res) => {
                 res.status(400).json('Token verification failed:', error.message);
               }
         }
+        return decodedToken;
       }
       
       try{
         const tokenValid = verifyResetToken(token)
         if(tokenValid){
-            const tokenUser = await User.findOne({emailaddress:tokenValid.email})
+            let tokenUser = await User.findOne({emailaddress:tokenValid.email})
             const hashedPassword = await bcrypt.hash(newPassword, 10);
             tokenUser.password = hashedPassword;
             tokenUser.resettoken = undefined;
             await tokenUser.save();
-            res.json({ message: 'password updated successfully' });
+            res.json('password updated successfully');
         }
       }
       catch(err){
