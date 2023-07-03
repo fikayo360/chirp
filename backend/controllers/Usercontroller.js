@@ -85,6 +85,7 @@ const forgotPassword = async (req,res) => {
 
 const changePassword = async (req,res) => {
     const {token,newPassword} = req.body
+    const sessionUser = await User.findOne({username:req.user.username})
     function decodeToken(token, secretKey) {
         try {
           const decoded = jwt.verify(token, secretKey);
@@ -97,19 +98,21 @@ const changePassword = async (req,res) => {
       
       try{
         let tokenEmail = decodeToken(token,process.env.JWT_SECRET)
-        console.log(tokenEmail)
-        let tokenUser = await User.findOne({emailaddress:tokenEmail})
-        console.log(tokenUser)
         const hashedPassword = await bcrypt.hash(newPassword, 10);
-        tokenUser.password = hashedPassword;
-        tokenUser.resettoken = undefined;
-        await tokenUser.save();
-        res.status(StatusCodes.OK).json('password updated successfully');
+        if(tokenEmail === sessionUser.email){
+            sessionUser.password = hashedPassword;
+            sessionUser.resettoken = undefined;
+            await sessionUser.save();
+            res.status(StatusCodes.OK).json('password updated successfully');
+        }
+        else{
+            res.status(StatusCodes.BAD_REQUEST).json('wrong user');
+        }
         }
       
-      catch(err){
-        throw new customError.BadRequestError(err)
-      }
+        catch(err){
+            throw new customError.BadRequestError(err)
+        }
 }
 
 const findFriend = async (req,res) => {
