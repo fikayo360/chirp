@@ -6,6 +6,7 @@ const customError = require('../errors')
 const { StatusCodes } = require('http-status-codes');
 const { attachCookiesToResponse, createTokenUser } = require('../utils');
 const {sendEmailConfirmation} = require('../utils/sendEmail')
+const jwt = require('jsonwebtoken');
 
 const register = async(req,res) => {
     const {username,email,password,state,zipcode} = req.body
@@ -87,7 +88,6 @@ const changePassword = async (req,res) => {
     function decodeToken(token, secretKey) {
         try {
           const decoded = jwt.verify(token, secretKey);
-          console.log(decoded);
           const email = decoded.email;
           return email;
         } catch (error) {
@@ -97,7 +97,7 @@ const changePassword = async (req,res) => {
       
       try{
         let tokenEmail = decodeToken(token,process.env.JWT_SECRET)
-        console.log(tokenEmail.email)
+        console.log(tokenEmail)
         let tokenUser = await User.findOne({emailaddress:tokenEmail})
         console.log(tokenUser)
         const hashedPassword = await bcrypt.hash(newPassword, 10);
