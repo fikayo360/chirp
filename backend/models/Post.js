@@ -4,26 +4,26 @@ const PostSchema = new mongoose.Schema({
     userId:{
         type:String
     },
-    PostImg:{
+    postImg:{
         type:String
     },
-    Postauthor:{
+    postAuthor:{
         type:String
     },
-    Posttitle:{
+    postTitle:{
         type:String
     },
-    Postbody:{
+    postBody:{
         type:String
     },
     url:{
         type:String
     },
-    PostAuthorImg:{
+    postAuthorImg:{
         type:String
     },
     
-    PostComments:[
+    postComments:[
         {
         PostId:{
             type:String
@@ -40,7 +40,7 @@ const PostSchema = new mongoose.Schema({
 
         }
     ],
-    PostLikes:[
+    postLikes:[
         {
             authorName:{
                 type:String

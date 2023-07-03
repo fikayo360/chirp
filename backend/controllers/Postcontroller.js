@@ -7,10 +7,11 @@ const { StatusCodes } = require('http-status-codes')
 const publishPost = async(req,res) => {
     const {postImg,postAuthor,postTitle,postBody} = req.body
     try{
-        const sessionUser = await User.findOne(req.username)
+        const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
-        const newPost = Post.create({'userId':sessionUser._id,postImg,postAuthor,postTitle,postBody})
-        res.status(StatusCodes.OK).json('post created succesfully')
+        const newPost = await Post.create({userId:sessionUser._id,postImg,postAuthor,postTitle,postBody})
+        console.log(newPost);
+        res.status(StatusCodes.OK).json('post created ')
     }catch(err){
         throw new customError.BadRequestError(err)
     }

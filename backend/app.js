@@ -9,7 +9,7 @@ const connectDB = require('./db/connect');
 const cookieParser = require('cookie-parser');
 const userRoute = require('./routes/userRoutes')
 const savedPostRoute = require('./routes/savedPostRoutes')
-const postRoute = require('./routes/userRoutes')
+const postRoute = require('./routes/postRoutes')
 const notificationRoute = require('./routes/userRoutes')
 const newsRoute = require('./routes/userRoutes')
 app.use(cors());
