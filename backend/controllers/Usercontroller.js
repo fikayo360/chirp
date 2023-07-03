@@ -68,7 +68,10 @@ const forgotPassword = async (req,res) => {
     const sessionUser = await User.findOne({username:req.user.username})
     try{
         if(sessionUser.email === emailaddress){
-            sendResetToken(sessionUser.email)
+            let reset = sendResetToken(sessionUser.email)
+            sessionUser.resettoken = reset
+            await sessionUser.save()
+            console.log(sessionUser)
             res.status(200).json('Reset token sent successfully');
         }else{
             res.status(500).json( 'pls input ur emailaddress' );
@@ -81,32 +84,29 @@ const forgotPassword = async (req,res) => {
 
 const changePassword = async (req,res) => {
     const {token,newPassword} = req.body
-    function verifyResetToken(resetToken) {
+    function decodeToken(token, secretKey) {
         try {
-          const secretKey = process.env.JWT_SECRET; 
-          const decodedToken = jwt.verify(resetToken, secretKey);
-        
+          const decoded = jwt.verify(token, secretKey);
+          console.log(decoded);
+          const email = decoded.email;
+          return email;
         } catch (error) {
-            if (error.name === 'TokenExpiredError') {
-                res.status(400).json('Token expired');
-              } else {
-                res.status(400).json('Token verification failed:', error.message);
-              }
+            res.status(StatusCodes.BAD_REQUEST)
         }
-        return decodedToken;
       }
       
       try{
-        const tokenValid = verifyResetToken(token)
-        if(tokenValid){
-            let tokenUser = await User.findOne({emailaddress:tokenValid.email})
-            const hashedPassword = await bcrypt.hash(newPassword, 10);
-            tokenUser.password = hashedPassword;
-            tokenUser.resettoken = undefined;
-            await tokenUser.save();
-            res.json('password updated successfully');
+        let tokenEmail = decodeToken(token,process.env.JWT_SECRET)
+        console.log(tokenEmail.email)
+        let tokenUser = await User.findOne({emailaddress:tokenEmail})
+        console.log(tokenUser)
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        tokenUser.password = hashedPassword;
+        tokenUser.resettoken = undefined;
+        await tokenUser.save();
+        res.status(StatusCodes.OK).json('password updated successfully');
         }
-      }
+      
       catch(err){
         throw new customError.BadRequestError(err)
       }

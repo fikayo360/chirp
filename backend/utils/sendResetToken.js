@@ -1,15 +1,16 @@
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const User = require('../models/User')
 
 function generateToken(email, expiresIn) {
     const secretKey = process.env.JWT_SECRET; 
-    const token = jwt.sign({ email }, secretKey, { expiresIn });
+    const token = jwt.sign({ email }, secretKey, { expiresIn:process.env.JWT_LIFETIME });
     return token;
  }
 
  const sendResetToken = (email) => {
-    let tokenData = generateToken(email,process.env.JWT_LIFETIME)
-    
+    let tokenData = generateToken(email,process.env.JWT_SECRET)
+    let tokenuser = User.findOne({email})
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         host: 'smtp.gmail.com',
@@ -32,10 +33,10 @@ function generateToken(email, expiresIn) {
     console.log('Error sending email:', error);
     } else {
     console.log('Email sent:', info.response);
-    founduser.resettoken = tokenData
-    founduser.save()
+    
     }
 });
+return tokenData
 }
 
 module.exports = {sendResetToken}
