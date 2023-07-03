@@ -67,48 +67,47 @@ const login = async (req,res) => {
 
 const forgotPassword = async (req,res) => {
     const {emailaddress} = req.body
-    const founduser = User.findOne({emailaddress})
-    if(!founduser){
-        throw new customError.NotFoundError('user not found')
-    }
-    try{
-        function generateToken(email, expiresIn) {
+    function generateToken(email, expiresIn) {
         const secretKey = process.env.JWT_SECRET; 
         const token = jwt.sign({ email }, secretKey, { expiresIn });
         return token;
-         }
-        
-        // Send the reset token via email to the user's email address
-        const sendResetToken = (email) => {
-            let tokenData = generateToken()
-            let transporter = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 465,
-                secure: true,
-                auth: {
-                    user:process.env.EMAIL,
-                    pass: process.env.EMAILPASS
-                }
-            })
-            let mailOptions = {
-                from: process.env.EMAIL,
-                to: email,
-                subject: 'password reset',
-                text: `use the following to reset your password ${tokenData}`
-            }
-        
-           transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-            console.log('Error sending email:', error);
-            } else {
-            console.log('Email sent:', info.response);
-            }
-        });
+     }
+     const sendResetToken = (email) => {
+        let tokenData = generateToken(email,process.env.JWT_LIFETIME)
+        let founduser = User.findOne({emailaddress: email})
+        if(!founduser){
+            throw new customError.NotFoundError('user not found')
         }
-
-        sendResetToken(emailaddress)
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user:process.env.EMAIL,
+                pass: process.env.EMAIL_PASSWORD,
+            }
+        })
+        let mailOptions = {
+            from: process.env.EMAIL,
+            to: founduser.email,
+            subject: 'password reset',
+            text: ` pls copy this token and use to reset your password ${tokenData}`
+        }
+    
+       transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+        console.log('Error sending email:', error);
+        } else {
+        console.log('Email sent:', info.response);
         founduser.resettoken = tokenData
         founduser.save()
+        }
+    });
+    }
+    
+    try{
+        sendResetToken(emailaddress)
         res.status(200).json({ message: 'Reset token sent successfully' });
     }
     catch(err){
