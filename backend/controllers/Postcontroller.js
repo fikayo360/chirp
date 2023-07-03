@@ -45,10 +45,13 @@ const getFriendsPost = async(req,res) => {
 const commentPost = async(req,res) => {
     try{
         const {PostId,PostcommentAuthor,PostcommentBody,PostcommentProfilePic} = req.body
+        console.log(req.body);
         let newComment = {PostId,PostcommentAuthor,PostcommentProfilePic,PostcommentBody}
-        let currentPost = Post.findById(PostId)
-        currentPost.PostComments.shift(newComment)
-        currentPost.save()
+        let currentPost = await Post.findById({_id:PostId})
+        
+        currentPost.postComments.push(newComment)
+        await currentPost.save()
+        
         res.status(StatusCodes.OK).json('comment added succesfully')
     }catch(err){
         throw new customError.BadRequestError(err)
@@ -59,15 +62,15 @@ const likePost = async(req,res) => {
     try{
         const {authorName,postId} = req.body
         let newlike = {authorName,postId}
-        let currentPost = Post.findById(postId)
-        currentPost.PostLikes.map(item => {
+        let currentPost = await Post.findById({_id:postId})
+        currentPost.postLikes.map(item => {
             if(item.authorName === newlike.authorName ){
                 throw new customError.BadRequestError('already liked post')
             }
     })
-        currentPost.PostLikes.push(newlike)
-        currentPost.save()
-        res.status(StatusCodes.OK).json('like added succesfully')
+        currentPost.postLikes.push(newlike)
+        await currentPost.save()
+        res.status(StatusCodes.OK).json('liked')
     }catch(err){       
         throw new customError.BadRequestError(err)
     }

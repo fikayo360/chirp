@@ -5,7 +5,7 @@ const {authUser} = require('../middleware/auth')
 
 
 router.route("/getAll").get(authUser,getNotications)
-router.route("/createNotification").get(authUser,createNotifications)
+router.route("/createNotification").post(authUser,createNotifications)
 
 
 

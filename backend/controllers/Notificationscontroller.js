@@ -6,10 +6,10 @@ const { StatusCodes } = require('http-status-codes');
 
 const getNotications = async (req,res) => {
     try{
-        const sessionUser = await User.findOne(req.username)
+        const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
         const notifications = await Notification.find({userId:sessionUser._id})
-        res.status(StatusCodes.Ok).json(notifications)
+        res.status(StatusCodes.OK).json(notifications)
     }catch(err){
         throw new customError.BadRequestError(err)
     }
@@ -18,10 +18,10 @@ const getNotications = async (req,res) => {
 const createNotifications = async(req,res) => {
     const {profilePic,username,body} = req.body
     try{
-        const sessionUser = await User.findOne(req.username)
+        const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
-        const notificationItem = Notification.create({userId:sessionUser._id,profilePic,username,body})
-        res.status(StatusCodes.Ok).json('saved succesfully')
+        const notificationItem = await Notification.create({userId:sessionUser._id,profilePic,username,body})
+        res.status(StatusCodes.OK).json('saved succesfully')
     }catch(err){
         throw new customError.BadRequestError(err)
     }
