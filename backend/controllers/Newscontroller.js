@@ -1,18 +1,18 @@
 const axios = require('axios')
 const customError = require('../errors')
 const { StatusCodes } = require('http-status-codes');
-// install and import node js newsapi package
+const NewsAPI = require('newsapi');
+const newsapi = new NewsAPI(process.env.NEWS_API-KEY);
 
 
 const getTopStories = async (req,res) => {
     try{
-        const topStories = await axios.get(`${process.env.NEWSBASEURL}?
-        country=ng
-        &apiKey=${process.env.News_API_KEY}
-        &limit=20
-        &offset=0`
-        )
-        res.status(StatusCodes.OK).json(topStories)
+        newsapi.v2.topHeadlines({
+            language: 'en',
+            country: 'ng'
+          }).then(response => {
+            res.status(StatusCodes.OK).json(response)
+          })
     }
     catch(err){
         throw new customError.BadRequestError(err)

@@ -19,9 +19,7 @@ const PostSchema = new mongoose.Schema({
     url:{
         type:String
     },
-    postAuthorImg:{
-        type:String
-    },
+    
     
     postComments:[
         {

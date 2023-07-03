@@ -20,17 +20,17 @@ const publishPost = async(req,res) => {
 const getFriendsPost = async(req,res) => {
    
     try{
-        const sessionUser = await User.findOne(req.username)
+        const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
         let FriendsPost = []
         const today = new Date();
         today.setHours(0, 0, 0, 0); 
         
-        sessionUser.friends.map(async user => {
-        const allFriendPosts = Post.find({userId:user._id})
-        const todaysPost = await Post.find({ createdAt: { $gte: today } })
-        offset += limit
-        FriendsPost = [...todaysPost,...allFriendPosts]
+        sessionUser.friends.map(async (user) => {
+        const allFriendPosts = await Post.find({userId:user._id})
+        //const todaysPost = await Post.find({ createdAt: { $gte: today } })
+        //offset += limit
+        FriendsPost = [...allFriendPosts]
         })
 
         res.status(StatusCodes.OK).json(FriendsPost)
