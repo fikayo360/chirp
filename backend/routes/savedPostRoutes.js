@@ -5,7 +5,7 @@ const {authUser} = require('../middleware/auth')
 
 
 router.route("/createSavedPost").post(authUser,createSavedPost)
-router.route("/getSavedPosts").post(authUser,getSavedPosts)
+router.route("/getSavedPosts").get(authUser,getSavedPosts)
 router.route("/DeleteSavedPost").delete(authUser,deleteSavedPost)
 
 

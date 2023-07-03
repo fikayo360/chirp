@@ -18,7 +18,7 @@ const createSavedPost = async(req,res) => {
 
 const getSavedPosts = async(req,res) => {
     try{
-        const sessionUser = await User.find({username:req.user.username})
+        const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
         const savedPosts = await Savedpost.find({userId:sessionUser._id})
         res.status(StatusCodes.OK).json(savedPosts)
@@ -32,7 +32,7 @@ const deleteSavedPost = async(req,res) => {
     try{
         const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
-        const deletepost = await Savedpost.findOneAndDelete({ _id: savedpostId });
+        const deletepost = await Savedpost.findByIdAndDelete({ _id: savedpostId });
         res.status(StatusCodes.OK).json('deleted')
     }catch(err){
         throw new customError.BadRequestError(err)
