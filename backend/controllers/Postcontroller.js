@@ -10,7 +10,6 @@ const publishPost = async(req,res) => {
         const sessionUser = await User.findOne({username:req.user.username})
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
         const newPost = await Post.create({userId:sessionUser._id,postImg,postAuthor,postTitle,postBody})
-        console.log(newPost);
         res.status(StatusCodes.OK).json('post created ')
     }catch(err){
         throw new customError.BadRequestError(err)
@@ -18,22 +17,24 @@ const publishPost = async(req,res) => {
 }
 
 const getFriendsPost = async(req,res) => {
-   
     try{
         const sessionUser = await User.findOne({username:req.user.username})
         console.log(sessionUser);
         if(!sessionUser){throw new customError.NotFoundError('sesseion user not found')}
-        let posts = []
         const today = new Date();
         today.setHours(0, 0, 0, 0); 
-    
-        sessionUser.friends.map(async (user) => {
-            let friendProfile = await User.findOne({username: user})
-            const allFriendPosts = await Post.find({userId:friendProfile._id})
-            //const todaysPost = await Post.find({ createdAt: { $gte: today } })
-            //offset += limit
-            posts = [...allFriendPosts]
-        })
+        const posts = await Promise.all(
+            sessionUser.friends.map(async (user) => {
+                let friendProfile = await User.findOne({username: user})
+                const todaysPosts = await Post.find({
+                    $and: [
+                      { userId: friendProfile._id },
+                      { createdAt: { $gte: today } }
+                    ]
+                  });
+                return [...todaysPosts]
+            })
+        )
         res.status(StatusCodes.OK).json(posts)
     }
        catch(err){
