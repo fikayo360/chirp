@@ -1,33 +1,31 @@
 const nodemailer = require('nodemailer')
-const fs = require('fs')
 
-const sendEmailConfirmation = (sender,receiver) => {
+const sendEmailConfirmation = (receiver) => {
     let transporter = nodemailer.createTransport({
+        service: 'gmail',
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
         auth: {
             user:process.env.EMAIL,
-            pass: process.env.EMAILPASS
+            pass: process.env.EMAIL_PASSWORD,
         }
     })
     let mailOptions = {
-        from: sender,
+        from: process.env.EMAIL,
         to: receiver,
-        subject: 'Welcome',
-        text: 'welcome to chirp',
-        html: ''
+        subject: 'welcome',
+        text: `Welcome to chirp, the home of free and unfiltered news on the Go`
     }
-    let readStream = fs.createReadStream('../public/welcome.html', 'utf8');
-    readStream.on('data', function(chunk) {
-        mailOptions.html += chunk;
-    });
-    transporter.sendMail(mailOptions,(error,info) => {
-        if (error){
-            return error
-        }
-        console.log(`message sent ${info.messageId}`)
-    })
+
+   transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+    console.log('Error sending email:', error);
+    } else {
+    console.log('Email sent:', info.response);
+    
+    }
+});
 }
 
 module.exports = {sendEmailConfirmation}

@@ -32,7 +32,7 @@ const register = async(req,res) => {
         const tokenUser = createTokenUser(savedUser)
         attachCookiesToResponse({res,user:tokenUser})
         res.status(StatusCodes.OK).json({user:tokenUser})
-       // sendEmailConfirmation(process.env.EMAIL,savedUser.email)
+       sendEmailConfirmation(savedUser.email)
     }
     catch(err){
         throw new customError.BadRequestError(err)
