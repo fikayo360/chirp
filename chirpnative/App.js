@@ -7,6 +7,7 @@ import Forgotpassword from './screens/forgotpassword';
 import Register from './screens/register';
 import Login from './screens/signin';
 import { Splashscreen } from './screens/splashscreen';
+
 import Newscategory from './screens/newscategory';
 import Aroundyou from './screens/aroundyou';
 import Post from './screens/post';
@@ -24,7 +25,7 @@ import Profile from './screens/profile';
 export default function App() {
   return (
     <>
-    <ChangePassword/>
+    <Home/>
     </>
   );
 }
