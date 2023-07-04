@@ -4,9 +4,25 @@ import { useState } from 'react';
 export default function Login() {
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
-    
+    let passwordAttempt = 2
 
-    const onChangeNumber = () => {}
+    const handlelogin = async(e) => {
+
+      if (!password || !username ){
+        console.log('error');
+      }
+          try{
+          let formdata =  {username,password}
+          console.log(formdata);
+          /*
+          const res = await axios.post("https://fksocial.onrender.com/v1/user/login",formdata)
+          localStorage.setItem('token',res.data.token)
+           */
+          
+          }catch(err){
+            /* console.log(err.response.data) */
+          }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -16,23 +32,23 @@ export default function Login() {
         <View style={styles.rinputs}>
         <TextInput
         style={styles.rinput}
-        onChangeText={onChangeNumber}
+        onChangeText={text => setUsername(text)}
         value={username}
         placeholder="username"
         />
         
         <TextInput
         style={styles.rinput}
-        onChangeText={onChangeNumber}
+        onChangeText={text => setUsername(text)}
         value={password}
         placeholder="password"
         />
         
-        <TouchableOpacity style={styles.button} onPress={()=>{}}>
+        <TouchableOpacity style={styles.button} onPress={handlelogin}>
         <Text style={styles.signuptxt}>Login</Text>
         </TouchableOpacity>
         </View>
-       <Text style={styles.footerTxt}>forgot password???</Text>
+       <Text style={styles.footerTxt}>{passwordAttempt === 2 && ('forgotpassword')}</Text>
     </SafeAreaView>
   );
 }
@@ -67,8 +83,8 @@ const styles = StyleSheet.create({
       
     },
   rinput: {
-    height: 60,
-    margin: 12,
+    height: 70,
+    margin: 15,
     borderWidth: 2,
     padding: 10,
     borderRadius: 10,

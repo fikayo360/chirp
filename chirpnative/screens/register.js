@@ -3,57 +3,61 @@ import { useState } from 'react';
 
 export default function Register() {
     const [username,setUsername] = useState("")
-    const [phoneNumber,setPhoneNumber] = useState("")
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const [confirm,setConfirm] = useState("")
     
 
-    const onChangeNumber = () => {}
+    const handlelogin = async(e) => {
+
+      if (!password || !username  || confirm ||email){
+          //
+      }
+          try{
+          let formdata =  {username,password,email}
+          console.log(formdata);
+          /*
+          const res = await axios.post("https://fksocial.onrender.com/v1/user/login",formdata)
+          localStorage.setItem('token',res.data.token)
+           */
+          
+          }catch(err){
+            /* console.log(err.response.data) */
+          }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-        <Text style={styles.headerTxt}>Chirp Signup</Text>
+        <Text style={styles.headerTxt}>{`Chirp Signup ${email}`}</Text>
         </View>
         <View style={styles.inputs}>
         <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber}
         value={username}
+        onChangeText={text => setUsername(text)}
         placeholder="username"
         />
         <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber}
-        value={phoneNumber}
-        placeholder="PhoneNumber"
-        />
-        <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
+        onChangeText={text => setEmail(text)}
         value={email}
         placeholder="Email"
         />
         <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber}
+        onChangeText={text => setPassword(text)}
         value={password}
         placeholder="password"
         />
         <TextInput
         style={styles.input}
-        onChangeText={onChangeNumber}
+        onChangeText={text => setConfirm(text)}
         value={confirm}
         placeholder="confirm password"
         />
-        <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-  value={username}
-        placeholder="Secret phrase"
-        />
-        <TouchableOpacity style={styles.button} onPress={()=>{}}>
+       
+        <TouchableOpacity style={styles.button} onPress={handlelogin}>
         <Text style={styles.signuptxt}>SignUp</Text>
         </TouchableOpacity>
         </View>

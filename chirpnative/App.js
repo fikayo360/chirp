@@ -24,7 +24,7 @@ import Profile from './screens/profile';
 export default function App() {
   return (
     <>
-    <Splashscreen/>
+    <ChangePassword/>
     </>
   );
 }

@@ -2,9 +2,9 @@ import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView} from 're
 import { useState, } from 'react';
 
 export default function ChangePassword() {
-    const [oldPassword,setOldPassword] = useState("")
+   
     const [newPassword,setNewPassword] = useState("")
-    const [confirmPassword,setConfirmPassword] = useState("")
+    const [token,setToken] = useState("")
     
 
     const onChangeNumber = () => {}
@@ -12,33 +12,26 @@ export default function ChangePassword() {
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-        <Text style={styles.headerTxt}>Chirp ChangePassword</Text>
+        <Text style={styles.headerTxt}> ChangePassword</Text>
         </View>
         <View style={styles.rinputs}>
-            
-        <TextInput
-        style={styles.rinput}
-        onChangeText={onChangeNumber}
-        value={oldPassword}
-        placeholder="old password"
-        />
         
         <TextInput
         style={styles.rinput}
-        onChangeText={onChangeNumber}
+        onChangeText={text => setNewPassword(text)}
         value={newPassword}
-        placeholder=" new password"
+        placeholder=" newpassword"
         />
 
         <TextInput
         style={styles.rinput}
-        onChangeText={onChangeNumber}
-        value={confirmPassword}
-        placeholder="confirm password"
+        onChangeText={text => setToken(text)}
+        value={token}
+        placeholder="token"
         />
         
         <TouchableOpacity style={styles.button} onPress={()=>{}}>
-        <Text style={styles.signuptxt}>Change</Text>
+        <Text style={styles.signuptxt}>change password</Text>
         </TouchableOpacity>
 
         </View>

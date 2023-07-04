@@ -4,7 +4,7 @@ import { useState, } from 'react';
 
 export default function Forgotpassword() {
 
-    const [phrase,setPhrase] = useState("")
+    const [emailaddress,setEmailaddress] = useState("")
     
 
     const onChangeNumber = () => {}
@@ -12,21 +12,21 @@ export default function Forgotpassword() {
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-        <Text style={styles.headerTxt}>Chirp Forgot Password</Text>
+        <Text style={styles.headerTxt}>ForgotPassword</Text>
         </View>
         <View style={styles.rinputs}>
         
-        <Text style={styles.forgotTxt}>  *** enter your secret phrase *** </Text> 
+        <Text style={styles.forgotTxt}>  *** enter your email *** </Text> 
 
         <TextInput
         style={styles.rinput}
-        onChangeText={onChangeNumber}
-        value={phrase}
-        placeholder="secret phrase"
+        onChangeText={text => setUsername(text)}
+        value={emailaddress}
+        placeholder="email address"
         />
         
         <TouchableOpacity style={styles.fpbutton} onPress={()=>{}}>
-        <Text style={styles.fpsignuptxt}> Get password </Text>
+        <Text style={styles.fpsignuptxt}> submit </Text>
         </TouchableOpacity>
         </View>
        
