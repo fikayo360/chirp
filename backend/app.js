@@ -11,7 +11,7 @@ const userRoute = require('./routes/userRoutes')
 const savedPostRoute = require('./routes/savedPostRoutes')
 const postRoute = require('./routes/postRoutes')
 const notificationRoute = require('./routes/notificationRoutes')
-const newsRoute = require('./routes/userRoutes')
+const newsRoute = require('./routes/newsRoutes')
 app.use(cors());
 app.use(express.json());
 

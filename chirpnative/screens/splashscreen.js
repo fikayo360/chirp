@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,Image } from 'react-native';
 
 export const Splashscreen = () => {
   return (
    <View style={styles.container}> 
-    <Text style={styles.firstText}> Chirrrrp!!  </Text>
+    <Text style={styles.firstText}> Chirrp  </Text>
+     
    </View>
   )
 }
@@ -13,13 +14,13 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor:'rgb(29, 155, 240)',
+      backgroundColor:'#0C6291',
     },
 
     firstText: {
-        color: 'white',
-        fontSize: 40,
+        marginTop:30,
+        color: '#30292F',
+        fontSize: 30,
         fontWeight: 'bold'
     }
     

@@ -7,7 +7,7 @@ export default function Register() {
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const [confirm,setConfirm] = useState("")
-    const [secretPhrase,setSecretPhrase] = useState("")
+    
 
     const onChangeNumber = () => {}
 
@@ -50,7 +50,7 @@ export default function Register() {
         <TextInput
         style={styles.input}
         onChangeText={onChangeNumber}
-        value={secretPhrase}
+  value={username}
         placeholder="Secret phrase"
         />
         <TouchableOpacity style={styles.button} onPress={()=>{}}>

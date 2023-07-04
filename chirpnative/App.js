@@ -1,3 +1,5 @@
+import axios from 'axios';
+axios.defaults.baseURL = process.env.BASE_URL;
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import ChangePassword from './screens/changepassword';
@@ -18,10 +20,11 @@ import Commentscreen from './screens/commentscreen';
 import EditProfile from './screens/editProfile';
 import Profile from './screens/profile';
 
+
 export default function App() {
   return (
     <>
-    <Home/>
+    <Splashscreen/>
     </>
   );
 }
