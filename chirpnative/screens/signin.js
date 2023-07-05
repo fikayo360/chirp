@@ -1,7 +1,7 @@
 import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView} from 'react-native';
 import { useState } from 'react';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
     const [username,setUsername] = useState("")
@@ -11,24 +11,22 @@ export default function Login() {
 
     const handleLogin = async () => {
       try {
-        const formData = { username, password };
-        console.log(formData);
-        if(!username || !password || !email ) {
-          setError("All fields are required")
+        if (!username || !password) {
+          setError("All fields are required");
+        } else {
+          const formData = { username, password };
+          const response = await axios.post('api/v1/user/login', formData);
+          // Handle the successful response here
+          setUsername('');
+          setPassword('');
+          setError('');
         }
-        
-        const response = await axios.post('api/v1/user/login', formData);
-        console.log(response.data)
-        await AsyncStorage.setItem('token', response.data.cookie);
-        setUsername('') 
-        setPassword('') 
-        setEmail('') 
-        setConfirm('')
-        setError("")
       } catch (error) {
         if (error.response) {
           setError(error.response.data);
-        } 
+        } else {
+          setError("An error occurred. Please try again later.");
+        }
       }
     };
 
