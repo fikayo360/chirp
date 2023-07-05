@@ -1,7 +1,10 @@
+
 import axios from 'axios';
-axios.defaults.baseURL = process.env.BASE_URL;
+axios.defaults.baseURL = 'http://192.168.31.86:5000';
+
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+
 import ChangePassword from './screens/changepassword';
 import Forgotpassword from './screens/forgotpassword';
 import Register from './screens/register';
@@ -25,7 +28,7 @@ import Profile from './screens/profile';
 export default function App() {
   return (
     <>
-    <Home/>
+    <Register/>
     </>
   );
 }

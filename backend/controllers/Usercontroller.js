@@ -11,13 +11,13 @@ const jwt = require('jsonwebtoken');
 const register = async(req,res) => {
     const {username,email,password,state,zipcode} = req.body
 
+    if (!username || !email || !password){
+        throw new customError.BadRequestError('fields cant be empty')
+      }
+
     if(validateEmail(email) === false){
         throw new customError.BadRequestError('incorrect email')
     }
-
-    if (!username && !email && !password){
-        return res.status(500).json("pls ensure fields are not empty ")
-      }
 
     const foundUser = await User.findOne({username})
     

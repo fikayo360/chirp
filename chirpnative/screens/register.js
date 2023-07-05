@@ -1,35 +1,51 @@
 import { StyleSheet, Text,View,TouchableOpacity,SafeAreaView,TextInput} from 'react-native';
 import { useState } from 'react';
+import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Register() {
     const [username,setUsername] = useState("")
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const [confirm,setConfirm] = useState("")
+    const [error,setError] = useState("")
     
-
-    const handlelogin = async(e) => {
-
-      if (!password || !username  || confirm ||email){
-          //
+    const handleLogin = async () => {
+      try {
+        const formData = { username, password, email };
+        
+        if(!username || !password || !email || !confirm) {
+          setError("All fields are required");
+        }
+        else if(password!== confirm) {
+          setError("Passwords do not match");
+        }
+        console.log(formData);
+        setUsername('') 
+        setPassword('') 
+        setEmail('') 
+        setConfirm('')
+         
+        const response = await axios.post('/api/v1/user/signup', formData);
+        // await AsyncStorage.setItem('token', response.data.cookie);
+      } catch (error) {
+        if (error.response) {
+          console.log(error.response.data); 
+          console.log(error.response.status);
+        } else if (error.request) {
+          console.log(error.request); 
+        } else {
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
       }
-          try{
-          let formdata =  {username,password,email}
-          console.log(formdata);
-          /*
-          const res = await axios.post("https://fksocial.onrender.com/v1/user/login",formdata)
-          localStorage.setItem('token',res.data.token)
-           */
-          
-          }catch(err){
-            /* console.log(err.response.data) */
-          }
-  }
+    };
 
   return (
     <SafeAreaView style={styles.container}>
+       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
         <View style={styles.header}>
-        <Text style={styles.headerTxt}>{`Chirp Signup ${email}`}</Text>
+        <Text style={styles.headerTxt}>{`Chirp Signup`}</Text>
         </View>
         <View style={styles.inputs}>
         <TextInput
@@ -56,19 +72,45 @@ export default function Register() {
         value={confirm}
         placeholder="confirm password"
         />
-       
-        <TouchableOpacity style={styles.button} onPress={handlelogin}>
+        </View>
+
+        <View style={styles.footer}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.signuptxt}>SignUp</Text>
         </TouchableOpacity>
-        </View>
        <Text style={styles.footerTxt}>already a user <Text style={styles.footerOtherTxt}>Login</Text> </Text>
+        </View>
+        
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
     container:{
-    justifyContent: 'center'
+      width: '100%',
+      height:'100%',
+      position:'relative'
+    },
+    errorContainer:{
+      alignItems: 'center',
+      marginTop:50,
+      backgroundColor: 'rgb(15, 20, 25)',
+      padding: 10,
+      height: 55,
+      position:"absolute",
+      width:'90%',
+      bottom:20,
+      left:15
+    },
+    errorText:{
+      fontSize: 15,
+      color:'white'
+    },
+    footer:{
+      justifyContent:'center',
+      position: 'absolute',
+      bottom: 20,
+      width:'100%'
     },
     button: {
       alignItems: 'center',
@@ -77,8 +119,7 @@ const styles = StyleSheet.create({
       height: 55,
       width:'93%',
       margin: 12,
-      marginTop:20,
-      borderRadius:5
+      borderRadius:5,   
     },
     signuptxt:{
       fontSize:20,
@@ -114,7 +155,7 @@ const styles = StyleSheet.create({
     fontWeight:'bold'
   },
   inputs: {
-    marginTop: 30
+    marginTop: 100
   },
   cta: {
     width:'80%',
