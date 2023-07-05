@@ -1,7 +1,7 @@
 import { StyleSheet, Text,View,TouchableOpacity,SafeAreaView,TextInput} from 'react-native';
 import { useState } from 'react';
 import axios from "axios";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Register() {
     const [username,setUsername] = useState("")
@@ -13,31 +13,24 @@ export default function Register() {
     const handleLogin = async () => {
       try {
         const formData = { username, password, email };
-        
+       
         if(!username || !password || !email || !confirm) {
-          setError("All fields are required");
+          setError("All fields are required")
         }
         else if(password!== confirm) {
           setError("Passwords do not match");
         }
-        console.log(formData);
+        const response = await axios.post('api/v1/user/signup', formData);
         setUsername('') 
         setPassword('') 
         setEmail('') 
         setConfirm('')
-         
-        const response = await axios.post('/api/v1/user/signup', formData);
-        // await AsyncStorage.setItem('token', response.data.cookie);
+        setError("")
+    
       } catch (error) {
         if (error.response) {
-          console.log(error.response.data); 
-          console.log(error.response.status);
-        } else if (error.request) {
-          console.log(error.request); 
-        } else {
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
+          setError(error.response.data);
+        } 
       }
     };
 
@@ -93,14 +86,15 @@ const styles = StyleSheet.create({
     },
     errorContainer:{
       alignItems: 'center',
-      marginTop:50,
+      marginTop:60,
       backgroundColor: 'rgb(15, 20, 25)',
       padding: 10,
-      height: 55,
+      height: 40,
       position:"absolute",
       width:'90%',
-      bottom:20,
-      left:15
+      top:50,
+      left:15,
+      borderRadius:10
     },
     errorText:{
       fontSize: 15,

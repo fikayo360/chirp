@@ -1,31 +1,40 @@
 import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView} from 'react-native';
 import { useState } from 'react';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
+    const [error,setError] = useState("")
     let passwordAttempt = 2
 
-    const handlelogin = async(e) => {
-
-      if (!password || !username ){
-        console.log('error');
+    const handleLogin = async () => {
+      try {
+        const formData = { username, password };
+        console.log(formData);
+        if(!username || !password || !email ) {
+          setError("All fields are required")
+        }
+        
+        const response = await axios.post('api/v1/user/login', formData);
+        console.log(response.data)
+        await AsyncStorage.setItem('token', response.data.cookie);
+        setUsername('') 
+        setPassword('') 
+        setEmail('') 
+        setConfirm('')
+        setError("")
+      } catch (error) {
+        if (error.response) {
+          setError(error.response.data);
+        } 
       }
-          try{
-          let formdata =  {username,password}
-          console.log(formdata);
-          /*
-          const res = await axios.post("https://fksocial.onrender.com/v1/user/login",formdata)
-          localStorage.setItem('token',res.data.token)
-           */
-          
-          }catch(err){
-            /* console.log(err.response.data) */
-          }
-  }
+    };
 
   return (
     <SafeAreaView style={styles.container}>
+      {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
         <View style={styles.header}>
         <Text style={styles.headerTxt}>Chirp Login</Text>
         </View>
@@ -39,12 +48,12 @@ export default function Login() {
         
         <TextInput
         style={styles.rinput}
-        onChangeText={text => setUsername(text)}
+        onChangeText={text => setPassword(text)}
         value={password}
         placeholder="password"
         />
         
-        <TouchableOpacity style={styles.button} onPress={handlelogin}>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.signuptxt}>Login</Text>
         </TouchableOpacity>
         </View>
@@ -54,6 +63,22 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
+  errorContainer:{
+    alignItems: 'center',
+    marginTop:60,
+    backgroundColor: 'rgb(15, 20, 25)',
+    padding: 10,
+    height: 40,
+    position:"absolute",
+    width:'90%',
+    top:50,
+    left:15,
+    borderRadius:10
+  },
+  errorText:{
+    fontSize: 15,
+    color:'white'
+  },
     container:{
     justifyContent: 'center'
     },

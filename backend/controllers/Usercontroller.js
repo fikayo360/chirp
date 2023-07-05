@@ -12,11 +12,11 @@ const register = async(req,res) => {
     const {username,email,password,state,zipcode} = req.body
 
     if (!username || !email || !password){
-        throw new customError.BadRequestError('fields cant be empty')
+        res.status(StatusCodes.BAD_REQUEST).json('fields cant be empty')
       }
 
     if(validateEmail(email) === false){
-        throw new customError.BadRequestError('incorrect email')
+        res.status(StatusCodes.BAD_REQUEST).json('invalid mail')
     }
 
     const foundUser = await User.findOne({username})
@@ -24,7 +24,7 @@ const register = async(req,res) => {
     const foundEmail = await User.findOne({email})
 
     if (foundEmail || foundUser) {
-        throw new customError.BadRequestError('that user already exists')
+        res.status(StatusCodes.BAD_REQUEST).json('user already exists')
     }
 
     try{
@@ -35,11 +35,12 @@ const register = async(req,res) => {
        sendEmailConfirmation(savedUser.email)
     }
     catch(err){
-        throw new customError.BadRequestError(err)
+        res.status(StatusCodes.BAD_REQUEST).json(err)
     }
 }
 
-const login = async (req,res) => {
+const login = async(req,res) => {
+    console.log('h');
     const {username,password} = req.body
     if (!username || !password){
         return res.status(500).json("pls ensure fields are not empty ")
