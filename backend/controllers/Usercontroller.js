@@ -43,24 +43,24 @@ const login = async(req,res) => {
     
     const {username,password} = req.body
     if (!username || !password){
-         res.status(500).json("pls ensure fields are not empty ")
+         return res.status(500).json("pls ensure fields are not empty ")
       }
     try{  
     const foundUser = await User.findOne({username})
     if(!foundUser){
-        res.status(StatusCodes.BAD_REQUEST).json('that user does not exist')
+        return res.status(StatusCodes.BAD_REQUEST).json('that user does not exist')
     }
     
     if(!bcrypt.compareSync(password,foundUser.password)){
-        res.status(StatusCodes.BAD_REQUEST).json('wrong password')
+       return res.status(StatusCodes.BAD_REQUEST).json('wrong password')
      }
      const { password: foundUserPassword, ...others } = foundUser._doc;
      const tokenUser = createTokenUser(others);
      let cookie = attachCookiesToResponse({ res, user: tokenUser });
-     res.status(StatusCodes.OK).json({ user: others,cookie });
+     return res.status(StatusCodes.OK).json({ user: others,cookie });
     }
     catch(err){
-        res.status(StatusCodes.BAD_REQUEST).json(err)
+        return res.status(StatusCodes.BAD_REQUEST).json(err)
     }
 }
 
