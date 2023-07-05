@@ -33,7 +33,7 @@ export default function Login() {
         }
       } catch (error) {
         if (error.response.data === "wrong password"){
-          setPasswordAttempt(passwordAttempt + 1)
+          setPasswordAttempt(current => current + 1)
           console.log(passwordAttempt);
         }
         if (error.response) {
