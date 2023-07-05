@@ -1,7 +1,7 @@
 import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView} from 'react-native';
 import { useState } from 'react';
 import axios from 'axios';
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
     const [username,setUsername] = useState("")
@@ -16,7 +16,6 @@ export default function Login() {
         } else {
           const formData = { username, password };
           const response = await axios.post('api/v1/user/login', formData);
-          // Handle the successful response here
           setUsername('');
           setPassword('');
           setError('');
