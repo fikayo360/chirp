@@ -7,7 +7,16 @@ export default function Login() {
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
     const [error,setError] = useState("")
-    let passwordAttempt = 2
+    const [passwordAttempt,setPasswordAttempt] = useState(0)
+
+    const setTokenToAsyncStorage = async (token) => {
+      try {
+        await AsyncStorage.setItem('token', token);
+        console.log('Token saved successfully');
+      } catch (error) {
+        console.log('Error saving token:', error);
+      }
+    };
 
     const handleLogin = async () => {
       try {
@@ -16,15 +25,22 @@ export default function Login() {
         } else {
           const formData = { username, password };
           const response = await axios.post('api/v1/user/login', formData);
+          setTokenToAsyncStorage(response.data.cookie)
           console.log(response.data);
           setUsername('');
           setPassword('');
           setError('');
         }
       } catch (error) {
+        if (error.response.data === "wrong password"){
+          setPasswordAttempt(passwordAttempt++)
+          console.log(passwordAttempt);
+        }
         if (error.response) {
           setError(error.response.data);
-        } else {
+          console.log(error.response.data);
+        }
+         else {
           setError("An error occurred. Please try again later.");
         }
       }
@@ -55,7 +71,7 @@ export default function Login() {
         <Text style={styles.signuptxt}>Login</Text>
         </TouchableOpacity>
         </View>
-       <Text style={styles.footerTxt}>{passwordAttempt === 2 && ('forgotpassword')}</Text>
+       <Text style={styles.footerTxt}>{passwordAttempt >= 2 && ('forgotpassword')}</Text>
     </SafeAreaView>
   );
 }
