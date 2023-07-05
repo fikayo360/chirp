@@ -16,6 +16,7 @@ export default function Login() {
         } else {
           const formData = { username, password };
           const response = await axios.post('api/v1/user/login', formData);
+          console.log(response.data);
           setUsername('');
           setPassword('');
           setError('');

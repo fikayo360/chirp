@@ -40,7 +40,7 @@ const register = async(req,res) => {
 }
 
 const login = async(req,res) => {
-    console.log('h');
+    
     const {username,password} = req.body
     if (!username || !password){
          res.status(500).json("pls ensure fields are not empty ")
