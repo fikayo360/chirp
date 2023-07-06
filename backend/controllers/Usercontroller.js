@@ -85,6 +85,7 @@ const forgotPassword = async (req,res) => {
 const changePassword = async (req,res) => {
     const {token,emailaddress,newPassword} = req.body
     const sessionUser = await User.findOne({email:emailaddress})
+    console.log(sessionUser);
     function decodeToken(token, secretKey) {
         try {
           const decoded = jwt.verify(token, secretKey);
