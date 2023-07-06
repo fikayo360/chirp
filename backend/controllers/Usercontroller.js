@@ -85,7 +85,6 @@ const forgotPassword = async (req,res) => {
 const changePassword = async (req,res) => {
     const {token,emailaddress,newPassword} = req.body
     const sessionUser = await User.findOne({email:emailaddress})
-    console.log(sessionUser);
     function decodeToken(token, secretKey) {
         try {
           const decoded = jwt.verify(token, secretKey);
@@ -98,6 +97,7 @@ const changePassword = async (req,res) => {
       
       try{
         let tokenEmail = decodeToken(token,process.env.JWT_SECRET)
+        console.log(tokenEmail);
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         if(tokenEmail === sessionUser.email){
             sessionUser.password = hashedPassword;
