@@ -66,17 +66,16 @@ const login = async(req,res) => {
 
 const forgotPassword = async (req,res) => {
     const {emailaddress} = req.body
-    const sessionUser = await User.findOne({username:req.user.username})
+    const sessionUser = await User.findOne({email:emailaddress})
+    if (!sessionUser){
+        return res.status(404).json('that user does not exist')
+    }
     try{
-        if(sessionUser.email === emailaddress){
             let reset = sendResetToken(sessionUser.email)
             sessionUser.resettoken = reset
             await sessionUser.save()
             console.log(sessionUser)
-            res.status(200).json('Reset token sent successfully');
-        }else{
-            res.status(500).json( 'pls input ur emailaddress' );
-        }
+            res.status(200).json('Reset token sent successfully')
     }
     catch(err){
         throw new customError.BadRequestError(err)
@@ -84,8 +83,8 @@ const forgotPassword = async (req,res) => {
 }
 
 const changePassword = async (req,res) => {
-    const {token,newPassword} = req.body
-    const sessionUser = await User.findOne({username:req.user.username})
+    const {token,emailaddress,newPassword} = req.body
+    const sessionUser = await User.findOne({email:emailaddress})
     function decodeToken(token, secretKey) {
         try {
           const decoded = jwt.verify(token, secretKey);
