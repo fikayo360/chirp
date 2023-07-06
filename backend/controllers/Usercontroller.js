@@ -87,19 +87,18 @@ const changePassword = async (req,res) => {
     const sessionUser = await User.findOne({email:emailaddress})
     function decodeToken(token, secretKey) {
         try {
-          const decoded = jwt.verify(token, secretKey);
-          const email = decoded.email;
-          return email;
+          const { email } = jwt.verify(token, secretKey);
+          console.log(email);
         } catch (error) {
             res.status(StatusCodes.BAD_REQUEST)
         }
       }
       
       try{
-        let {email} = decodeToken(token,process.env.JWT_SECRET)
-        console.log(email);
+        let tokenMail = decodeToken(token,process.env.JWT_SECRET)
+        console.log(tokenMail);
         const hashedPassword = await bcrypt.hash(newPassword, 10);
-        if(email === sessionUser.email){
+        if(tokenMail === sessionUser.email){
             sessionUser.password = hashedPassword;
             sessionUser.resettoken = undefined;
             await sessionUser.save();
