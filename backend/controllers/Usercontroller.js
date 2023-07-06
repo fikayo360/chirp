@@ -96,10 +96,10 @@ const changePassword = async (req,res) => {
       }
       
       try{
-        let tokenEmail = decodeToken(token,process.env.JWT_SECRET)
-        console.log(tokenEmail);
+        let {email} = decodeToken(token,process.env.JWT_SECRET)
+        console.log(email);
         const hashedPassword = await bcrypt.hash(newPassword, 10);
-        if(tokenEmail === sessionUser.email){
+        if(email === sessionUser.email){
             sessionUser.password = hashedPassword;
             sessionUser.resettoken = undefined;
             await sessionUser.save();
