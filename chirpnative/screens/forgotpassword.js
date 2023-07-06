@@ -1,16 +1,32 @@
 
 import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView} from 'react-native';
 import { useState, } from 'react';
+import axios from "axios";
 
 export default function Forgotpassword() {
 
     const [emailaddress,setEmailaddress] = useState("")
-    
+    const [error,setError] = useState("")
 
-    const onChangeNumber = () => {}
+    const submit = async () => {
+      try {
+        const formData = { emailaddress };
+        if(!emailaddress ) {
+          setError(" field cant be empty")
+        }
+        const response = await axios.post('api/v1/user/forgotPassword', formData);
+        setError(response.data)
+        setEmailaddress('')
+      } catch (error) {
+        if (error.response) {
+          setError(error.response.data);
+        } 
+      }
+    };
 
   return (
     <SafeAreaView style={styles.container}>
+       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
         <View style={styles.header}>
         <Text style={styles.headerTxt}>ForgotPassword</Text>
         </View>
@@ -20,12 +36,12 @@ export default function Forgotpassword() {
 
         <TextInput
         style={styles.rinput}
-        onChangeText={text => setUsername(text)}
         value={emailaddress}
+        onChangeText={text => setEmailaddress(text)}
         placeholder="email address"
         />
         
-        <TouchableOpacity style={styles.fpbutton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.fpbutton} onPress={submit}>
         <Text style={styles.fpsignuptxt}> submit </Text>
         </TouchableOpacity>
         </View>
@@ -37,6 +53,22 @@ export default function Forgotpassword() {
 const styles = StyleSheet.create({
     container:{
     justifyContent: 'center'
+    },
+    errorContainer:{
+      alignItems: 'center',
+      marginTop:60,
+      backgroundColor: 'rgb(15, 20, 25)',
+      padding: 10,
+      height: 40,
+      position:"absolute",
+      width:'90%',
+      top:50,
+      left:15,
+      borderRadius:10
+    },
+    errorText:{
+      fontSize: 15,
+      color:'white'
     },
     fpbutton: {
       alignItems: 'center',

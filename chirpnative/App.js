@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-axios.defaults.baseURL = 'https://a3a9-105-112-22-181.eu.ngrok.io/';
+axios.defaults.baseURL = 'https://a53f-105-112-183-28.eu.ngrok.io/';
 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
@@ -28,7 +28,7 @@ import Profile from './screens/profile';
 export default function App() {
   return (
     <>
-    <Login/>
+    <Forgotpassword/>
     </>
   );
 }
