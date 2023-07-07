@@ -85,7 +85,8 @@ const forgotPassword = async (req,res) => {
 const changePassword = async (req,res) => {
     const {token,emailaddress,newPassword} = req.body
     const sessionUser = await User.findOne({email:emailaddress})
-    function decodeToken(token, secretKey) {
+    /*
+     function decodeToken(token, secretKey) {
         try {
           const { email } = jwt.verify(token, secretKey);
           console.log(email);
@@ -93,10 +94,12 @@ const changePassword = async (req,res) => {
             res.status(StatusCodes.BAD_REQUEST)
         }
       }
-      
+     */
+   
       try{
-        let tokenMail = decodeToken(token,process.env.JWT_SECRET)
-        console.log(tokenMail);
+        //let tokenMail = decodeToken(token,process.env.JWT_SECRET)
+        const { email } = jwt.verify(token,process.env.JWT_SECRET);
+        console.log(email);
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         if(tokenMail === sessionUser.email){
             sessionUser.password = hashedPassword;
