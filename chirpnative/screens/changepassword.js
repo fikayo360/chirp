@@ -1,5 +1,6 @@
 import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView} from 'react-native';
 import { useState, } from 'react';
+import axios from "axios";
 
 export default function ChangePassword() {
     const [emailaddress,setEmailaddress] = useState("")
@@ -14,7 +15,7 @@ export default function ChangePassword() {
         if(!emailaddress || !newPassword || !token) {
           setError(" fields cant be empty")
         }
-        const response = await axios.post('api/v1/user/changePassword', formData);
+        const response = await axios.post('api/v1/user/changePassword',formData);
         setError(response.data)
         setEmailaddress('')
         setNewPassword('')
@@ -22,7 +23,9 @@ export default function ChangePassword() {
       } catch (error) {
         if (error.response) {
           setError(error.response.data);
-        } 
+        } else{
+          setError(error.Error)
+        }
       }
     };
 
@@ -51,7 +54,7 @@ export default function ChangePassword() {
         style={styles.rinput}
         onChangeText={text => setToken(text)}
         value={token}
-        maxLength={50}
+        maxLength={100}
         placeholder="token"
         />
         
