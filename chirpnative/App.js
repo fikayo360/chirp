@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-axios.defaults.baseURL = 'https://a53f-105-112-183-28.eu.ngrok.io/';
+axios.defaults.baseURL = 'https://3b42-105-112-183-28.eu.ngrok.io/';
 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
