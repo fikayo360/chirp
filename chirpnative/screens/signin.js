@@ -9,9 +9,9 @@ export default function Login() {
     const [error,setError] = useState("")
     const [passwordAttempt,setPasswordAttempt] = useState(0)
 
-    const setTokenToAsyncStorage = async (token) => {
+    const setTokenToAsyncStorage = async (value) => {
       try {
-        await AsyncStorage.setItem('token', token);
+        await AsyncStorage.setItem('token', value);
         console.log('Token saved successfully');
       } catch (error) {
         console.log('Error saving token:', error);

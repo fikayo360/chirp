@@ -1,23 +1,25 @@
 import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView} from 'react-native';
 import { useState, } from 'react';
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ChangePassword() {
-    const [emailaddress,setEmailaddress] = useState("")
+    
     const [newPassword,setNewPassword] = useState("")
     const [token,setToken] = useState("")
     const [error,setError] = useState("")
     
     const submit = async () => {
       try {
+        const emailaddress = await AsyncStorage.getItem('email');
         const formData = { emailaddress,newPassword,token };
         console.log(formData);
         if(!emailaddress || !newPassword || !token) {
           setError(" fields cant be empty")
         }
         const response = await axios.post('api/v1/user/changePassword',formData);
+        await AsyncStorage.removeItem('email');
         setError(response.data)
-        setEmailaddress('')
         setNewPassword('')
         setToken('')
       } catch (error) {
@@ -37,12 +39,6 @@ export default function ChangePassword() {
         </View>
         <View style={styles.rinputs}>
 
-        <TextInput
-        style={styles.rinput}
-        value={emailaddress}
-        onChangeText={text => setEmailaddress(text)}
-        placeholder="email address"
-        />
         <TextInput
         style={styles.rinput}
         onChangeText={text => setNewPassword(text)}

@@ -2,11 +2,21 @@
 import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView} from 'react-native';
 import { useState, } from 'react';
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Forgotpassword() {
 
     const [emailaddress,setEmailaddress] = useState("")
     const [error,setError] = useState("")
+
+    const setTokenToAsyncStorage = async (value) => {
+      try {
+        await AsyncStorage.setItem('email', value);
+        console.log('email saved successfully');
+      } catch (error) {
+        console.log('Error saving token:', error);
+      }
+    };
 
     const submit = async () => {
       try {
@@ -16,6 +26,7 @@ export default function Forgotpassword() {
         }
         const response = await axios.post('api/v1/user/forgotPassword', formData);
         setError(response.data)
+        setTokenToAsyncStorage(emailaddress)
         setEmailaddress('')
       } catch (error) {
         if (error.response) {

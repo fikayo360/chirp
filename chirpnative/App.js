@@ -28,7 +28,7 @@ import Profile from './screens/profile';
 export default function App() {
   return (
     <>
-    <Login/>
+    <Forgotpassword/>
     </>
   );
 }
