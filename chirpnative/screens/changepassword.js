@@ -50,12 +50,14 @@ export default function ChangePassword() {
         placeholder="newpassword"
         />
 
-        <TextInput
-        style={styles.rinput}
-        onChangeText={text => setToken(text)}
+         <TextInput
+        style={styles.input}
+        multiline={true}
+        numberOfLines={4}
         value={token}
-        maxLength={100}
+        onChangeText={text => setToken(text)}
         placeholder="token"
+        placeholderTextColor={'black'}
         />
         
         <TouchableOpacity style={styles.button} onPress={submit}>
@@ -111,7 +113,13 @@ const styles = StyleSheet.create({
     footerOtherTxt:{
       fontSize: 16,
       color:'#1D98F0',
-      
+    },
+    input:{
+      margin: 12,
+    borderWidth: 2,
+    padding: 10,
+    borderRadius: 10,
+    borderColor:'black'
     },
   rinput: {
     height: 60,
