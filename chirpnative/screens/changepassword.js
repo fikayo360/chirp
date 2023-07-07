@@ -2,12 +2,25 @@ import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView} from 're
 import { useState, } from 'react';
 
 export default function ChangePassword() {
-   
+    const [emailaddress,setEmailaddress] = useState("")
     const [newPassword,setNewPassword] = useState("")
     const [token,setToken] = useState("")
     
-
-    const onChangeNumber = () => {}
+    const submit = async () => {
+      try {
+        const formData = { emailaddress,newPassword,token };
+        if(!emailaddress ) {
+          setError(" field cant be empty")
+        }
+        const response = await axios.post('api/v1/user/forgotPassword', formData);
+        setError(response.data)
+        setEmailaddress('')
+      } catch (error) {
+        if (error.response) {
+          setError(error.response.data);
+        } 
+      }
+    };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -15,7 +28,13 @@ export default function ChangePassword() {
         <Text style={styles.headerTxt}> ChangePassword</Text>
         </View>
         <View style={styles.rinputs}>
-        
+
+        <TextInput
+        style={styles.rinput}
+        value={emailaddress}
+        onChangeText={text => setEmailaddress(text)}
+        placeholder="email address"
+        />
         <TextInput
         style={styles.rinput}
         onChangeText={text => setNewPassword(text)}
@@ -30,7 +49,7 @@ export default function ChangePassword() {
         placeholder="token"
         />
         
-        <TouchableOpacity style={styles.button} onPress={()=>{}}>
+        <TouchableOpacity style={styles.button} onPress={submit}>
         <Text style={styles.signuptxt}>change password</Text>
         </TouchableOpacity>
 
