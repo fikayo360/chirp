@@ -3,13 +3,14 @@ const nodemailer = require('nodemailer');
 const User = require('../models/User')
 
 function generateToken(email, expiresIn) {
+    const header = { alg: 'HS256' };
     const secretKey = process.env.JWT_SECRET; 
-    const token = jwt.sign({ email }, secretKey, { expiresIn:process.env.JWT_LIFETIME });
+    const token = jwt.sign({ email }, secretKey,{ header }, { expiresIn });
     return token;
  }
 
  const sendResetToken = (email) => {
-    let tokenData = generateToken(email,process.env.JWT_SECRET)
+    let tokenData = generateToken(email,process.env.JWT_LIFETIME)
     let tokenuser = User.findOne({email})
     let transporter = nodemailer.createTransport({
         service: 'gmail',
