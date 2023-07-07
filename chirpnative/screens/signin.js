@@ -26,7 +26,7 @@ export default function Login() {
           const formData = { username, password };
           const response = await axios.post('api/v1/user/login', formData);
           console.log(response.data.cookie);
-          //setTokenToAsyncStorage(response.data.cookie)
+          setTokenToAsyncStorage(response.data.cookie)
           setUsername('');
           setPassword('');
           setError('');
