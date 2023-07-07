@@ -57,7 +57,6 @@ export default function ChangePassword() {
         value={token}
         onChangeText={text => setToken(text)}
         placeholder="token"
-        placeholderTextColor={'black'}
         />
         
         <TouchableOpacity style={styles.button} onPress={submit}>

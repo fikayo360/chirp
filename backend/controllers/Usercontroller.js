@@ -47,6 +47,7 @@ const login = async(req,res) => {
       }
     try{  
     const foundUser = await User.findOne({username})
+    console.log(foundUser);
     if(!foundUser){
         return res.status(StatusCodes.BAD_REQUEST).json('that user does not exist')
     }
