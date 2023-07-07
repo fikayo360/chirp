@@ -1,7 +1,6 @@
 
 import axios from 'axios';
-axios.defaults.baseURL = 'https://3b42-105-112-183-28.eu.ngrok.io/';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -23,12 +22,35 @@ import Home from './screens/home';
 import Commentscreen from './screens/commentscreen';
 import EditProfile from './screens/editProfile';
 import Profile from './screens/profile';
+axios.defaults.baseURL = 'https://3b42-105-112-183-28.eu.ngrok.io/';
+
 
 
 export default function App() {
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      return token
+    } catch (error) {
+      console.log('Error getting token:', error);
+    }
+  };
+
+  axios.interceptors.request.use(
+    (config) => {
+      const token = getToken();
+      config.headers.Authorization = `Bearer ${token}`;
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
   return (
     <>
-    <Forgotpassword/>
+    <Home/>
     </>
   );
 }
