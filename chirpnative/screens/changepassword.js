@@ -16,6 +16,8 @@ export default function ChangePassword() {
         const response = await axios.post('api/v1/user/changePassword', formData);
         setError(response.data)
         setEmailaddress('')
+        setNewPassword('')
+        setToken('')
       } catch (error) {
         if (error.response) {
           setError(error.response.data);
@@ -41,13 +43,14 @@ export default function ChangePassword() {
         style={styles.rinput}
         onChangeText={text => setNewPassword(text)}
         value={newPassword}
-        placeholder=" newpassword"
+        placeholder="newpassword"
         />
 
         <TextInput
         style={styles.rinput}
         onChangeText={text => setToken(text)}
         value={token}
+        maxLength={50}
         placeholder="token"
         />
         
