@@ -10,7 +10,8 @@ export default function ChangePassword() {
     const submit = async () => {
       try {
         const formData = { emailaddress,newPassword,token };
-        if(!emailaddress || newPassword || token) {
+        console.log(formData);
+        if(!emailaddress || !newPassword || !token) {
           setError(" fields cant be empty")
         }
         const response = await axios.post('api/v1/user/changePassword', formData);
