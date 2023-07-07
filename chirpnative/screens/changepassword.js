@@ -5,14 +5,15 @@ export default function ChangePassword() {
     const [emailaddress,setEmailaddress] = useState("")
     const [newPassword,setNewPassword] = useState("")
     const [token,setToken] = useState("")
+    const [error,setError] = useState("")
     
     const submit = async () => {
       try {
         const formData = { emailaddress,newPassword,token };
-        if(!emailaddress ) {
-          setError(" field cant be empty")
+        if(!emailaddress || newPassword || token) {
+          setError(" fields cant be empty")
         }
-        const response = await axios.post('api/v1/user/forgotPassword', formData);
+        const response = await axios.post('api/v1/user/changePassword', formData);
         setError(response.data)
         setEmailaddress('')
       } catch (error) {
@@ -24,6 +25,7 @@ export default function ChangePassword() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
         <View style={styles.header}>
         <Text style={styles.headerTxt}> ChangePassword</Text>
         </View>
@@ -60,6 +62,22 @@ export default function ChangePassword() {
 }
 
 const styles = StyleSheet.create({
+  errorContainer:{
+    alignItems: 'center',
+    marginTop:60,
+    backgroundColor: 'rgb(15, 20, 25)',
+    padding: 10,
+    height: 40,
+    position:"absolute",
+    width:'90%',
+    top:50,
+    left:15,
+    borderRadius:10
+  },
+  errorText:{
+    fontSize: 15,
+    color:'white'
+  },
     container:{
     justifyContent: 'center'
     },
