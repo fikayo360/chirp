@@ -13,7 +13,7 @@ const Newscategory = () => {
   const submit = async () => {
     try {
       const response = await axios.get(`api/v1/news/getNewsCategory/${business}`);
-      console.log(response.data.articles);
+      console.log(response.data);
       setData(response.data.articles);
     } catch (error) {
       if (error.response) {
