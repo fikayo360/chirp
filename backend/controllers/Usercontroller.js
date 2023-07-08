@@ -118,7 +118,7 @@ const findFriend = async (req,res) => {
         res.status(StatusCodes.OK).json(others)
     }
     catch(err){
-        throw new customError.BadRequestError(err)
+        res.status(StatusCodes.BAD_REQUEST).json('user not found')
     }
     /*
     
@@ -179,7 +179,7 @@ const aroundYou = async (req,res) => {
         aroundYou = [...filteredSameZip,...filteredSameStates]
         res.status(StatusCodes.OK).json(aroundYou)
     }catch(err){
-        throw new customError.BadRequestError(err)
+        res.status(StatusCodes.BAD_REQUEST).json('error getting users')
     }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,Text,TextInput,ScrollView,StyleSheet,View,Image} from 'react-native'
+import {SafeAreaView,Text,TextInput,ScrollView,StyleSheet,View,Image,TouchableOpacity} from 'react-native'
 import Searchresult from '../components/searchresult'
 import Discovereduser from '../components/discovereduser'
 import  Header  from '../components/header'
@@ -8,26 +8,37 @@ import Discoveredusers from '../components/discoveredusers'
 import * as Icons from "react-native-heroicons/solid"
 import { useState,useEffect } from 'react'
 import axios from "axios";
+import { Discovered } from '../mockdata/Discoveredpeople'
 /* import spinner component */
 
 const Aroundyou = () => {
 
  const [items,setItems] = useState([])
+ const [username,setUsername] = useState('')
+ const [error,setError] = useState("")
+ const [discovered,setDiscovered] = useState({})
+ 
   const getAround = async () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
       setItems(response.data);
       console.log(items);
+      
     } catch (error) {
       console.log(err.response);
     }
   };
 
   const search = async () => {
+    const formData = {username}
+    if(!username){
+      setError('fields cant be empty')
+    }
     try {
-      const response = await axios.get('api/v1/news/getTopStories');
-      setNewsItems(response.data.articles);
-      console.log(response.data);
+      const response = await axios.get('api/v1/user/search', formData);
+      setDiscovered(response.data);
+      setUsername('')
+      console.log(discovered);
     } catch (error) {
       if (error.response) {
         setError(error.response.data);
@@ -53,13 +64,18 @@ const Aroundyou = () => {
 
   return (
     <SafeAreaView>
+      {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
         <Header title={'Search'} />
-
         <View style={styles.bodyContainer}>
         <View style={styles.customSearchInput}> 
         <Icons.MagnifyingGlassIcon width={20} height={20} color="black"/> 
-        <TextInput placeholder='search' style={styles.searchInput} />
-        <Icons.PaperAirplaneIcon width={20} height={20} color="black" />
+        <TextInput
+        style={styles.searchInput}
+        onChangeText={text => setUsername(text)}
+        value={username}
+        placeholder="username"
+        />
+        <TouchableOpacity onPress={search}><Icons.PaperAirplaneIcon width={20} height={20} color="black" /></TouchableOpacity>
         </View>
 
         <View style={styles.imageContainer}>
@@ -67,7 +83,7 @@ const Aroundyou = () => {
         </View>
      
         <View style={styles.discoverContainer}>
-        <Text style={styles.discoverpeople}> Discover people </Text>
+        <Text style={styles.discoverpeople}> Discoverd people {items.length} </Text>
         <Discoveredusers data={items} />
         </View>
 
@@ -77,7 +93,22 @@ const Aroundyou = () => {
 }
 
 const styles = StyleSheet.create({
-
+  errorContainer:{
+    alignItems: 'center',
+    marginTop:60,
+    backgroundColor: 'rgb(15, 20, 25)',
+    padding: 10,
+    height: 40,
+    position:"absolute",
+    width:'90%',
+    top:50,
+    left:15,
+    borderRadius:10
+  },
+  errorText:{
+    fontSize: 15,
+    color:'white'
+  },
   bodyContainer:{
     width:'100%',
     padding:3

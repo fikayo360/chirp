@@ -3,22 +3,25 @@ import {View,TouchableOpacity,Text,StyleSheet,Image} from 'react-native'
 import * as Icons from "react-native-heroicons/solid"
 import ProfilePlaceholder from './Profiletextplace'
 
-const Discovereduser = ({item}) => {
+const Discovereduser = (props) => {
   return (
     <View style={styles.container}>
-    <View style={styles.xIconContainer}><Icons.XMarkIcon width={15} height={15} color="black" /></View>
-    <View style={styles.ImgContainer}>
-      {item.profilePic?(<Image resizeMode='contain' 
-    style={{ width:'100%', height:'100%' }}  source={{uri:props.data.profilePic}}/>):(<ProfilePlaceholder username={item.username}/>)}
+      <View style={styles.xIconContainer}><Icons.XMarkIcon width={15} height={15} color="black" /></View>
+      <View style={styles.ImgContainer}>
+        {props.data.profilePic ? (
+          <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} source={{ uri: props.data.profilePic }} />
+        ) : (
+          <ProfilePlaceholder username={props.data.username} />
+        )}
+      </View>
+      <Text>{props.data.username}</Text>
+      <TouchableOpacity style={styles.button} onPress={() => {}}> 
+        <Text style={styles.buttonTxt}>follow</Text>
+      </TouchableOpacity>
     </View>
-    <Text>{item.userName}</Text>
-    <TouchableOpacity style={styles.button} onPress={() => {}}> 
-    <Text style={styles.buttonTxt}>follow</Text>
-    </TouchableOpacity>
-    </View>
-    
-  )
+  );
 }
+
 
 const styles = StyleSheet.create({
   container:{
