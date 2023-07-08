@@ -2,11 +2,12 @@ import React from 'react'
 import {SafeAreaView,ScrollView} from 'react-native'
 import HomeComponents from '../components/homeComponents'
 import Header from '../components/header'
+import { newsItems } from '../mockdata/newsitems'
 import axios from "axios";
 import { useState,useEffect } from 'react'
 
 const Home = () => {
-  const [newsItems,setNewsItems] = useState([])
+  //const [newsItems,setNewsItems] = useState([])
 
   const submit = async () => {
     try {
