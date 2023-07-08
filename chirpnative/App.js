@@ -23,7 +23,7 @@ import Commentscreen from './screens/commentscreen';
 import EditProfile from './screens/editProfile';
 import Profile from './screens/profile';
 axios.defaults.baseURL = 'https://9545-105-112-190-69.eu.ngrok.io/';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 export default function App() {
