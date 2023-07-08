@@ -11,18 +11,15 @@ import axios from "axios";
 /* import spinner component */
 
 const Aroundyou = () => {
-  
- const [discoveredUsers,setDiscoveredUsers] = useState([])
 
-  const aroundyou = async () => {
+ const [items,setItems] = useState([])
+  const getAround = async () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
-      setDiscoveredUsers(response.data)
-      console.log(discoveredUsers);
+      setItems(response.data);
+      console.log(items);
     } catch (error) {
-      if (error.response) {
-        setError(error.response.data);
-      } 
+      console.log(err.response);
     }
   };
 
@@ -51,7 +48,7 @@ const Aroundyou = () => {
   };
 
   useEffect(() => {
-    aroundyou()
+    getAround()
   },[])
 
   return (
@@ -71,7 +68,7 @@ const Aroundyou = () => {
      
         <View style={styles.discoverContainer}>
         <Text style={styles.discoverpeople}> Discover people </Text>
-        {/*<Discoveredusers data={discoveredUsers} />*/}
+        <Discoveredusers data={items} />
         </View>
 
         </View>
