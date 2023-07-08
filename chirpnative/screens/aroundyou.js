@@ -4,7 +4,6 @@ import Searchresult from '../components/searchresult'
 import Discovereduser from '../components/discovereduser'
 import  Header  from '../components/header'
 import { ForwardIcon } from 'react-native-heroicons/solid'
-import { Discovered } from '../mockdata/Discoveredpeople'
 import Discoveredusers from '../components/discoveredusers'
 import * as Icons from "react-native-heroicons/solid"
 import { useState,useEffect } from 'react'
@@ -13,13 +12,13 @@ import axios from "axios";
 
 const Aroundyou = () => {
   
-  const [aroundYou,setAroundYou] = useState([])
+ const [discoveredUsers,setDiscoveredUsers] = useState([])
 
   const aroundyou = async () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
-      setAroundYou(response.data)
-      console.log(response.data);
+      setDiscoveredUsers(response.data)
+      console.log(discoveredUsers);
     } catch (error) {
       if (error.response) {
         setError(error.response.data);
@@ -72,7 +71,7 @@ const Aroundyou = () => {
      
         <View style={styles.discoverContainer}>
         <Text style={styles.discoverpeople}> Discover people </Text>
-        <Discoveredusers data={aroundYou} />
+        {/*<Discoveredusers data={discoveredUsers} />*/}
         </View>
 
         </View>
