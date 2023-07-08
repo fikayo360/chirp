@@ -8,7 +8,7 @@ const NewscategoryItems = (props) => {
     <View>
       {
         props.data && props.data.map(item => (
-         <NewscategoryItem data={item} key={item.id} />
+         <NewscategoryItem data={item} key={item._id} />
         ))
         }
     </View>
