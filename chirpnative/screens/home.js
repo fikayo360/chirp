@@ -2,17 +2,19 @@ import React from 'react'
 import {SafeAreaView,ScrollView} from 'react-native'
 import HomeComponents from '../components/homeComponents'
 import Header from '../components/header'
-import { newsItems } from '../mockdata/newsitems'
+//import { newsItems } from '../mockdata/newsitems'
 import axios from "axios";
 import { useState,useEffect } from 'react'
 
 const Home = () => {
-  //const [newsItems,setNewsItems] = useState([])
+  const [newsItems,setNewsItems] = useState([])
 
   const submit = async () => {
     try {
+      //const token = await AsyncStorage.getItem('token');
       const response = await axios.get('api/v1/news/getTopStories');
-      setNewsItems(response.data.articles);
+      //setNewsItems(response.data.articles);
+      console.log(response.data);
     } catch (error) {
       if (error.response) {
         setError(error.response.data);
