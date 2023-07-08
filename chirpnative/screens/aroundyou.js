@@ -8,10 +8,11 @@ import { Discovered } from '../mockdata/Discoveredpeople'
 import Discoveredusers from '../components/discoveredusers'
 import * as Icons from "react-native-heroicons/solid"
 import { useState,useEffect } from 'react'
+import axios from "axios";
 /* import spinner component */
 
 const Aroundyou = () => {
-  const [data,setData]= useState(Discovered)
+  
   const [aroundYou,setAroundYou] = useState([])
 
   const aroundyou = async () => {
@@ -71,7 +72,7 @@ const Aroundyou = () => {
      
         <View style={styles.discoverContainer}>
         <Text style={styles.discoverpeople}> Discover people </Text>
-        <Discoveredusers data={data} />
+        <Discoveredusers data={aroundYou} />
         </View>
 
         </View>
