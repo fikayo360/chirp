@@ -4,6 +4,9 @@ import * as Icons from "react-native-heroicons/solid"
 import ProfilePlaceholder from './Profiletextplace'
 
 const Discovereduser = (props) => {
+  const handleFollow = () => {
+    props.follow(props.data.username); 
+  };
   return (
     <View style={styles.container}>
       <View style={styles.xIconContainer}><Icons.XMarkIcon width={15} height={15} color="black" /></View>
@@ -15,11 +18,11 @@ const Discovereduser = (props) => {
         )}
       </View>
       <Text>{props.data.username}</Text>
-      <TouchableOpacity style={styles.button} onPress={() => {}}> 
+      <TouchableOpacity style={styles.button} onPress={handleFollow}> 
         <Text style={styles.buttonTxt}>follow</Text>
       </TouchableOpacity>
     </View>
-  );
+  )
 }
 
 

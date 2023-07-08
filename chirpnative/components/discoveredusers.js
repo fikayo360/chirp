@@ -3,11 +3,12 @@ import Discovereduser from './discovereduser'
 import {View,ScrollView,StyleSheet} from 'react-native'
 
 const Discoveredusers = (props) => {
+    
     return (
         <ScrollView style={styles.Discovered} horizontal={true} showsHorizontalScrollIndicator={false}>
         {
-        props.data && props.data?.map((item) => (
-            <Discovereduser data={item} key={item._id} />
+         props.data.length > 0 && props.data.map((item) => (
+            <Discovereduser data={item} follow={props.follow}/>
         ))
         }
         </ScrollView>

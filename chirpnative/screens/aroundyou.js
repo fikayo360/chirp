@@ -22,7 +22,7 @@ const Aroundyou = () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
       setItems(response.data);
-      console.log(items);
+      console.log(items)
       
     } catch (error) {
       console.log(err.response);
@@ -35,27 +35,30 @@ const Aroundyou = () => {
       setError('fields cant be empty')
     }
     try {
-      const response = await axios.get('api/v1/user/search', formData);
+      const response = await axios.post('api/v1/user/search', formData);
       setDiscovered(response.data);
+      //console.log(discovered);
       setUsername('')
-      console.log(discovered);
     } catch (error) {
       if (error.response) {
-        setError(error.response.data);
+        setError(error.response.data)
       } 
     }
   };
 
-  const follow = async () => {
+  const follow = async (username) => {
+    console.log('hi you got here');
+    /*
     try {
-      const response = await axios.get('api/v1/news/getTopStories');
-      setNewsItems(response.data.articles);
-      console.log(response.data);
+      const response = await axios.get(`api/v1/user/follow/${username}`);
+      setError(response.data)
     } catch (error) {
       if (error.response) {
         setError(error.response.data);
       } 
     }
+    */
+    
   };
 
   useEffect(() => {
@@ -77,14 +80,12 @@ const Aroundyou = () => {
         />
         <TouchableOpacity onPress={search}><Icons.PaperAirplaneIcon width={20} height={20} color="black" /></TouchableOpacity>
         </View>
-
-        <View style={styles.imageContainer}>
+        {<Discovereduser data={discovered}/> && <View style={styles.imageContainer}>
           <Image source={require('../assets/searchillus.jpg')} resizeMode='contain' style={{ width: '100%', height: '100%' }}  />
-        </View>
-     
+        </View>}
         <View style={styles.discoverContainer}>
         <Text style={styles.discoverpeople}> Discoverd people {items.length} </Text>
-        <Discoveredusers data={items} />
+        <Discoveredusers data={items} follow={follow} />
         </View>
 
         </View>

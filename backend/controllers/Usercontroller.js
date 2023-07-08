@@ -112,7 +112,7 @@ const findFriend = async (req,res) => {
     try{
         const foundUser = await User.findOne({username})
         if(!foundUser){
-            throw new customError.NotFoundError('user does not exist')
+            return res.status(StatusCodes.BAD_REQUEST).json('user not doesnot exist')
         }
         const { password, ...others } = foundUser._doc;
         res.status(StatusCodes.OK).json(others)
@@ -140,10 +140,10 @@ const follow = async (req,res) => {
             sessionUser.save()
             res.status(StatusCodes.OK).json(`${friendName} added succesfully`)
         }else{
-            throw new customError.BadRequestError('error occured while adding friend')
+            res.status(StatusCodes.OK).json(`error adding user`)
         }
     }catch(err){
-        throw new customError.BadRequestError(err)
+        res.status(StatusCodes.OK).json(err)
     }
 }
 
