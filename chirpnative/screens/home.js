@@ -5,7 +5,6 @@ import Header from '../components/header'
 //import { newsItems } from '../mockdata/newsitems'
 import axios from "axios";
 import { useState,useEffect } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = () => {
 
@@ -13,11 +12,10 @@ const Home = () => {
 
   const submit = async () => {
     try {
-      //const token = await AsyncStorage.getItem('token');
-      //const response = await axios.get('api/v1/news/getTopStories');
+      const response = await axios.get('api/v1/news/getTopStories');
       //setNewsItems(response.data.articles);
-      const token = await AsyncStorage.getItem('token');
-      console.log(token);
+      
+      console.log(response.data);
     } catch (error) {
       if (error.response) {
         setError(error.response.data);
