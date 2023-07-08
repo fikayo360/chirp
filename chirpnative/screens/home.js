@@ -9,15 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = () => {
 
-  const getToken = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      return token
-    } catch (error) {
-      console.log('Error getting token:', error);
-    }
-  };
-
   const [newsItems,setNewsItems] = useState([])
 
   const submit = async () => {
@@ -25,7 +16,8 @@ const Home = () => {
       //const token = await AsyncStorage.getItem('token');
       //const response = await axios.get('api/v1/news/getTopStories');
       //setNewsItems(response.data.articles);
-      console.log(getToken());
+      const token = await AsyncStorage.getItem('token');
+      console.log(token);
     } catch (error) {
       if (error.response) {
         setError(error.response.data);

@@ -26,6 +26,7 @@ axios.defaults.baseURL = 'https://9545-105-112-190-69.eu.ngrok.io/';
 
 
 
+
 export default function App() {
 
   const getToken = async () => {
@@ -37,7 +38,8 @@ export default function App() {
     }
   };
 
-
+  let myToken = getToken()
+  axios.defaults.headers.common['Authorization'] = myToken;
   return (
     <>
     <Home/>
