@@ -31,18 +31,16 @@ export default function App() {
   const getToken = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
-      console.log(token);
+      return token;
     } catch (error) {
       console.log('Error getting token:', error);
     }
   };
 
   let myToken = getToken()
-  axios.defaults.headers.common['Authorization'] = myToken;
+  
+  axios.defaults.headers.common['Authorization']  = `Bearer ${myToken}`
 
-  useEffect(() => {
-    getToken()
-  }, []);
   return (
     <>
 
