@@ -38,12 +38,11 @@ export default function App() {
   };
 
   let myToken = getToken()
-  
+
   axios.defaults.headers.common['Authorization']  = `Bearer ${myToken}`
 
   return (
     <>
-
     <Home/>
     </>
   );
