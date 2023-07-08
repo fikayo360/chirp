@@ -1,14 +1,17 @@
 import React from 'react'
 import {View,TouchableOpacity,Text,StyleSheet,Image} from 'react-native'
 import * as Icons from "react-native-heroicons/solid"
+import ProfilePlaceholder from './Profiletextplace'
 
 const Discovereduser = (props) => {
   return (
     <View style={styles.container}>
     <View style={styles.xIconContainer}><Icons.XMarkIcon width={15} height={15} color="black" /></View>
-    <View style={styles.ImgContainer}><Image resizeMode='contain' 
-    style={{ width:'100%', height:'100%' }}  source={{uri:props.data.discoveredUserPic}}/></View>
-    <Text>{props.data.discoveredUserName}</Text>
+    <View style={styles.ImgContainer}>
+      {props.data.profilePic?(<Image resizeMode='contain' 
+    style={{ width:'100%', height:'100%' }}  source={{uri:props.data.profilePic}}/>):(<ProfilePlaceholder/>)}
+    </View>
+    <Text>{props.data.userName}</Text>
     <TouchableOpacity style={styles.button} onPress={() => {}}> 
     <Text style={styles.buttonTxt}>follow</Text>
     </TouchableOpacity>

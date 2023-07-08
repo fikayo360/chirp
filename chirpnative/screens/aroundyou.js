@@ -7,11 +7,53 @@ import { ForwardIcon } from 'react-native-heroicons/solid'
 import { Discovered } from '../mockdata/Discoveredpeople'
 import Discoveredusers from '../components/discoveredusers'
 import * as Icons from "react-native-heroicons/solid"
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 /* import spinner component */
 
 const Aroundyou = () => {
   const [data,setData]= useState(Discovered)
+  const [aroundYou,setAroundYou] = useState([])
+
+  const aroundyou = async () => {
+    try {
+      const response = await axios.get('api/v1/user/aroundYou');
+      setAroundYou(response.data)
+      console.log(response.data);
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data);
+      } 
+    }
+  };
+
+  const search = async () => {
+    try {
+      const response = await axios.get('api/v1/news/getTopStories');
+      setNewsItems(response.data.articles);
+      console.log(response.data);
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data);
+      } 
+    }
+  };
+
+  const follow = async () => {
+    try {
+      const response = await axios.get('api/v1/news/getTopStories');
+      setNewsItems(response.data.articles);
+      console.log(response.data);
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data);
+      } 
+    }
+  };
+
+  useEffect(() => {
+    aroundyou()
+  },[])
+
   return (
     <SafeAreaView>
         <Header title={'Search'} />

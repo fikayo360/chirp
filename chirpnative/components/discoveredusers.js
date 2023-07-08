@@ -7,7 +7,7 @@ const Discoveredusers = (props) => {
         <ScrollView style={styles.Discovered} horizontal={true} showsHorizontalScrollIndicator={false}>
         {
         props.data && props.data.map(item => (
-            <Discovereduser data={item} key={item.id}/>
+            <Discovereduser data={item} key={item._id}/>
         ))
         }
         </ScrollView>
