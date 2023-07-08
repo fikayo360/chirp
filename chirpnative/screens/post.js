@@ -2,9 +2,45 @@ import React from 'react'
 import {SafeAreaView,Text,TextInput,TouchableOpacity,StyleSheet,View} from 'react-native'
 import  Header  from '../components/header'
 import { useState } from 'react'
+import ImagePicker from 'react-native-image-picker';
+import axios from 'axios'
+import uploadImageToFirebase from '../utils/uploadImage'
 
 const Post = () => {
   const [text, setText] = useState('');
+  const [image, setImage] = useState(null);
+
+  const handleClick = () => {
+    ImagePicker.show({
+      title: 'Select an Image',
+      multiple: false,
+      // Choose from camera or gallery
+      mediaType: 'photo',
+      // Resize the image to a maximum of 1024x1024
+      width: 1024,
+      height: 1024,
+    }, (error, res) => {
+      if (error) {
+        console.log(error);
+      } else {
+        setImage(res);
+      }
+    });
+  };
+  const submit = async () => {
+  {/*
+    try {
+      const response = await axios.post('api/v1/post/publish');
+      setNewsItems(response.data.articles);
+      console.log(response.data);
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data);
+      } 
+    }
+  */}
+    
+  };
 
   return (
     <SafeAreaView>
@@ -20,7 +56,7 @@ const Post = () => {
         placeholderTextColor={'black'}
         />
         <View style={styles.buttonsComponent}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleClick}>
           <Text style={styles.buttonTxt}>AttachMedia</Text> 
         </TouchableOpacity>  
         <TouchableOpacity style={styles.button}>
@@ -76,4 +112,5 @@ const styles = StyleSheet.create({
     color:'white'
   }
 })
+
 export default Post

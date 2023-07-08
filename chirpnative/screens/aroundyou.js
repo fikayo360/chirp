@@ -48,17 +48,14 @@ const Aroundyou = () => {
 
   const follow = async (username) => {
     console.log('hi you got here');
-    /*
     try {
       const response = await axios.get(`api/v1/user/follow/${username}`);
       setError(response.data)
     } catch (error) {
       if (error.response) {
-        setError(error.response.data);
+        setError(error.response.data)
       } 
     }
-    */
-    
   };
 
   useEffect(() => {
