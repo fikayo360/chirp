@@ -37,16 +37,6 @@ export default function App() {
     }
   };
 
-  axios.interceptors.request.use(
-    (config) => {
-      const token = getToken();
-      config.headers.Authorization = `Bearer ${token}`;
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
 
   return (
     <>
