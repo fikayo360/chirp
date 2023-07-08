@@ -22,7 +22,9 @@ const Home = () => {
     }
   };
 
-  setBearerToken();
+ useEffect(() => {
+  submit()
+ },[])
 
   // use effect to get the data 
   // loading indicator
