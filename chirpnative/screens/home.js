@@ -25,7 +25,7 @@ const Home = () => {
       //const token = await AsyncStorage.getItem('token');
       //const response = await axios.get('api/v1/news/getTopStories');
       //setNewsItems(response.data.articles);
-      console.log(getToken);
+      console.log(getToken());
     } catch (error) {
       if (error.response) {
         setError(error.response.data);
