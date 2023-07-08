@@ -10,10 +10,10 @@ const Newscategory = () => {
 
   const [data,setData]= useState([])
   let category = 'business'
-
+ 
   const submit = async () => {
     try {
-      const response = await axios.get(`api/v1/news/getNewsCategory/${category}`);
+      const response = await axios.get(`api/v1/news/getNewsCategory/general`);
       console.log(response.data);
       setData(response.data.articles);
     } catch (error) {

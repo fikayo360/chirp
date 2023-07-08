@@ -22,7 +22,7 @@ import Home from './screens/home';
 import Commentscreen from './screens/commentscreen';
 import EditProfile from './screens/editProfile';
 import Profile from './screens/profile';
-axios.defaults.baseURL = 'https://9545-105-112-190-69.eu.ngrok.io/';
+axios.defaults.baseURL = 'https://86a6-105-112-190-69.eu.ngrok.io/';
 
 
 export default function App() {
