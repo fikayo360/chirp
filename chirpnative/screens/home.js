@@ -12,7 +12,7 @@ const Home = () => {
 
   const submit = async () => {
     try {
-      const response = await axios.get('api/v1/news/getTopStories');
+      //const response = await axios.get('api/v1/news/getTopStories');
       //setNewsItems(response.data.articles);
       
       console.log(response.data);

@@ -23,8 +23,7 @@ import Commentscreen from './screens/commentscreen';
 import EditProfile from './screens/editProfile';
 import Profile from './screens/profile';
 axios.defaults.baseURL = 'https://9545-105-112-190-69.eu.ngrok.io/';
-
-
+import { useEffect } from 'react';
 
 
 export default function App() {
@@ -32,7 +31,7 @@ export default function App() {
   const getToken = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
-      return token
+      console.log(token);
     } catch (error) {
       console.log('Error getting token:', error);
     }
@@ -40,8 +39,13 @@ export default function App() {
 
   let myToken = getToken()
   axios.defaults.headers.common['Authorization'] = myToken;
+
+  useEffect(() => {
+    getToken()
+  }, []);
   return (
     <>
+
     <Home/>
     </>
   );
