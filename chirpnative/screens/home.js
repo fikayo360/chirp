@@ -14,7 +14,6 @@ const Home = () => {
     try {
       const response = await axios.get('api/v1/news/getTopStories');
       setNewsItems(response.data.articles);
-      console.log(newsItems.length);
     } catch (error) {
       if (error.response) {
         setError(error.response.data);

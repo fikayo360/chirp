@@ -14,17 +14,17 @@
     }
 
     export const newsItems = [
-    {
+        {
             "source": {
                 "id": "google-news",
                 "name": "Google News"
             },
-            "author": "Tatler Philippines",
-            "title": "5 ways to make your perimenopause journey more positive - Tatler Philippines",
+            "author": "African Business",
+            "title": "A Model for Africa: Côte d'Ivoire Health Ministry Announces New Initiative to Become Self-Sufficient in Paediatric Cardiology Surgery - African Business",
             "description": null,
-            "url": "https://news.google.com/rss/articles/CBMiXWh0dHBzOi8vd3d3LnRhdGxlcmFzaWEuY29tL3Bvd2VyLXB1cnBvc2UvZnJvbnQtZmVtYWxlL3dvbWVucy1oZWFsdGgtd2l0aC1ldm9sdmUtcGVyaW1lbm9wYXVzZdIBAA?oc=5",
+            "url": "https://news.google.com/rss/articles/CBMisQFodHRwczovL2FmcmljYW4uYnVzaW5lc3MvMjAyMy8wNy9hcG8tbmV3c2ZlZWQvYS1tb2RlbC1mb3ItYWZyaWNhLWNvdGUtZGl2b2lyZS1oZWFsdGgtbWluaXN0cnktYW5ub3VuY2VzLW5ldy1pbml0aWF0aXZlLXRvLWJlY29tZS1zZWxmLXN1ZmZpY2llbnQtaW4tcGFlZGlhdHJpYy1jYXJkaW9sb2d5LXN1cmdlcnnSAQA?oc=5",
             "urlToImage": null,
-            "publishedAt": "2023-07-06T00:12:39Z",
+            "publishedAt": "2023-07-07T08:08:25Z",
             "content": null
         },
         {
@@ -32,12 +32,12 @@
                 "id": "google-news",
                 "name": "Google News"
             },
-            "author": "THISDAY Newspapers",
-            "title": "NIGERIA'S POOR RANKING IN GLOBAL SKILLS REPORT - THISDAY Newspapers",
+            "author": "News-Medical.Net",
+            "title": "Using a matrigengel matrix for cell culturing, disease modeling and more - News-Medical.Net",
             "description": null,
-            "url": "https://news.google.com/rss/articles/CBMiXmh0dHBzOi8vd3d3LnRoaXNkYXlsaXZlLmNvbS9pbmRleC5waHAvMjAyMy8wNy8wNi9uaWdlcmlhcy1wb29yLXJhbmtpbmctaW4tZ2xvYmFsLXNraWxscy1yZXBvcnTSAQA?oc=5",
+            "url": "https://news.google.com/rss/articles/CBMifWh0dHBzOi8vd3d3Lm5ld3MtbWVkaWNhbC5uZXQvd2hpdGVwYXBlci8yMDIzMDcwNy9Vc2luZy1hLW1hdHJpZ2VuZ2VsLW1hdHJpeC1mb3ItY2VsbC1jdWx0dXJpbmctZGlzZWFzZS1tb2RlbGluZy1hbmQtbW9yZS5hc3B40gEA?oc=5",
             "urlToImage": null,
-            "publishedAt": "2023-07-05T23:54:22Z",
+            "publishedAt": "2023-07-07T07:54:00Z",
             "content": null
         },
         {
@@ -45,12 +45,12 @@
                 "id": "google-news",
                 "name": "Google News"
             },
-            "author": "Space.com",
-            "title": "Farewell, Ariane 5! Europe's workhorse rocket launches 2 satellites on final mission - Space.com",
+            "author": "Guardian Nigeria",
+            "title": "Police nab 25 year-old over N55m stolen vehicle in Abuja - Guardian Nigeria",
             "description": null,
-            "url": "https://news.google.com/rss/articles/CBMiOmh0dHBzOi8vd3d3LnNwYWNlLmNvbS9hcmlhbmUtNS1yb2NrZXQtZmluYWwtbGF1bmNoLXN1Y2Nlc3PSAQA?oc=5",
+            "url": "https://news.google.com/rss/articles/CBMiUmh0dHBzOi8vZ3VhcmRpYW4ubmcvbmV3cy9wb2xpY2UtbmFiLTI1LXllYXItb2xkLW92ZXItbjU1bS1zdG9sZW4tdmVoaWNsZS1pbi1hYnVqYS_SAQA?oc=5",
             "urlToImage": null,
-            "publishedAt": "2023-07-05T22:41:41Z",
+            "publishedAt": "2023-07-07T06:22:00Z",
             "content": null
         },
         {
@@ -58,12 +58,12 @@
                 "id": "google-news",
                 "name": "Google News"
             },
-            "author": "Businessday",
-            "title": "Overland, United Nigeria, Azman, record highest number of flight delays in Q1 2023 - Businessday",
+            "author": "Euronews",
+            "title": "Racist or revolutionary: The complex legacy of Alexei Navalny - Euronews",
             "description": null,
-            "url": "https://news.google.com/rss/articles/CBMieGh0dHBzOi8vYnVzaW5lc3NkYXkubmcvYXZpYXRpb24vYXJ0aWNsZS9vdmVybGFuZC11bml0ZWQtbmlnZXJpYS1hem1hbi1yZWNvcmQtaGlnaGVzdC1udW1iZXItb2YtZmxpZ2h0LWRlbGF5cy1pbi1xMS0yMDIzL9IBAA?oc=5",
+            "url": "https://news.google.com/rss/articles/CBMibWh0dHBzOi8vd3d3LmV1cm9uZXdzLmNvbS8yMDIzLzA3LzA3L3JhY2lzdC1vci1yZXZvbHV0aW9uYXJ5LWlzLWFsZXhlaS1uYXZhbG55LXdoby1tYW55LXdlc3Rlcm5lcnMtdGhpbmstaGUtaXPSAQA?oc=5",
             "urlToImage": null,
-            "publishedAt": "2023-07-05T21:52:44Z",
+            "publishedAt": "2023-07-07T05:02:13Z",
             "content": null
         },
         {
@@ -71,116 +71,12 @@
                 "id": "google-news",
                 "name": "Google News"
             },
-            "author": "Channels Television",
-            "title": "Mmesoma: Like JAMB, INEC Must Be Accountable, Says Chidoka - Channels Television",
+            "author": "Guardian Nigeria",
+            "title": "Temporary relief as Tinubu defers, suspends Buhari's 11th hour tax drive - Guardian Nigeria",
             "description": null,
-            "url": "https://news.google.com/rss/articles/CBMiXmh0dHBzOi8vd3d3LmNoYW5uZWxzdHYuY29tLzIwMjMvMDcvMDUvbW1lc29tYS1saWtlLWphbWItaW5lYy1tdXN0LWJlLWFjY291bnRhYmxlLXNheXMtY2hpZG9rYS_SAe8BaHR0cHM6Ly93d3cuY2hhbm5lbHN0di5jb20vMjAyMy8wNy8wNS9tbWVzb21hLWxpa2UtamFtYi1pbmVjLW11c3QtYmUtYWNjb3VudGFibGUtc2F5cy1jaGlkb2thL2FtcC8_ZmJjbGlkPUl3QVIzT1h6VU5sbl9Xei1meEVkOG5JZm9YVUl6N1hJTFZzQU1nYWV3WWQ2RzJqbFR6OFFZUlpjcDhISTRfYWVtX0FWSEpQQTQ2Z0Q5M0xUTFNubnBGYk1kU2VMRnNEdUlGR01FeGt1c0V1eWxINUNhdVAyY010b2trLUF4Ti02S0w0ekE?oc=5",
+            "url": "https://news.google.com/rss/articles/CBMiYGh0dHBzOi8vZ3VhcmRpYW4ubmcvbmV3cy90ZW1wb3JhcnktcmVsaWVmLWFzLXRpbnVidS1kZWZlcnMtc3VzcGVuZHMtYnVoYXJpcy0xMXRoLWhvdXItdGF4LWRyaXZlL9IBAA?oc=5",
             "urlToImage": null,
-            "publishedAt": "2023-07-05T21:28:52Z",
-            "content": null
-        },
-        {
-            "source": {
-                "id": "google-news",
-                "name": "Google News"
-            },
-            "author": "GOAL English",
-            "title": "WATCH: 'I want you to be a very important player' - New Manchester United signing Mason Mount's first interaction with new boss Erik ten Hag - GOAL English",
-            "description": null,
-            "url": "https://news.google.com/rss/articles/CBMibGh0dHBzOi8vd3d3LmdvYWwuY29tL2VuLWluL25ld3Mvd2F0Y2gtbWFuY2hlc3Rlci11bml0ZWQtc2lnbmluZy1tYXNvbi1tb3VudC1lcmlrLXRlbi1oYWcvYmx0OTFlNzliZGEyMzMxZDg1Y9IBAA?oc=5",
-            "urlToImage": null,
-            "publishedAt": "2023-07-05T21:25:51Z",
-            "content": null
-        },
-        {
-            "source": {
-                "id": "google-news",
-                "name": "Google News"
-            },
-            "author": "NASA Jet Propulsion Laboratory",
-            "title": "Meet the Mars Samples: Salette and Coulettes (Samples 4 and 5) - NASA Jet Propulsion Laboratory",
-            "description": null,
-            "url": "https://news.google.com/rss/articles/CCAiC3REVzVMODJsZl9jmAEB?oc=5",
-            "urlToImage": null,
-            "publishedAt": "2023-07-05T20:47:04Z",
-            "content": null
-        },
-        {
-            "source": {
-                "id": "google-news",
-                "name": "Google News"
-            },
-            "author": "groovyPost",
-            "title": "How to Fix Spotify Not Updating Podcasts - groovyPost",
-            "description": null,
-            "url": "https://news.google.com/rss/articles/CBMiQ2h0dHBzOi8vd3d3Lmdyb292eXBvc3QuY29tL2hvd3RvL2ZpeC1zcG90aWZ5LW5vdC11cGRhdGluZy1wb2RjYXN0cy_SAQA?oc=5",
-            "urlToImage": null,
-            "publishedAt": "2023-07-05T20:30:08Z",
-            "content": null
-        },
-        {
-            "source": {
-                "id": "google-news",
-                "name": "Google News"
-            },
-            "author": "QED.NG",
-            "title": "Erica's Mother Reacts To Her 'Secret Marriage' To Wande Coal - QED.NG",
-            "description": null,
-            "url": "https://news.google.com/rss/articles/CBMiSWh0dHBzOi8vd3d3LnFlZC5uZy9lcmljYXMtbW90aGVyLXJlYWN0cy10by1zZWNyZXQtbWFycmlhZ2UtdG8td2FuZGUtY29hbC_SAQA?oc=5",
-            "urlToImage": null,
-            "publishedAt": "2023-07-05T19:53:24Z",
-            "content": null
-        },
-        {
-            "source": {
-                "id": "google-news",
-                "name": "Google News"
-            },
-            "author": "Naija Nigeria News | Gistmania",
-            "title": "See How Nigerians Are Reacting to Hilda Baci's Recent Visit to Oba of Elegushi (Video) - Naija Nigeria News | Gistmania",
-            "description": null,
-            "url": "https://news.google.com/rss/articles/CBMiMmh0dHBzOi8vd3d3Lmdpc3RtYW5pYS5jb20vdGFsay90b3BpYyw1Njc4MjQuMC5odG1s0gEA?oc=5",
-            "urlToImage": null,
-            "publishedAt": "2023-07-05T19:16:30Z",
-            "content": null
-        },
-        {
-            "source": {
-                "id": "google-news",
-                "name": "Google News"
-            },
-            "author": "African Development Bank",
-            "title": "Libya - African Development Bank",
-            "description": null,
-            "url": "https://news.google.com/rss/articles/CBMijQFodHRwczovL3d3dy5hZmRiLm9yZy9lbi9uZXdzLWFuZC1ldmVudHMvcHJlc3MtcmVsZWFzZXMvbGlieWEtYWZyaWNhbi1kZXZlbG9wbWVudC1iYW5rLWdvdmVybm1lbnQtZGlzY3Vzcy1zdHJhdGVneS1ib2xzdGVyLWZvb2Qtc2VjdXJpdHktNjI3MDPSAQA?oc=5",
-            "urlToImage": null,
-            "publishedAt": "2023-07-05T18:58:02Z",
-            "content": null
-        },
-        {
-            "source": {
-                "id": "google-news",
-                "name": "Google News"
-            },
-            "author": "Peoples Gazette",
-            "title": "Tribunal adjourns as Tinubu, APC, INEC call one witness each despite hefty PDP, Labour petitions - Peoples Gazette",
-            "description": null,
-            "url": "https://news.google.com/rss/articles/CBMidWh0dHBzOi8vZ2F6ZXR0ZW5nci5jb20vdHJpYnVuYWwtYWRqb3VybnMtYXMtdGludWJ1LWFwYy1pbmVjLWNhbGwtb25lLXdpdG5lc3MtZWFjaC1kZXNwaXRlLWhlZnR5LXBkcC1sYWJvdXItcGV0aXRpb25zL9IBAA?oc=5",
-            "urlToImage": null,
-            "publishedAt": "2023-07-05T18:07:59Z",
-            "content": null
-        },
-        {
-            "source": {
-                "id": "google-news",
-                "name": "Google News"
-            },
-            "author": "The Nation Newspaper ",
-            "title": "Sit-at-home: Ban on order still stands - Enugu Govt. insists - The Nation Newspaper ",
-            "description": null,
-            "url": "https://news.google.com/rss/articles/CBMiV2h0dHBzOi8vdGhlbmF0aW9ub25saW5lbmcubmV0L3NpdC1hdC1ob21lLWJhbi1vbi1vcmRlci1zdGlsbC1zdGFuZHMtZW51Z3UtZ292dC1pbnNpc3RzL9IBAA?oc=5",
-            "urlToImage": null,
-            "publishedAt": "2023-07-05T18:07:32Z",
+            "publishedAt": "2023-07-07T04:47:00Z",
             "content": null
         },
         {
@@ -189,11 +85,11 @@
                 "name": "Google News"
             },
             "author": "Leadership News",
-            "title": "Tinubu Pledges Support For $5b Floating LNG Project - Leadership News",
+            "title": "Protesters Storm EU Office Over Election Report - Leadership News",
             "description": null,
-            "url": "https://news.google.com/rss/articles/CBMiSWh0dHBzOi8vbGVhZGVyc2hpcC5uZy90aW51YnUtcGxlZGdlcy1zdXBwb3J0LWZvci01Yi1mbG9hdGluZy1sbmctcHJvamVjdC_SAQA?oc=5",
+            "url": "https://news.google.com/rss/articles/CBMiRmh0dHBzOi8vbGVhZGVyc2hpcC5uZy9wcm90ZXN0ZXJzLXN0b3JtLWV1LW9mZmljZS1vdmVyLWVsZWN0aW9uLXJlcG9ydC_SAQA?oc=5",
             "urlToImage": null,
-            "publishedAt": "2023-07-05T17:56:15Z",
+            "publishedAt": "2023-07-07T04:39:43Z",
             "content": null
         },
         {
@@ -201,13 +97,130 @@
                 "id": "google-news",
                 "name": "Google News"
             },
-            "author": "My Modern Met",
-            "title": "16 Favorites from 2023 Astronomy Photographer of the Year Shortlist - My Modern Met",
+            "author": "Leadership News",
+            "title": "Diphtheria: NCDC Confirms 798 Cases, 80 Deaths In 8 States, FCT - Leadership News",
             "description": null,
-            "url": "https://news.google.com/rss/articles/CBMiQ2h0dHBzOi8vbXltb2Rlcm5tZXQuY29tLzIwMjMtYXN0cm9ub215LXBob3RvZ3JhcGhlci15ZWFyLXNob3J0bGlzdC_SAQA?oc=5",
+            "url": "https://news.google.com/rss/articles/CBMiU2h0dHBzOi8vbGVhZGVyc2hpcC5uZy9kaXBodGhlcmlhLW5jZGMtY29uZmlybXMtNzk4LWNhc2VzLTgwLWRlYXRocy1pbi04LXN0YXRlcy1mY3Qv0gEA?oc=5",
             "urlToImage": null,
-            "publishedAt": "2023-07-05T17:32:02Z",
+            "publishedAt": "2023-07-07T04:38:44Z",
             "content": null
         },
+        {
+            "source": {
+                "id": "google-news",
+                "name": "Google News"
+            },
+            "author": "The Nation Newspaper ",
+            "title": "Tinubu vows to reduce security challenges to barest level within shortest time - The Nation Newspaper ",
+            "description": null,
+            "url": "https://news.google.com/rss/articles/CBMibWh0dHBzOi8vdGhlbmF0aW9ub25saW5lbmcubmV0L3RpbnVidS12b3dzLXRvLXJlZHVjZS1zZWN1cml0eS1jaGFsbGVuZ2VzLXRvLWJhcmVzdC1sZXZlbC13aXRoaW4tc2hvcnRlc3QtdGltZS_SAQA?oc=5",
+            "urlToImage": null,
+            "publishedAt": "2023-07-07T04:35:25Z",
+            "content": null
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Hindustan Times"
+            },
+            "author": "HT Tech",
+            "title": "Stadium-sized asteroid approaching Earth at rapid pace! NASA reveals details - HT Tech",
+            "description": "NASA has revealed that an asteroid could be making its closest approach to Earth today, and it is huge! Check out its speed, distance, and other details, as revealed by NASA.",
+            "url": "https://tech.hindustantimes.com/tech/news/stadiumsized-asteroid-approaching-earth-at-rapid-pace-nasa-reveals-details-71688701975248.html",
+            "urlToImage": "https://images.hindustantimes.com/tech/img/2023/07/07/1600x900/orbit-viewer-snapshot_1688702043197_1688702052010.jpg",
+            "publishedAt": "2023-07-07T04:10:45Z",
+            "content": "An asteroid that was previously expected to strike Earth is now being deemed safe. However, it will come close enough to the planet in this decade, giving scientists a chance to study it. This astero… [+1970 chars]"
+        },
+        {
+            "source": {
+                "id": "google-news",
+                "name": "Google News"
+            },
+            "author": "EurekAlert",
+            "title": "ASPB welcomes conference correspondents for Plant Biology 2023 - EurekAlert",
+            "description": null,
+            "url": "https://news.google.com/rss/articles/CBMiL2h0dHBzOi8vd3d3LmV1cmVrYWxlcnQub3JnL25ld3MtcmVsZWFzZXMvOTk0NzQx0gEA?oc=5",
+            "urlToImage": null,
+            "publishedAt": "2023-07-07T02:01:50Z",
+            "content": null
+        },
+        {
+            "source": {
+                "id": "google-news",
+                "name": "Google News"
+            },
+            "author": "The Nation Newspaper ",
+            "title": "I owe the world a lot, says Mayolee - The Nation Newspaper ",
+            "description": null,
+            "url": "https://news.google.com/rss/articles/CBMiQWh0dHBzOi8vdGhlbmF0aW9ub25saW5lbmcubmV0L2ktb3dlLXRoZS13b3JsZC1hLWxvdC1zYXlzLW1heW9sZWUv0gEA?oc=5",
+            "urlToImage": null,
+            "publishedAt": "2023-07-07T01:37:54Z",
+            "content": null
+        },
+        {
+            "source": {
+                "id": "google-news",
+                "name": "Google News"
+            },
+            "author": "PBS NewsHour",
+            "title": "News Wrap: Russian strikes on civilian areas in western Ukraine kill at least 5 people - PBS NewsHour",
+            "description": null,
+            "url": "https://news.google.com/rss/articles/CCAiC3NGWHBjS2xCT09vmAEB?oc=5",
+            "urlToImage": null,
+            "publishedAt": "2023-07-06T22:21:25Z",
+            "content": null
+        },
+        {
+            "source": {
+                "id": "google-news",
+                "name": "Google News"
+            },
+            "author": "TheCable",
+            "title": "Gbenga Daniel asks Dapo Abiodun to suspend his pension as ex-governor of Ogun - TheCable",
+            "description": null,
+            "url": "https://news.google.com/rss/articles/CBMiZWh0dHBzOi8vd3d3LnRoZWNhYmxlLm5nL2diZW5nYS1kYW5pZWwtYXNrcy1kYXBvLWFiaW9kdW4tdG8tc3VzcGVuZC1oaXMtcGVuc2lvbi1hcy1leC1nb3Zlcm5vci1vZi1vZ3Vu0gEA?oc=5",
+            "urlToImage": null,
+            "publishedAt": "2023-07-06T22:00:00Z",
+            "content": null
+        },
+        {
+            "source": {
+                "id": "google-news",
+                "name": "Google News"
+            },
+            "author": "Businessday",
+            "title": "Nigeria eyes malaria vaccine consignment at WHO's second window - Businessday",
+            "description": null,
+            "url": "https://news.google.com/rss/articles/CBMiZWh0dHBzOi8vYnVzaW5lc3NkYXkubmcvaGVhbHRoL2FydGljbGUvbmlnZXJpYS1leWVzLW1hbGFyaWEtdmFjY2luZS1jb25zaWdubWVudC1hdC13aG9zLXNlY29uZC13aW5kb3cv0gEA?oc=5",
+            "urlToImage": null,
+            "publishedAt": "2023-07-06T21:17:10Z",
+            "content": null
+        },
+        {
+            "source": {
+                "id": "google-news",
+                "name": "Google News"
+            },
+            "author": "Channels Television",
+            "title": "Hudu Ari: INEC Demonstrated It Means Business, Says IPAC Chair - Channels Television",
+            "description": null,
+            "url": "https://news.google.com/rss/articles/CBMiY2h0dHBzOi8vd3d3LmNoYW5uZWxzdHYuY29tLzIwMjMvMDcvMDYvaHVkdS1hcmktaW5lYy1kZW1vbnN0cmF0ZWQtaXQtbWVhbnMtYnVzaW5lc3Mtc2F5cy1pcGFjLWNoYWlyL9IBZ2h0dHBzOi8vd3d3LmNoYW5uZWxzdHYuY29tLzIwMjMvMDcvMDYvaHVkdS1hcmktaW5lYy1kZW1vbnN0cmF0ZWQtaXQtbWVhbnMtYnVzaW5lc3Mtc2F5cy1pcGFjLWNoYWlyL2FtcC8?oc=5",
+            "urlToImage": null,
+            "publishedAt": "2023-07-06T20:45:11Z",
+            "content": null
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "CIO Dive"
+            },
+            "author": "Lindsey Wilkinson",
+            "title": "Microsoft launches free AI training as enterprises grapple with skills shortage - Legal Dive",
+            "description": "Developed in partnership with Microsoft-owned LinkedIn, the coursework will be offered through LinkedIn's training platform",
+            "url": "https://www.ciodive.com/news/Microsoft-AI-skills-upskilling-certification-generative/654212/",
+            "urlToImage": "https://www.legaldive.com/imgproxy/MA_LbsUJCoEwEUmqOulHSLET9O_iR19UIM1Bk7DwWQU/g:ce/rs:fill:770:435:0/bG9jYWw6Ly8vZGl2ZWltYWdlL0dldHR5SW1hZ2VzLTEyMDcwNzQ0MTUuanBn.jpg",
+            "publishedAt": "2023-07-06T19:09:23Z",
+            "content": "Dive Brief:\r\n<ul><li>Microsoft launched a new AI training initiative aimed at expanding access to AI skills through free coursework, the company recently announced. Developed in partnership with Micr… [+2121 chars]"
+        }
     ]
     
