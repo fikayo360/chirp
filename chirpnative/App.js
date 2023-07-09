@@ -24,7 +24,7 @@ import EditProfile from './screens/editProfile';
 import Profile from './screens/profile';
 import Webview from './screens/webview';
 
-axios.defaults.baseURL = 'https://07fc-105-112-190-69.eu.ngrok.io/';
+axios.defaults.baseURL = 'https://58da-105-112-182-193.eu.ngrok.io/';
 
 export default function App() {
   const getToken = async () => {
@@ -51,7 +51,7 @@ export default function App() {
 
   return (
     <>
-    <Post/>
+    <Wall/>
     </>
   );
 }

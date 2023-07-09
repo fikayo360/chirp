@@ -1,11 +1,8 @@
-import firebase from 'firebase/app';
-import 'firebase/storage';
+import firebase from '../firebaseConfig';
 
 const uploadImageToFirebase = async (imageURI) => {
     try {
-      // Create a reference to the Firebase Storage bucket
       const storageRef = firebase.storage().ref();
-  
       // Generate a unique filename for the image
       const filename = `images/${Date.now()}`;
   
@@ -59,4 +56,4 @@ const uploadImageToFirebase = async (imageURI) => {
     });
  */}
 
-module.exports = uploadImageToFirebase
+export default uploadImageToFirebase

@@ -12,7 +12,7 @@ const publishPost = async(req,res) => {
         const newPost = await Post.create({userId:sessionUser._id,postImg,postAuthor,postTitle,postBody})
         res.status(StatusCodes.OK).json('post created ')
     }catch(err){
-        throw new customError.BadRequestError(err)
+        res.status(StatusCodes.BAD_REQUEST).json('error creating posts ')
     }
 }
 
