@@ -30,7 +30,7 @@ const Wallcomponent = (props) => {
         <View style={styles.iconcontainer}>
         <TouchableOpacity style={styles.iconsubcontainer} onPress={handleFollow}>
           <Icons.HeartIcon width={20} height={20} color="black" /><Text>{props.data.postLikes.length}</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.iconsubcontainer}><Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{props?.data?.postComments.length}</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.iconsubcontainer}><Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{0}</Text></TouchableOpacity>
         <TouchableOpacity style={styles.iconsubcontainer} onPress={()=>props.savePost(postData)}>
           <Icons.BookmarkIcon width={20} height={20} color="black" /></TouchableOpacity>
         </View>

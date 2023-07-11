@@ -13,13 +13,9 @@ const Wall = () => {
  
   const getFriendsPost = async () => {
     try {
-      const response = await axios.get('api/v1/post/getFriendsPost',{
-        headers: {
-          'If-Modified-Since': null,
-        },
-      })
-      console.log(response.data);
+      const response = await axios.get('api/v1/post/getFriendsPost')
       setItems(response.data)
+      console.log(items)
     } catch (error) {
       if (error.response) {
         setError(error.response.data)
