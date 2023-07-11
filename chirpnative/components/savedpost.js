@@ -1,26 +1,28 @@
 import * as Icons from "react-native-heroicons/solid"
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity,Image,StyleSheet} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image} from 'react-native'
 import ProfilePlaceholder from './Profiletextplace'
 
-const Savedpost = (props) => {
 
+const Savedpost = (props) => {
+ 
     return (
       (
-        <TouchableOpacity style={styles.wallcontainer}>
-        <View style={styles.wallheader}><ProfilePlaceholder username={'fikayo'}/>
-        <Text style={styles.wallheaderTxt}>{'fikayo-friends'}</Text></View>
+        <View style={styles.wallcontainer}>
+        <View style={styles.wallheader}><ProfilePlaceholder username={'fifk'}/>
+        <Text style={styles.wallheaderTxt}>{props.data.SavedPostAuthor}</Text></View>
         <View style={styles.wallimgcontainer}>
         <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} 
         source={{uri:props.data.SavedPostImg}}/></View>
-        <Text style={styles.title}>{props}</Text>
+        <Text style={styles.title}>{props.data.SavedPostTitle}</Text>
+        <Text style={styles.title}>{props.data.SavedPostBody}</Text>
         <View style={styles.footer}>
           <Text style={styles.timestamp}>{props.data.createdAt}</Text>
           <View style={styles.iconcontainer}>
-          <View style={styles.iconsubcontainer}><Icons.TrashIcon width={20} height={20} color="black" /></View>
+          <TouchableOpacity style={styles.iconsubcontainer} onPress={()=>props.deleteSavedPost(props.data._id) }><Icons.TrashIcon width={20} height={20} color="black" /></TouchableOpacity>
           </View>
         </View>
-    </TouchableOpacity>
+    </View>
     )
       )
 }

@@ -8,7 +8,7 @@ import uploadImageToFirebase from '../utils/uploadImage'
 
 const Post = () => {
   
-  const [postImg, setSelectedImage] = useState('');
+  const [postImg, setSelectedImage] = useState('')
   const [postAuthor, setAuthor] = useState('')
   const [postTitle,setPostTitle]= useState('')
   const [postBody,setPostBody]= useState('')

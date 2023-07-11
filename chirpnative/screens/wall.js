@@ -60,11 +60,11 @@ const Wall = () => {
     <SafeAreaView style={styles.container}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
       <Header title={'Wall'} />
-      <View style={styles.container}>
-      <ScrollView>
+     
+      <ScrollView style={styles.friendsComponent}>
       <Wallcomponents data={flattenedArray} likePost={likePost} savePost={savePost}/>
       </ScrollView>
-      </View>
+    
     </SafeAreaView>
   )
 }
@@ -88,7 +88,12 @@ const styles = StyleSheet.create({
   },
   container:{
    width:'100%',
+   height:'100%',
    position:'relative'
+  },
+  friendsComponent:{
+    width:'100%',
+    height:'80%'
   }
 })
 

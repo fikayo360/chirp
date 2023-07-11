@@ -23,6 +23,7 @@ import Commentscreen from './screens/commentscreen';
 import EditProfile from './screens/editProfile';
 import Profile from './screens/profile';
 import Webview from './screens/webview';
+import { ArrowLongDownIcon } from 'react-native-heroicons/solid';
 
 axios.defaults.baseURL = 'https://chirpserver.onrender.com/';
 
@@ -51,7 +52,7 @@ export default function App() {
 
   return (
     <>
-    <Post/>
+    <Savedpost/>
     </>
   );
 }
