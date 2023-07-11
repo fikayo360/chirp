@@ -1,23 +1,22 @@
 import * as Icons from "react-native-heroicons/solid"
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity,Image} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image,StyleSheet} from 'react-native'
 import ProfilePlaceholder from './Profiletextplace'
 
 const Savedpost = (props) => {
+
     return (
       (
         <TouchableOpacity style={styles.wallcontainer}>
         <View style={styles.wallheader}><ProfilePlaceholder username={'fikayo'}/>
-        <Text style={styles.wallheaderTxt}>{props.data.friendName}</Text></View>
+        <Text style={styles.wallheaderTxt}>{'fikayo-friends'}</Text></View>
         <View style={styles.wallimgcontainer}>
         <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} 
-        source={{uri:props.data.friendImage}}/></View>
-        <Text style={styles.title}>{props.data.postTitle}</Text>
+        source={{uri:props.data.SavedPostImg}}/></View>
+        <Text style={styles.title}>{props}</Text>
         <View style={styles.footer}>
-          <Text style={styles.timestamp}>{props.data.publishedAt}</Text>
+          <Text style={styles.timestamp}>{props.data.createdAt}</Text>
           <View style={styles.iconcontainer}>
-          <View style={styles.iconsubcontainer}><Icons.HeartIcon width={20} height={20} color="black" /><Text>{10}</Text></View>
-          <View style={styles.iconsubcontainer}><Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{13}</Text></View>
           <View style={styles.iconsubcontainer}><Icons.TrashIcon width={20} height={20} color="black" /></View>
           </View>
         </View>

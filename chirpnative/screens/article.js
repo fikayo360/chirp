@@ -51,12 +51,11 @@ const styles = StyleSheet.create({
   },
   imgContainer:{
     width:'98%',
-    height:350
+    height:370
   },
   articleBodyContainer:{
     width:'100%',
     height:'60%',
-    lineHeight:3
   },
   articleBody:{
     fontSize:16
