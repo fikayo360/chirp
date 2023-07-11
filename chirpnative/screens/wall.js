@@ -11,11 +11,11 @@ const Wall = () => {
   const [items,setItems] = useState([])
   const [error,setError] = useState("")
  
+
   const getFriendsPost = async () => {
     try {
       const response = await axios.get('api/v1/post/getFriendsPost')
       setItems(response.data)
-      console.log(items)
     } catch (error) {
       if (error.response) {
         setError(error.response.data)
@@ -55,14 +55,14 @@ const Wall = () => {
  useEffect(() => {
   getFriendsPost()
  },[])
-
+ const flattenedArray = [].concat(...items);
   return (
     <SafeAreaView style={styles.container}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
       <Header title={'Wall'} />
       <View style={styles.container}>
       <ScrollView>
-      <Wallcomponents data={items} likePost={likePost} savePost={savePost}/>
+      <Wallcomponents data={flattenedArray} likePost={likePost} savePost={savePost}/>
       </ScrollView>
       </View>
     </SafeAreaView>
