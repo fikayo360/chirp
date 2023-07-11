@@ -1,16 +1,34 @@
 import {React,useState} from 'react'
 import * as Icons from "react-native-heroicons/solid"
-import {SafeAreaView,TextInput,ScrollView,StyleSheet,View,Text} from 'react-native'
+import {SafeAreaView,TextInput,ScrollView,StyleSheet,View,TouchableOpacity,Text} from 'react-native'
 import Header from '../components/header'
 import { commentsData } from '../mockdata/comments'
 import ProfilePlaceholder from '../components/Profiletextplace'
 import CommentItems from '../components/comments'
+import axios from 'axios'
 
 const Commentscreen = () => {
-  const [text, setText] = useState('');
-  return (
+  const [error,setError] = useState("")
+  const [PostId,setPostId] = useState("64ad227b4c446f7663685a06")
+  const [PostcommentAuthor,setPostCommentAuthor] = useState("fikayo")
+  const [PostcommentBody,setPostcommentBody] = useState("")
+  const [ProfilePic,setProfilePic] = useState("https://firebasestorage.googleapis.com/v0/b/chirp-3e947.appspot.com/o/images%2F1688932202963?alt=media&token=cd511d7a-600a-4b4d-b7d7-b842d055d3a5")
+ 
+  const createComment = async () => {
+    try {
+      const response = await axios.post('api/v1/post/commentPost', {PostId,PostcommentAuthor,PostcommentBody,ProfilePic})
+      setError('Saved')
+      setPostcommentBody('')
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data)
+      } 
+    }
+  };
 
+  return (
         <SafeAreaView>
+          {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
         <Header title={'Comments'} />
         <View style={styles.upperContainer}>
         <ProfilePlaceholder username={'fikayo'}/>
@@ -19,12 +37,12 @@ const Commentscreen = () => {
         <TextInput
         style={styles.input}
         multiline={true}
-        value={text}
-        onChangeText={(value) => setText(value)}
+        value={PostcommentBody}
+        onChangeText={(value) => setPostcommentBody(value)}
         placeholder="add comment"
         placeholderTextColor={'black'}
         /> 
-        <View style={styles.paperIconCont}><Icons.PaperAirplaneIcon width={20} height={20} color="black" /></View>
+        <TouchableOpacity style={styles.paperIconCont} onPress={createComment}><Icons.PaperAirplaneIcon width={20} height={20} color="black" /></TouchableOpacity>
         </View>
         </View>
         
@@ -38,6 +56,22 @@ const Commentscreen = () => {
 }
 
 const styles = StyleSheet.create({
+  errorContainer:{
+    alignItems: 'center',
+    marginTop:40,
+    backgroundColor: 'rgb(15, 20, 25)',
+    padding: 10,
+    height: 40,
+    position:"absolute",
+    width:'90%',
+    top:50,
+    left:15,
+    borderRadius:10
+  },
+  errorText:{
+    fontSize: 15,
+    color:'white'
+  },
   scrollContainer:{
     width:'100%',
     height:'70%'

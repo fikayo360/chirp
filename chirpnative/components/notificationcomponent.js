@@ -3,12 +3,13 @@ import {View,Text,StyleSheet} from 'react-native'
 import ProfilePlaceholder from './Profiletextplace'
 
 const Notificationcomponent = (props) => {
+ 
   return (
     <View style={styles.container}>
-    <ProfilePlaceholder username={'fikayo'}/>
+    <ProfilePlaceholder username={props.data.username}/>
     <View style={styles.notificationWrap}>
-    <Text style={styles.notificationTitle}> {props.data.notificationTitle} </Text>
-    <Text style={styles.otherTxt}> {props.data.NotificationBody} </Text>
+    <Text style={styles.notificationTitle}> {props.data.username} </Text>
+    <Text style={styles.otherTxt}> {props.data.body} </Text>
     </View>
     </View>
   )
