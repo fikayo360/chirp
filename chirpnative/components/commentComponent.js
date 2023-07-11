@@ -5,15 +5,14 @@ import {View,Text,StyleSheet} from 'react-native'
 const CommentComponent = (props) => {
     return (
         <View style={styles.container}>     
-        <ProfilePlaceholder username={'fikayo'} />
+        <ProfilePlaceholder username={props.data.PostcommentAuthor} />
         <View>
 
         <View style={styles.textHeader}>
-        <Text> {props.data.name} </Text>
-        <Text> {props.data.timestamp} </Text>
+        <Text> {props.data.PostcommentAuthor} </Text>
         </View>
 
-        <Text> {props.data.commentBody} </Text>
+        <Text> {props.data.PostcommentBody} </Text>
         </View>    
 
         </View>

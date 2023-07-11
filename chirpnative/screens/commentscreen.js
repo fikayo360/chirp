@@ -1,17 +1,35 @@
-import {React,useState} from 'react'
+import {React,useState,useEffect} from 'react'
 import * as Icons from "react-native-heroicons/solid"
 import {SafeAreaView,TextInput,ScrollView,StyleSheet,View,TouchableOpacity,Text} from 'react-native'
 import Header from '../components/header'
-import { commentsData } from '../mockdata/comments'
 import ProfilePlaceholder from '../components/Profiletextplace'
-import CommentItems from '../components/comments'
 import axios from 'axios'
+import CommentItems from '../components/comments'
 
 const Commentscreen = () => {
   const [error,setError] = useState("")
-  const [PostId,setPostId] = useState("64ad227b4c446f7663685a06")
+  const [PostId,setPostId] = useState("64ad27f684d5529baf5f7ffa")
   const [PostcommentAuthor,setPostCommentAuthor] = useState("fikayo")
   const [PostcommentBody,setPostcommentBody] = useState("")
+  const [items,setItems] = useState([ {
+    "PostId": "64ad27f684d5529baf5f7ffa",
+    "PostcommentAuthor": "fikayo",
+    "PostcommentBody": "thisis the first comment",
+    "_id": "64ad47248cb249f189bed609"
+},
+{
+    "PostId": "64ad27f684d5529baf5f7ffa",
+    "PostcommentAuthor": "fikayo",
+    "PostcommentBody": "thisis the first comment",
+    "_id": "64ad476e8cb249f189bed60d"
+},
+{
+    "PostId": "64ad27f684d5529baf5f7ffa",
+    "PostcommentAuthor": "fikayo",
+    "PostcommentBody": "thisis the first comment",
+    "_id": "64ad47728cb249f189bed612"
+}])
+
   const [ProfilePic,setProfilePic] = useState("https://firebasestorage.googleapis.com/v0/b/chirp-3e947.appspot.com/o/images%2F1688932202963?alt=media&token=cd511d7a-600a-4b4d-b7d7-b842d055d3a5")
  
   const createComment = async () => {
@@ -26,6 +44,21 @@ const Commentscreen = () => {
     }
   };
 
+  const getComments = async () => {
+    try{
+      const response = await axios.get('api/v1/post/getComments', {PostId})
+      console.log(response.data);
+      //setItems(response.data)
+    }catch(error){
+      if (error.response) {
+        setError(error.response.data)
+      } 
+    }
+  }
+
+  useEffect(()=>{
+    getComments()
+  },[])
   return (
         <SafeAreaView>
           {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
@@ -47,7 +80,7 @@ const Commentscreen = () => {
         </View>
         
         <ScrollView style={styles.scrollContainer}>
-          <CommentItems data={commentsData} />
+          <CommentItems data={items} />
         </ScrollView>  
 
         </SafeAreaView>
