@@ -5,23 +5,37 @@ import ProfilePlaceholder from './Profiletextplace'
 
 
 const Wallcomponent = (props) => {
+  let postData = {
+          SavedPostImg:props.data.postImg,
+          SavedPostAuthor:props.data.postAuthor,
+          SavedPostTitle:props.data.postTitle,
+          SavedPostBody:props.data.postBody
+        }
+   
+    const handleFollow = () => {
+      let likeData = {authorName:props.data.postAuthor,postId:props.data._id}
+      props.likePost(likeData); 
+      props.data.postLikes.push(likeData)
+    };
   return (
-      <TouchableOpacity style={styles.wallcontainer}>
+      <View style={styles.wallcontainer}>
       <View style={styles.wallheader}><ProfilePlaceholder username={'fikayo'}/>
-      <Text style={styles.wallheaderTxt}>{props.data.friendName}</Text></View>
+      <Text style={styles.wallheaderTxt}>{props.data.postAuthor}</Text></View>
       <View style={styles.wallimgcontainer}>
       <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} 
-      source={{uri:props.data.friendImage}}/></View>
-      <Text style={styles.title}>{props.data.postTitle}</Text>
+      source={{uri:props.data.postImg}}/></View>
+      <Text style={styles.title}>{props.data.postAuthor}</Text>
       <View style={styles.footer}>
-        <Text style={styles.timestamp}>{props.data.publishedAt}</Text>
+        <Text style={styles.timestamp}>{props.data.createdAt}</Text>
         <View style={styles.iconcontainer}>
-        <View style={styles.iconsubcontainer}><Icons.HeartIcon width={20} height={20} color="black" /><Text>{10}</Text></View>
-        <View style={styles.iconsubcontainer}><Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{13}</Text></View>
-        <View style={styles.iconsubcontainer}><Icons.BookmarkIcon width={20} height={20} color="black" /></View>
+        <TouchableOpacity style={styles.iconsubcontainer} onPress={handleFollow}>
+          <Icons.HeartIcon width={20} height={20} color="black" /><Text>{props.data.postLikes.length}</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.iconsubcontainer}><Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{props?.data?.postComments.length}</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.iconsubcontainer} onPress={()=>props.savePost(postData)}>
+          <Icons.BookmarkIcon width={20} height={20} color="black" /></TouchableOpacity>
         </View>
       </View>
-  </TouchableOpacity>
+  </View>
   )
 }
 

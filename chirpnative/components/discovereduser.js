@@ -9,7 +9,7 @@ const Discovereduser = (props) => {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.xIconContainer}><Icons.XMarkIcon width={15} height={15} color="black" /></View>
+      <View style={styles.xIconContainer}><Icons.XMarkIcon width={15} height={15} color="black"/></View>
       <View style={styles.ImgContainer}>
         {props.data.profilePic ? (
           <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} source={{ uri: props.data.profilePic }} />

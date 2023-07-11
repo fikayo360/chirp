@@ -24,7 +24,7 @@ import EditProfile from './screens/editProfile';
 import Profile from './screens/profile';
 import Webview from './screens/webview';
 
-axios.defaults.baseURL = 'https://58da-105-112-182-193.eu.ngrok.io/';
+axios.defaults.baseURL = 'https://chirpserver.onrender.com/';
 
 export default function App() {
   const getToken = async () => {
