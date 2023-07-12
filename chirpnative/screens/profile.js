@@ -6,8 +6,6 @@ import ProfilePlaceholder from '../components/Profiletextplace'
 import Discoveredusers from '../components/discoveredusers'
 import { Discovered } from '../mockdata/Discoveredpeople'
 import NewscategoryItems from '../components/newscategoryItems'
-import {newsItems} from '../mockdata/newsitems'
-import { userFollowing } from '../mockdata/following'
 import Following from '../components/following'
 import Wallcomponents from '../components/wallcomponent'
 import axios from 'axios'
@@ -24,7 +22,7 @@ const Profile = () => {
     try {
       const response = await axios.get('api/v1/user/following');
       console.log(response.data);
-      //setFriends(response.data)
+      setFriends(response.data)
     } catch(error) {
       if (error.response) {
         setError(error.response.data)
@@ -36,7 +34,7 @@ const Profile = () => {
     try{
       const response = await axios.get('api/v1/user/getUser');
        setSessionUser(response.data)
-       //console.log(response.data);
+       console.log(response.data);
     }catch(error) {
       if (error.response) {
         setError(error.response.data)
@@ -48,7 +46,7 @@ const Profile = () => {
     try{
       const response = await axios.get('api/v1/post/postByUser');
        setPosts(response.data)
-       console.log(posts);
+       console.log(response.data);
     }catch(error){
       if (error.response) {
         setError(error.response.data)
@@ -60,14 +58,14 @@ const Profile = () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
       setAroundYou(response.data);
-      //console.log(response.data)
+      console.log(response.data)
     } catch(error) {
       console.log(err.response);
     }
   };
 
   const follow = async (username) => {
-    console.log('hi you got here');
+    
     try {
       const response = await axios.get(`api/v1/user/follow/${username}`);
       setError(response.data)
@@ -81,9 +79,9 @@ const Profile = () => {
 
   useEffect(() => {
     getFriends();
-    //getUserProfile()
-    //getUserPost()
-    //getAround()
+    getUserProfile()
+    getUserPost()
+    getAround()
   }, []);
 
   return (
@@ -116,22 +114,21 @@ const Profile = () => {
 
         <View style={styles.bioContainer}>
           <Text style={styles.contHeaderTxt}>Bio</Text>
-          <Text>{/*sessionUser.Bio*/}</Text>
+          <Text>{sessionUser.Bio}</Text>
+          <Text style={styles.contHeaderTxt}>Username</Text>
+          <Text>{sessionUser.username}</Text>
+          <Text style={styles.contHeaderTxt}>Email</Text>
+          <Text>{sessionUser.email}</Text>
         </View>
 
         <View style={styles.people}>
           <Text style={styles.contHeaderTxt}>Discover People</Text>
-          {/*<Discoveredusers data={aroundYou} follow={follow} />*/}
+          <Discoveredusers data={aroundYou} follow={follow} />
         </View>
 
         <View style={styles.following}>
           <Text style={styles.contHeaderTxt}>following</Text>
-          {/*<Following data={friends} />*/}
-        </View>
-
-        <View style={styles.posts}>
-          <Text style={styles.contHeaderTxt}>Posts</Text>
-          {/*<Wallcomponents data={posts} />*/}
+          <Following data={friends} />
         </View>
         
       </ScrollView>
