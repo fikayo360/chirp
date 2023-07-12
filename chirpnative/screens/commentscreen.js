@@ -11,24 +11,7 @@ const Commentscreen = () => {
   const [PostId,setPostId] = useState("64ad27f684d5529baf5f7ffa")
   const [PostcommentAuthor,setPostCommentAuthor] = useState("fikayo")
   const [PostcommentBody,setPostcommentBody] = useState("")
-  const [items,setItems] = useState([ {
-    "PostId": "64ad27f684d5529baf5f7ffa",
-    "PostcommentAuthor": "fikayo",
-    "PostcommentBody": "thisis the first comment",
-    "_id": "64ad47248cb249f189bed609"
-},
-{
-    "PostId": "64ad27f684d5529baf5f7ffa",
-    "PostcommentAuthor": "fikayo",
-    "PostcommentBody": "thisis the first comment",
-    "_id": "64ad476e8cb249f189bed60d"
-},
-{
-    "PostId": "64ad27f684d5529baf5f7ffa",
-    "PostcommentAuthor": "fikayo",
-    "PostcommentBody": "thisis the first comment",
-    "_id": "64ad47728cb249f189bed612"
-}])
+  const [items,setItems] = useState([ ])
 
   const [ProfilePic,setProfilePic] = useState("https://firebasestorage.googleapis.com/v0/b/chirp-3e947.appspot.com/o/images%2F1688932202963?alt=media&token=cd511d7a-600a-4b4d-b7d7-b842d055d3a5")
  
@@ -45,20 +28,20 @@ const Commentscreen = () => {
   };
 
   const getComments = async () => {
-    try{
-      const response = await axios.get('api/v1/post/getComments', {PostId})
-      console.log(response.data);
-      //setItems(response.data)
-    }catch(error){
+    try {
+      const response = await axios.get('api/v1/post/getComments', { params: { PostId } });
+       setItems(response.data.postComments)
+    } catch (error) {
       if (error.response) {
         setError(error.response.data)
       } 
     }
   }
-
-  useEffect(()=>{
-    getComments()
-  },[])
+  
+  useEffect(() => {
+    getComments();
+  }, []);
+  
   return (
         <SafeAreaView>
           {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
