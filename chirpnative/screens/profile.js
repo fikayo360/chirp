@@ -10,7 +10,7 @@ import {newsItems} from '../mockdata/newsitems'
 import { userFollowing } from '../mockdata/following'
 import Following from '../components/following'
 import axios from 'axios'
-import {useState,useEffect }from 'react'
+import {useEffect }from 'react'
 
 const Profile = () => {
   const [friends,setFriends] = useState([])
@@ -22,6 +22,7 @@ const Profile = () => {
   const getFriends = async () => {
     try {
       const response = await axios.get('api/v1/user/following');
+      console.log(re);
        setFriends(response.data)
        console.log(friends);
     } catch (error) {
@@ -94,7 +95,7 @@ const Profile = () => {
         <View style={styles.profileQuickInfo}>
 
           <View >
-          <View style={styles.imgContainer}>jj</View>
+          <View style={styles.imgContainer}><ProfilePlaceholder username={'fikayo'} /></View>
           <Text style={styles.imgtext}>Edit</Text>
           </View>
 
