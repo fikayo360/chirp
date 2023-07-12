@@ -23,8 +23,8 @@ const Profile = () => {
   const getFriends = async () => {
     try {
       const response = await axios.get('api/v1/user/following');
-      //console.log(response.data);
-      setFriends(response.data)
+      console.log(response.data);
+      //setFriends(response.data)
     } catch(error) {
       if (error.response) {
         setError(error.response.data)
@@ -81,9 +81,9 @@ const Profile = () => {
 
   useEffect(() => {
     getFriends();
-    getUserProfile()
-    getUserPost()
-    getAround()
+    //getUserProfile()
+    //getUserPost()
+    //getAround()
   }, []);
 
   return (
@@ -96,7 +96,7 @@ const Profile = () => {
         <View style={styles.profileQuickInfo}>
 
           <View >
-          <View style={styles.imgContainer}><ProfilePlaceholder username={sessionUser.username} /></View>
+          <View style={styles.imgContainer}><ProfilePlaceholder username={'fikayo'} /></View>
           <Text style={styles.imgtext}>Edit</Text>
           </View>
 
@@ -108,7 +108,7 @@ const Profile = () => {
 
             <View style={styles.profileQuickInfoAnalContainer}>
               <Text style={styles.quickinfoTxtUpper}>Following</Text>
-              <Text style={styles.quickInfoTxtLower}>{sessionUser.friends.length}</Text>
+              <Text style={styles.quickInfoTxtLower}>{0}</Text>
             </View>
           </View>
 
@@ -116,17 +116,17 @@ const Profile = () => {
 
         <View style={styles.bioContainer}>
           <Text style={styles.contHeaderTxt}>Bio</Text>
-          <Text>{sessionUser.Bio}</Text>
+          <Text>{/*sessionUser.Bio*/}</Text>
         </View>
 
         <View style={styles.people}>
           <Text style={styles.contHeaderTxt}>Discover People</Text>
-          <Discoveredusers data={aroundYou} follow={follow} />
+          {/*<Discoveredusers data={aroundYou} follow={follow} />*/}
         </View>
 
         <View style={styles.following}>
           <Text style={styles.contHeaderTxt}>following</Text>
-          <Following data={friends} />
+          {/*<Following data={friends} />*/}
         </View>
 
         <View style={styles.posts}>
