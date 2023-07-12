@@ -94,7 +94,7 @@ const Profile = () => {
         <View style={styles.profileQuickInfo}>
 
           <View >
-          <View style={styles.imgContainer}><ProfilePlaceholder username={'fikayo'} /></View>
+          <View style={styles.imgContainer}>jj</View>
           <Text style={styles.imgtext}>Edit</Text>
           </View>
 
