@@ -4,12 +4,12 @@ import ProfilePlaceholder from './Profiletextplace'
 
 const Followingcomponent = (props) => {
   return (
- 
+    
     <View style={styles.wrapper}>
-    <ProfilePlaceholder username={'fikayo'} />
+    <ProfilePlaceholder username={props.data.username} />
     
 
-    <Text style={styles.text}>{props.data.name} </Text>
+    <Text style={styles.text}>{props.data.username} </Text>
     </View>
    
   )

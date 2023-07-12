@@ -24,7 +24,6 @@ const Profile = () => {
       const response = await axios.get('api/v1/user/following');
       console.log(response.data);
        //setFriends(response.data)
-       console.log(friends);
     } catch(error) {
       if (error.response) {
         setError(error.response.data)
@@ -59,7 +58,7 @@ const Profile = () => {
   const getAround = async () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
-      //setAroundYou(response.data);
+      setAroundYou(response.data);
       console.log(response.data)
     } catch(error) {
       console.log(err.response);
@@ -70,7 +69,7 @@ const Profile = () => {
     console.log('hi you got here');
     try {
       const response = await axios.get(`api/v1/user/follow/${username}`);
-      //setError(response.data)
+      setError(response.data)
       console.log(response.data);
     } catch(error) {
       if (error.response) {
@@ -80,7 +79,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    //getFriends();
+    getFriends();
     getUserProfile()
     //getUserPost()
     //getAround()
@@ -96,7 +95,7 @@ const Profile = () => {
         <View style={styles.profileQuickInfo}>
 
           <View >
-          <View style={styles.imgContainer}><ProfilePlaceholder username={'fikayo'} /></View>
+          <View style={styles.imgContainer}><ProfilePlaceholder username={sessionUser.username} /></View>
           <Text style={styles.imgtext}>Edit</Text>
           </View>
 
@@ -108,7 +107,7 @@ const Profile = () => {
 
             <View style={styles.profileQuickInfoAnalContainer}>
               <Text style={styles.quickinfoTxtUpper}>Following</Text>
-              <Text style={styles.quickInfoTxtLower}>{30}</Text>
+              <Text style={styles.quickInfoTxtLower}>{sessionUser.friends.length}</Text>
             </View>
           </View>
 
@@ -116,12 +115,12 @@ const Profile = () => {
 
         <View style={styles.bioContainer}>
           <Text style={styles.contHeaderTxt}>Bio</Text>
-          <Text>eihrejhejhehjebjhejbjhrebfnejhjbenjhebjhebjhbnejkn</Text>
+          <Text>{sessionUser.Bio}</Text>
         </View>
 
         <View style={styles.people}>
           <Text style={styles.contHeaderTxt}>Discover People</Text>
-          {/*<Discoveredusers data={Discovered} />*/}
+          <Discoveredusers data={aroundYou} follow={follow} />
         </View>
 
         <View style={styles.following}>
