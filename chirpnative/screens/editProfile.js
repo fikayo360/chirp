@@ -1,9 +1,10 @@
 import React from 'react'
 import {View,Text,TextInput,SafeAreaView,StyleSheet,Image,ScrollView} from 'react-native'
 import * as Icons from "react-native-heroicons/solid"
-
+import axios from 'axios'
 
 const EditProfile = () => {
+  
   return (
     <SafeAreaView  >
     
