@@ -9,6 +9,7 @@ import NewscategoryItems from '../components/newscategoryItems'
 import {newsItems} from '../mockdata/newsitems'
 import { userFollowing } from '../mockdata/following'
 import Following from '../components/following'
+import Wallcomponents from '../components/wallcomponent'
 import axios from 'axios'
 import {useEffect }from 'react'
 
@@ -22,8 +23,8 @@ const Profile = () => {
   const getFriends = async () => {
     try {
       const response = await axios.get('api/v1/user/following');
-      console.log(response.data);
-       //setFriends(response.data)
+      //console.log(response.data);
+      setFriends(response.data)
     } catch(error) {
       if (error.response) {
         setError(error.response.data)
@@ -35,7 +36,7 @@ const Profile = () => {
     try{
       const response = await axios.get('api/v1/user/getUser');
        setSessionUser(response.data)
-       console.log(response.data);
+       //console.log(response.data);
     }catch(error) {
       if (error.response) {
         setError(error.response.data)
@@ -46,7 +47,7 @@ const Profile = () => {
   getUserPost = async () => {
     try{
       const response = await axios.get('api/v1/post/postByUser');
-      // setPosts(response.data)
+       setPosts(response.data)
        console.log(posts);
     }catch(error){
       if (error.response) {
@@ -59,7 +60,7 @@ const Profile = () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
       setAroundYou(response.data);
-      console.log(response.data)
+      //console.log(response.data)
     } catch(error) {
       console.log(err.response);
     }
@@ -81,8 +82,8 @@ const Profile = () => {
   useEffect(() => {
     getFriends();
     getUserProfile()
-    //getUserPost()
-    //getAround()
+    getUserPost()
+    getAround()
   }, []);
 
   return (
@@ -125,13 +126,12 @@ const Profile = () => {
 
         <View style={styles.following}>
           <Text style={styles.contHeaderTxt}>following</Text>
-          {/*<Following data={userFollowing} />*/}
+          <Following data={friends} />
         </View>
 
         <View style={styles.posts}>
           <Text style={styles.contHeaderTxt}>Posts</Text>
-
-          {/*<NewscategoryItems data={newsItems} />*/}
+          {/*<Wallcomponents data={posts} />*/}
         </View>
         
       </ScrollView>
