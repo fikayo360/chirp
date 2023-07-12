@@ -35,7 +35,7 @@ const Profile = () => {
   getUserProfile = async () => {
     try{
       const response = await axios.get('api/v1/user/getUser');
-       //setSessionUser(response.data)
+       setSessionUser(response.data)
        console.log(response.data);
     }catch(error) {
       if (error.response) {
@@ -47,8 +47,8 @@ const Profile = () => {
   getUserPost = async () => {
     try{
       const response = await axios.get('api/v1/post/postByUser');
-       //setPosts(response.data)
-       console.log(response.data);
+      // setPosts(response.data)
+       console.log(posts);
     }catch(error){
       if (error.response) {
         setError(error.response.data)
@@ -80,10 +80,10 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    getFriends();
+    //getFriends();
     getUserProfile()
-    getUserPost()
-    getAround()
+    //getUserPost()
+    //getAround()
   }, []);
 
   return (
