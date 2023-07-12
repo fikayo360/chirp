@@ -22,10 +22,10 @@ const Profile = () => {
   const getFriends = async () => {
     try {
       const response = await axios.get('api/v1/user/following');
-      console.log(re);
-       setFriends(response.data)
+      console.log(response.data);
+       //setFriends(response.data)
        console.log(friends);
-    } catch (error) {
+    } catch(error) {
       if (error.response) {
         setError(error.response.data)
       } 
@@ -35,9 +35,9 @@ const Profile = () => {
   getUserProfile = async () => {
     try{
       const response = await axios.get('api/v1/user/getUser');
-       setSessionUser(response.data)
-       console.log(sessionUser);
-    }catch (error) {
+       //setSessionUser(response.data)
+       console.log(response.data);
+    }catch(error) {
       if (error.response) {
         setError(error.response.data)
       } 
@@ -47,8 +47,8 @@ const Profile = () => {
   getUserPost = async () => {
     try{
       const response = await axios.get('api/v1/post/postByUser');
-       setPosts(response.data)
-       console.log(posts);
+       //setPosts(response.data)
+       console.log(response.data);
     }catch(error){
       if (error.response) {
         setError(error.response.data)
@@ -59,9 +59,9 @@ const Profile = () => {
   const getAround = async () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
-      setAroundYou(response.data);
-      console.log(aroundYou)
-    } catch (error) {
+      //setAroundYou(response.data);
+      console.log(response.data)
+    } catch(error) {
       console.log(err.response);
     }
   };
@@ -70,8 +70,9 @@ const Profile = () => {
     console.log('hi you got here');
     try {
       const response = await axios.get(`api/v1/user/follow/${username}`);
-      setError(response.data)
-    } catch (error) {
+      //setError(response.data)
+      console.log(response.data);
+    } catch(error) {
       if (error.response) {
         setError(error.response.data)
       } 
@@ -102,11 +103,6 @@ const Profile = () => {
           <View style={styles.quickInfoContainer}>
              <View style={styles.profileQuickInfoAnalContainer}>
               <Text style={styles.quickinfoTxtUpper}>posts</Text>
-              <Text style={styles.quickInfoTxtLower}>{30}</Text>
-              </View>
-
-              <View style={styles.profileQuickInfoAnalContainer}>
-              <Text style={styles.quickinfoTxtUpper}>Followers</Text>
               <Text style={styles.quickInfoTxtLower}>{30}</Text>
               </View>
 
