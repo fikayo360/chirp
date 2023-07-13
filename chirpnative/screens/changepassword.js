@@ -67,7 +67,7 @@ export default function ChangePassword() {
         placeholder="paste your token here"
         />
         
-        <TouchableOpacity style={styles.button} onPress={submit}>
+        <TouchableOpacity style={[styles.fpbutton,ctaStyles]} onPress={submit}>
         <Text style={styles.signuptxt}>change password</Text>
         </TouchableOpacity>
 
