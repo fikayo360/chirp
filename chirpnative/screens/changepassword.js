@@ -51,22 +51,20 @@ export default function ChangePassword() {
         </View>
 
         <View style={[styles.rinputs,{paddingTop:windowWidth * 0.4}]}>
-        
-
         <TextInput
-        style={styles.rinput}
+        style={[styles.rinput, inputStyles ]}
         onChangeText={text => setNewPassword(text)}
         value={newPassword}
         placeholder="newpassword"
         />
 
          <TextInput
-        style={styles.input}
+        style={[styles.rinput, inputStyles ]}
         multiline={true}
         numberOfLines={4}
         value={token}
         onChangeText={text => setToken(text)}
-        placeholder="token"
+        placeholder="paste your token here"
         />
         
         <TouchableOpacity style={styles.button} onPress={submit}>
@@ -132,12 +130,9 @@ const styles = StyleSheet.create({
     borderColor:'black'
     },
   rinput: {
-    height: 60,
-    margin: 12,
-    borderWidth: 2,
-    padding: 10,
-    borderRadius: 10,
-    borderColor:'black'
+    borderColor:'black',
+    width:'95%',
+    borderWidth: 2
   },
   header: {
     width:'100%',
