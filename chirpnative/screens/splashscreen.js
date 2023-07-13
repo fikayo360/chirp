@@ -1,10 +1,14 @@
-import { StyleSheet, Text, View,Image } from 'react-native';
+import { StyleSheet, Text, View,Image,Dimensions } from 'react-native';
 
 export const Splashscreen = () => {
+
+  const windowWidth = Dimensions.get('window').width;
+  const fontSize = windowWidth * 0.2;
+  const imageWidth = windowWidth * 0.84
   return (
    <View style={styles.container}> 
-    <Text style={styles.firstText}> Chirrp  </Text>
-    <Image source={require('../assets/anime2.png')} resizeMode='contain' style={{ width: 300, height: 300 }} />
+    <Text style={[styles.firstText, { fontSize }]}> #Chirrp  </Text>
+    <Image source={require('../assets/anime2.png')} resizeMode='contain' style={{ width: imageWidth, height: imageWidth }} />
    </View>
   )
 }
@@ -20,7 +24,7 @@ const styles = StyleSheet.create({
 
     firstText: {
         marginTop:30,
-        color: 'white',
+        color: '#EBE9E9',
         fontSize: 40,
         fontWeight: 'bold'
     }
