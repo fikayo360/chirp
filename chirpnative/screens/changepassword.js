@@ -56,6 +56,7 @@ export default function ChangePassword() {
         onChangeText={text => setNewPassword(text)}
         value={newPassword}
         placeholder="newpassword"
+        secureTextEntry
         />
 
          <TextInput
@@ -65,10 +66,11 @@ export default function ChangePassword() {
         value={token}
         onChangeText={text => setToken(text)}
         placeholder="paste your token here"
+        secureTextEntry
         />
         
         <TouchableOpacity style={[styles.button,ctaStyles]} onPress={submit}>
-        <Text style={[styles.signuptxt]}>change password</Text>
+        <Text style={[styles.signuptxt,{fontSize:windowWidth * 0.05}]}>change password</Text>
         </TouchableOpacity>
 
         </View>
