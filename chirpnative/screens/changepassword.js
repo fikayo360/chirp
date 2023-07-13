@@ -67,8 +67,8 @@ export default function ChangePassword() {
         placeholder="paste your token here"
         />
         
-        <TouchableOpacity style={[styles.fpbutton,ctaStyles]} onPress={submit}>
-        <Text style={styles.signuptxt}>change password</Text>
+        <TouchableOpacity style={[styles.button,ctaStyles]} onPress={submit}>
+        <Text style={[styles.signuptxt]}>change password</Text>
         </TouchableOpacity>
 
         </View>
@@ -99,14 +99,9 @@ const styles = StyleSheet.create({
     position:'relative'
   },
     button: {
-      alignItems: 'center',
       backgroundColor: 'rgb(15, 20, 25)',
-      padding: 10,
-      height: 55,
-      width:'93%',
-      margin: 12,
-      marginTop:50,
-      borderRadius:5
+      justifyContent: 'center',
+      width:'95%'
     },
     signuptxt:{
       fontSize:20,
