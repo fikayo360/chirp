@@ -1,4 +1,4 @@
-import { StyleSheet, Text,View,TouchableOpacity,SafeAreaView,TextInput,Image,Dimensions} from 'react-native';
+import { StyleSheet, Text,View,TouchableOpacity,SafeAreaView,KeyboardAvoidingView,TextInput,Image,Dimensions} from 'react-native';
 import { useState } from 'react';
 import axios from "axios";
 
@@ -48,6 +48,7 @@ export default function Register() {
     };
 
   return (
+    <KeyboardAvoidingView style={styles.keyboard} behavior="padding" keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
     <SafeAreaView style={styles.container}>
        {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
 
@@ -89,12 +90,15 @@ export default function Register() {
         </TouchableOpacity>
        <Text style={[styles.footerTxt,{fontSize: windowWidth * 0.04,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03}]}>already a user <Text style={styles.footerOtherTxt}>Login</Text> </Text>
         </View>
-        
     </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  keyboard:{
+    flex: 1,
+  },
     container:{
       flex: 1,
       position:'relative'
