@@ -86,7 +86,7 @@ export default function Login() {
         <TouchableOpacity style={[styles.button,ctaStyles]} onPress={handleLogin}>
         <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06}]}>Login</Text>
         </TouchableOpacity>
-        <Text style={styles.footerTxt}>{passwordAttempt >= 2 && ('forgotpassword')}</Text>
+        <Text style={[styles.footerTxt,{fontSize: windowWidth * 0.04,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03}]}>{passwordAttempt >= 2 && ('forgotpassword')}</Text>
         </View>
        
     </ScrollView>
@@ -124,10 +124,7 @@ const styles = StyleSheet.create({
       color:'white'
     },
     footerTxt:{
-      fontSize: 17,
-      marginTop:23,
-      marginLeft:100,
-      color:'#1D98F0',
+      color:'black'
     },
     footerOtherTxt:{
       fontSize: 16,

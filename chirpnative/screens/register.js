@@ -57,7 +57,7 @@ export default function Register() {
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
         </View>
 
-        <View style={[styles.inputs,{paddingTop:windowWidth * 0.2}]}>
+        <View style={[styles.inputs,{paddingTop:windowWidth * 0.4}]}>
         <TextInput
         style={[styles.input, inputStyles ]}
         value={username}

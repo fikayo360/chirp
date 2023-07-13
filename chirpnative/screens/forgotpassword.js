@@ -1,10 +1,22 @@
 
-import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView} from 'react-native';
+import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView,ScrollView,Image,Dimensions} from 'react-native';
 import { useState, } from 'react';
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Forgotpassword() {
+  const windowWidth = Dimensions.get('window').width;
+  const headerFontSize = windowWidth * 0.07;
+  const imageWidth = windowWidth * 0.14
+  const headerHeight = windowWidth * 0.2
+  const inputStyles = {
+      height: windowWidth * 0.20,
+      padding: windowWidth * 0.05,
+      borderRadius: windowWidth * 0.03,
+      margin: windowWidth * 0.05,
+      fontSize: windowWidth * 0.05,
+  }
+  const ctaStyles = {height:windowWidth * 0.18,borderRadius: windowWidth * 0.5,padding:windowWidth * 0.03,alignItems:'center',marginTop: windowWidth * 0.09}
 
     const [emailaddress,setEmailaddress] = useState("")
     const [error,setError] = useState("")
@@ -36,35 +48,38 @@ export default function Forgotpassword() {
     };
 
   return (
-    <SafeAreaView style={styles.container}>
-       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-        <View style={styles.header}>
-        <Text style={styles.headerTxt}>ForgotPassword</Text>
+    <ScrollView style={styles.container}>
+        {error !== "" && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+
+        <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
+        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{'ForgotPassword'}</Text>
+        <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
         </View>
-        <View style={styles.rinputs}>
-        
-        <Text style={styles.forgotTxt}>  *** enter your email *** </Text> 
+
+        <View style={[styles.rinputs,{paddingTop:windowWidth * 0.4}]}>
+        <Text style={[styles.forgotTxt,{fontSize:windowWidth * 0.07}]}>  *** enter your email *** </Text> 
 
         <TextInput
-        style={styles.rinput}
+        style={[styles.rinput, inputStyles ]}
         value={emailaddress}
         onChangeText={text => setEmailaddress(text)}
         placeholder="email address"
         />
         
-        <TouchableOpacity style={styles.fpbutton} onPress={submit}>
-        <Text style={styles.fpsignuptxt}> submit </Text>
+        <TouchableOpacity style={[styles.fpbutton,ctaStyles]} onPress={submit}>
+        <Text style={[styles.fpsignuptxt,{fontSize:windowWidth * 0.05}]}> submit </Text>
         </TouchableOpacity>
         </View>
        
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-    container:{
-    justifyContent: 'center'
-    },
+  container:{
+    flex: 1,
+    position:'relative'
+  },
     errorContainer:{
       alignItems: 'center',
       marginTop:60,
@@ -82,24 +97,14 @@ const styles = StyleSheet.create({
       color:'white'
     },
     fpbutton: {
-      alignItems: 'center',
-      borderRadius: 5,
       backgroundColor: 'rgb(15, 20, 25)',
-      padding: 10,
-      height: 55,
-      width:'93%',
-      margin: 12,
-      marginTop:40,
-      
+      justifyContent: 'center',
+      width:'95%'
     },
     fpsignuptxt:{
-      fontSize:18,
       color:'white'
     },
     forgotTxt:{
-      fontSize: 19,
-      marginLeft:40,
-      marginBottom:50,
       color:'black'
     },
     footerOtherTxt:{
@@ -108,25 +113,29 @@ const styles = StyleSheet.create({
       
     },
   rinput: {
-    height: 60,
-    margin: 12,
-    borderWidth: 2,
-    padding: 10,
-    borderRadius: 10,
+    borderColor:'black',
+    width:'95%',
+    borderWidth: 2
   },
   header: {
-    justifyContent: 'center',
-    marginTop: 50
+    width:'100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    
   },
   headerTxt: {
-    marginLeft:13,
-    fontSize: 25,
-    color:'#1D98F0',
-    fontWeight:'bold'
+    color:'#191919',
+    fontWeight:'bold',
   },
-  rinputs: {
-    marginTop: 170
-  },
+  
+    rinputs: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+      height:'80%'
+    },
+  
   cta: {
     width:'80%',
     height:50,
