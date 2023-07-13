@@ -1,4 +1,4 @@
-import { StyleSheet, Text,View,TouchableOpacity,SafeAreaView,KeyboardAvoidingView,TextInput,Image,Dimensions} from 'react-native';
+import { StyleSheet, Text,View,TouchableOpacity,SafeAreaView,KeyboardAvoidingView,TextInput,Image,Dimensions,ScrollView} from 'react-native';
 import { useState } from 'react';
 import axios from "axios";
 
@@ -16,7 +16,7 @@ export default function Register() {
       margin: windowWidth * 0.05,
       fontSize: windowWidth * 0.05,
   }
-  const ctaStyles = {height:windowWidth * 0.18,borderRadius: windowWidth * 0.5,padding:windowWidth * 0.03,alignItems:'center'}
+  const ctaStyles = {height:windowWidth * 0.18,borderRadius: windowWidth * 0.5,padding:windowWidth * 0.03,alignItems:'center',marginTop: windowWidth * 0.09}
   const [username,setUsername] = useState("")
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
@@ -48,16 +48,16 @@ export default function Register() {
     };
 
   return (
-    <KeyboardAvoidingView style={styles.keyboard} behavior="padding" keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
-    <SafeAreaView style={styles.container}>
-       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+    
+    <ScrollView style={styles.container}>
+       {error !== "" && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
 
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
         <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{`ChirpSignup`}</Text>
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
         </View>
 
-        <View style={styles.inputs}>
+        <View style={[styles.inputs,{paddingTop:windowWidth * 0.2}]}>
         <TextInput
         style={[styles.input, inputStyles ]}
         value={username}
@@ -75,23 +75,23 @@ export default function Register() {
         onChangeText={text => setPassword(text)}
         value={password}
         placeholder="password"
+        secureTextEntry
         />
         <TextInput
         style={[styles.input, inputStyles ]}
         onChangeText={text => setConfirm(text)}
         value={confirm}
+        secureTextEntry
         placeholder="confirm password"
         />
-        </View>
-
-        <View style={styles.footer}>
-        <TouchableOpacity style={[styles.button,ctaStyles]} onPress={handleLogin}>
+         <TouchableOpacity style={[styles.button,ctaStyles]} onPress={handleLogin}>
         <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06}]}>SignUp</Text>
         </TouchableOpacity>
-       <Text style={[styles.footerTxt,{fontSize: windowWidth * 0.04,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03}]}>already a user <Text style={styles.footerOtherTxt}>Login</Text> </Text>
+       <Text style={[styles.footerTxt,{fontSize: windowWidth * 0.04,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03}]}>
+        already a user <Text style={styles.footerOtherTxt}>Login</Text> </Text>
         </View>
-    </SafeAreaView>
-    </KeyboardAvoidingView>
+    </ScrollView>
+   
   );
 }
 
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       marginTop:60,
-      backgroundColor: 'rgb(15, 20, 25)',
+      backgroundColor: 'black',
       padding: 10,
       height: 40,
       position:"absolute",
@@ -161,9 +161,8 @@ const styles = StyleSheet.create({
   inputs: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 0,
     width: '100%',
-    height:'68%'
+    height:'80%'
   },
   cta: {
     width:'80%',

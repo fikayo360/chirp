@@ -1,13 +1,25 @@
-import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView,Dimensions} from 'react-native';
+import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView,Dimensions,ScrollView,Image} from 'react-native';
 import { useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login() {
+  const windowWidth = Dimensions.get('window').width;
+  const headerFontSize = windowWidth * 0.07;
+  const imageWidth = windowWidth * 0.14
+  const headerHeight = windowWidth * 0.2
+  const inputStyles = {
+      height: windowWidth * 0.20,
+      padding: windowWidth * 0.05,
+      borderRadius: windowWidth * 0.03,
+      margin: windowWidth * 0.05,
+      fontSize: windowWidth * 0.05,
+  }
+  const ctaStyles = {height:windowWidth * 0.18,borderRadius: windowWidth * 0.5,padding:windowWidth * 0.03,alignItems:'center',marginTop: windowWidth * 0.09}
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
     const [error,setError] = useState("")
-    const [passwordAttempt,setPasswordAttempt] = useState(0)
+    const [passwordAttempt,setPasswordAttempt] = useState(2)
 
     const setTokenToAsyncStorage = async (value) => {
       try {
@@ -47,32 +59,37 @@ export default function Login() {
     };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-        <View style={styles.header}>
-        <Text style={styles.headerTxt}>Chirp Login</Text>
+    <ScrollView style={styles.container}>
+      {error !== "" && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+
+        <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
+        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>ChirpLogin</Text>
+        <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
         </View>
-        <View style={styles.rinputs}>
+
+        <View style={[styles.rinputs,{paddingTop:windowWidth * 0.2}]}>
         <TextInput
-        style={styles.rinput}
+        style={[styles.rinput, inputStyles ]}
         onChangeText={text => setUsername(text)}
         value={username}
         placeholder="username"
         />
         
         <TextInput
-        style={styles.rinput}
+        style={[styles.rinput, inputStyles ]}
         onChangeText={text => setPassword(text)}
         value={password}
         placeholder="password"
+        secureTextEntry
         />
         
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.signuptxt}>Login</Text>
+        <TouchableOpacity style={[styles.button,ctaStyles]} onPress={handleLogin}>
+        <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06}]}>Login</Text>
         </TouchableOpacity>
+        <Text style={styles.footerTxt}>{passwordAttempt >= 2 && ('forgotpassword')}</Text>
         </View>
-       <Text style={styles.footerTxt}>{passwordAttempt >= 2 && ('forgotpassword')}</Text>
-    </SafeAreaView>
+       
+    </ScrollView>
   );
 }
 
@@ -93,19 +110,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color:'white'
   },
-    container:{
-    justifyContent: 'center'
-    },
-    button: {
-      alignItems: 'center',
-      backgroundColor: 'rgb(15, 20, 25)',
-      padding: 10,
-      height: 55,
-      width:'93%',
-      margin: 12,
-      marginTop:40,
-      borderRadius:5
-    },
+  container:{
+    flex: 1,
+    position:'relative'
+  }, 
+  button: {
+    backgroundColor: 'rgb(15, 20, 25)',
+    justifyContent: 'center',
+    width:'95%'
+  },
     signuptxt:{
       fontSize:20,
       color:'white'
@@ -121,26 +134,32 @@ const styles = StyleSheet.create({
       color:'#1D98F0',
       
     },
-  rinput: {
-    height: 70,
-    margin: 15,
-    borderWidth: 2,
-    padding: 10,
-    borderRadius: 10,
-    borderColor:'black'
+    rinput: {
+      borderColor:'black',
+      width:'95%',
+      borderWidth: 2,
+    },
+  rinputs: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height:'80%'
   },
   header: {
-    justifyContent: 'center',
-    marginTop: 50
+    width:'100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   headerTxt: {
-    marginLeft:13,
-    fontSize: 25,
-    color:'#1D98F0',
-    fontWeight:'bold'
+    color:'#191919',
+    fontWeight:'bold',
   },
-  rinputs: {
-    marginTop: 170
+  reportErrorinputs: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height:'80%'
   },
   cta: {
     width:'80%',
