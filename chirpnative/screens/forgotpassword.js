@@ -121,12 +121,11 @@ const styles = StyleSheet.create({
     width:'100%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    flexDirection: 'row',
-    
+    flexDirection: 'row'
   },
   headerTxt: {
     color:'#191919',
-    fontWeight:'bold',
+    fontWeight:'bold'
   },
   
     rinputs: {
