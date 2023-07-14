@@ -42,9 +42,8 @@ export default function Register() {
         setEmail('') 
         setConfirm('')
         setError("")
-    
-      } catch (error) {
         setIsLoading(false)
+      } catch (error) {
         if (error.response) {
           setError(error.response.data);
         } 

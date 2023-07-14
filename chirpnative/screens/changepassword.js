@@ -2,6 +2,7 @@ import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView,ScrollVie
 import { useState, } from 'react';
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function ChangePassword() {
   const windowWidth = Dimensions.get('window').width;
@@ -19,7 +20,8 @@ export default function ChangePassword() {
     const [newPassword,setNewPassword] = useState("")
     const [token,setToken] = useState("")
     const [error,setError] = useState("")
-    
+    const [isLoading, setIsLoading] = useState(false);
+
     const submit = async () => {
       try {
         const emailaddress = await AsyncStorage.getItem('email');
@@ -29,10 +31,12 @@ export default function ChangePassword() {
           setError(" fields cant be empty")
         }
         const response = await axios.post('api/v1/user/changePassword',formData);
+        setIsLoading(!isLoading)
         await AsyncStorage.removeItem('email');
         setError(response.data)
         setNewPassword('')
         setToken('')
+        setIsLoading(false)
       } catch (error) {
         if (error.response) {
           setError(error.response.data);
@@ -45,6 +49,7 @@ export default function ChangePassword() {
   return (
     <ScrollView style={styles.container}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+      <Spinner visible={isLoading} textStyle={{ color: '#FFF' }} />
       <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
         <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{'ForgotPassword'}</Text>
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />

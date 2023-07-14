@@ -38,7 +38,6 @@ export default function Login() {
           setError("All fields are required");
         } else {
           const formData = { username, password };
-          
           const response = await axios.post('api/v1/user/login', formData);
           setIsLoading(!isLoading)
           console.log(response.data.cookie);
@@ -46,6 +45,7 @@ export default function Login() {
           setUsername('');
           setPassword('');
           setError('');
+          setIsLoading(false)
         }
       } catch (error) {
         
