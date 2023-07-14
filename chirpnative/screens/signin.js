@@ -39,7 +39,7 @@ export default function Login() {
         } else {
           const formData = { username, password };
           const response = await axios.post('api/v1/user/login', formData);
-          setIsLoading(!isLoading)
+          setIsLoading(true)
           console.log(response.data.cookie);
           setTokenToAsyncStorage(response.data.cookie)
           setUsername('');
