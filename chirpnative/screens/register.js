@@ -28,13 +28,13 @@ export default function Register() {
     const handleLogin = async () => {
       try {
         const formData = { username, password, email };
-        setIsLoading(true)
         if(!username || !password || !email || !confirm) {
           setError("All fields are required")
         }
         else if(password!== confirm) {
           setError("Passwords do not match");
         }
+        setIsLoading(true)
         const response = await axios.post('api/v1/user/signup', formData);
         setIsLoading(!isLoading)
         setUsername('') 
@@ -54,7 +54,7 @@ export default function Register() {
     
     <ScrollView style={styles.container}>
        {error !== "" && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-
+       {isLoading && (<Spinner visible={isLoading} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />)}
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
         <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{`ChirpSignup`}</Text>
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
@@ -88,8 +88,7 @@ export default function Register() {
         placeholder="confirm password"
         />
          <TouchableOpacity style={[styles.button,ctaStyles]} onPress={handleLogin}>
-        <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06}]}>
-          {isLoading?(<Spinner visible={isLoading} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />):'signup'}</Text>
+        <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06}]}>signup</Text>
         </TouchableOpacity>
        <Text style={[styles.footerTxt,{fontSize: windowWidth * 0.04,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03}]}>
         already a user <Text style={styles.footerOtherTxt}>Login</Text> </Text>
