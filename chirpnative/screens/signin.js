@@ -38,7 +38,7 @@ export default function Login() {
           setError("All fields are required");
         } else {
           const formData = { username, password };
-          setIsLoading(!isLoading)
+          
           const response = await axios.post('api/v1/user/login', formData);
           setIsLoading(!isLoading)
           console.log(response.data.cookie);
@@ -52,7 +52,7 @@ export default function Login() {
         if (error.response.data === "wrong password"){
           setIsLoading(false)
           setPasswordAttempt(current => current + 1)
-          console.log(passwordAttempt);
+          console.log(passwordAttempt)
         }
         if (error.response) {
           setError(error.response.data);
@@ -67,7 +67,7 @@ export default function Login() {
   return (
     <ScrollView style={styles.container}>
       {error !== "" && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-      <Spinner visible={!isLoading} textStyle={{ color: '#FFF' }} />
+      <Spinner visible={isLoading} textStyle={{ color: '#FFF' }} />
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
         <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>ChirpLogin</Text>
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />

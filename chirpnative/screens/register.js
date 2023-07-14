@@ -34,7 +34,7 @@ export default function Register() {
         else if(password!== confirm) {
           setError("Passwords do not match");
         }
-        setIsLoading(!isLoading)
+        
         const response = await axios.post('api/v1/user/signup', formData);
         setIsLoading(!isLoading)
         setUsername('') 
@@ -55,13 +55,13 @@ export default function Register() {
     
     <ScrollView style={styles.container}>
        {error !== "" && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-       <Spinner visible={!isLoading} textStyle={{ color: '#FFF' }} />
+       <Spinner visible={isLoading} textStyle={{ color: 'blue' }} />
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
         <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{`ChirpSignup`}</Text>
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
         </View>
 
-        <View style={[styles.inputs,{paddingTop:windowWidth * 0.4}]}>
+        <View style={[styles.inputs,{paddingTop:windowWidth * 0.2}]}>
         <TextInput
         style={[styles.input, inputStyles ]}
         value={username}
