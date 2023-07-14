@@ -1,4 +1,4 @@
-import { StyleSheet, Text,View,TouchableOpacity,ActivityIndicator,TextInput,Image,Dimensions,ScrollView} from 'react-native';
+import { StyleSheet, Text,View,TouchableOpacity,TextInput,Image,Dimensions,ScrollView} from 'react-native';
 import { useState } from 'react';
 import axios from "axios";
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -34,7 +34,7 @@ export default function Register() {
         else if(password!== confirm) {
           setError("Passwords do not match");
         }
-        setIsLoading(true)
+        setIsLoading(!isLoading)
         const response = await axios.post('api/v1/user/signup', formData);
         setIsLoading(!isLoading)
         setUsername('') 
@@ -44,6 +44,7 @@ export default function Register() {
         setError("")
     
       } catch (error) {
+        setIsLoading(false)
         if (error.response) {
           setError(error.response.data);
         } 
