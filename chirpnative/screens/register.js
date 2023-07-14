@@ -1,7 +1,7 @@
 import { StyleSheet, Text,View,TouchableOpacity,ActivityIndicator,TextInput,Image,Dimensions,ScrollView} from 'react-native';
 import { useState } from 'react';
 import axios from "axios";
-
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function Register() {
 
@@ -22,11 +22,13 @@ export default function Register() {
   const [password,setPassword] = useState("")
   const [confirm,setConfirm] = useState("")
   const [error,setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+  
     
     const handleLogin = async () => {
       try {
         const formData = { username, password, email };
-       
+        setIsLoading(true)
         if(!username || !password || !email || !confirm) {
           setError("All fields are required")
         }
@@ -34,6 +36,7 @@ export default function Register() {
           setError("Passwords do not match");
         }
         const response = await axios.post('api/v1/user/signup', formData);
+        setIsLoading(!isLoading)
         setUsername('') 
         setPassword('') 
         setEmail('') 
@@ -85,7 +88,8 @@ export default function Register() {
         placeholder="confirm password"
         />
          <TouchableOpacity style={[styles.button,ctaStyles]} onPress={handleLogin}>
-        <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06}]}>SignUp</Text>
+        <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06}]}>
+          {isLoading?(<Spinner visible={isLoading} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />):'signup'}</Text>
         </TouchableOpacity>
        <Text style={[styles.footerTxt,{fontSize: windowWidth * 0.04,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03}]}>
         already a user <Text style={styles.footerOtherTxt}>Login</Text> </Text>
