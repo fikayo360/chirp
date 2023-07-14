@@ -37,14 +37,15 @@ export default function Forgotpassword() {
         if(!emailaddress ) {
           setError(" field cant be empty")
         }
+        setIsLoading(true)
         const response = await axios.post('api/v1/user/forgotPassword', formData);
-        setIsLoading(!isLoading)
+        setIsLoading(false)
         setError(response.data)
         setTokenToAsyncStorage(emailaddress)
         setEmailaddress('')
-        setIsLoading(false)
       } catch (error) {
         if (error.response) {
+          setIsLoading(false)
           setError(error.response.data);
         } 
       }

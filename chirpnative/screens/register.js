@@ -34,15 +34,14 @@ export default function Register() {
         else if(password!== confirm) {
           setError("Passwords do not match");
         }
-        
+        setIsLoading(true)
         const response = await axios.post('api/v1/user/signup', formData);
-        setIsLoading(!isLoading)
+        setIsLoading(false)
         setUsername('') 
         setPassword('') 
         setEmail('') 
         setConfirm('')
         setError("")
-        setIsLoading(false)
       } catch (error) {
         if (error.response) {
           setError(error.response.data);

@@ -38,14 +38,14 @@ export default function Login() {
           setError("All fields are required");
         } else {
           const formData = { username, password };
-          const response = await axios.post('api/v1/user/login', formData);
           setIsLoading(true)
+          const response = await axios.post('api/v1/user/login', formData);
+          setIsLoading(false)
           console.log(response.data.cookie);
           setTokenToAsyncStorage(response.data.cookie)
           setUsername('');
           setPassword('');
           setError('');
-          setIsLoading(false)
         }
       } catch (error) {
         
@@ -55,6 +55,7 @@ export default function Login() {
           console.log(passwordAttempt)
         }
         if (error.response) {
+          setIsLoading(false)
           setError(error.response.data);
           console.log(error.response.data);
         }

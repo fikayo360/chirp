@@ -19,6 +19,7 @@ import Savedpost from './screens/savedpost';
 import Notifications from './screens/notifications';
 import AppNotifications from './screens/notifications';
 import Home from './screens/home';
+
 import Commentscreen from './screens/commentscreen';
 import EditProfile from './screens/editProfile';
 import Profile from './screens/profile';
@@ -52,7 +53,7 @@ export default function App() {
 
   return (
     <>
-    <Login/>
+    <ChangePassword/>
     </>
   );
 }

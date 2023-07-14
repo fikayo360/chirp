@@ -30,8 +30,9 @@ export default function ChangePassword() {
         if(!emailaddress || !newPassword || !token) {
           setError(" fields cant be empty")
         }
+        setIsLoading(true)
         const response = await axios.post('api/v1/user/changePassword',formData);
-        setIsLoading(!isLoading)
+        setIsLoading(false)
         await AsyncStorage.removeItem('email');
         setError(response.data)
         setNewPassword('')
@@ -39,6 +40,7 @@ export default function ChangePassword() {
         setIsLoading(false)
       } catch (error) {
         if (error.response) {
+          setIsLoading(false)
           setError(error.response.data);
         } else{
           setError(error.Error)
@@ -51,7 +53,7 @@ export default function ChangePassword() {
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
       <Spinner visible={isLoading} textStyle={{ color: '#FFF' }} />
       <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
-        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{'ForgotPassword'}</Text>
+        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{'changePassword'}</Text>
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
         </View>
 
