@@ -54,7 +54,7 @@ export default function Register() {
     
     <ScrollView style={styles.container}>
        {error !== "" && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-       {isLoading && (<Spinner visible={isLoading} textContent={'Loading...'} textStyle={{ color: '#FFF' }} />)}
+       <Spinner visible={!isLoading} textStyle={{ color: '#FFF' }} />
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
         <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{`ChirpSignup`}</Text>
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
