@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from "axios";
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
+import ErrorComponent from '../components/errorComponent';
 
 export default function Register() {
   const navigation = useNavigation();
@@ -53,7 +54,7 @@ export default function Register() {
   return (
     
     <ScrollView style={styles.container}>
-       {error !== "" && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+       {error !== "" && (<ErrorComponent text={error} />)}
        <Spinner visible={isLoading} textStyle={{ color: 'blue' }} />
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
         <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{`ChirpSignup`}</Text>
@@ -105,24 +106,6 @@ const styles = StyleSheet.create({
     container:{
       flex: 1,
       position:'relative'
-    },
-    errorContainer:{
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop:60,
-      backgroundColor: 'black',
-      padding: 10,
-      height: 40,
-      position:"absolute",
-      width:'90%',
-      height:'8%',
-      top:50,
-      left:15,
-      borderRadius:10
-    },
-    errorText:{
-      fontSize: 15,
-      color:'white'
     },
     footer:{
       alignItems: 'center',

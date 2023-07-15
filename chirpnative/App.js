@@ -25,6 +25,7 @@ import { ArrowLongDownIcon } from 'react-native-heroicons/solid';
 import Sidebar from './components/sidebar';
 
 axios.defaults.baseURL = 'https://chirpserver.onrender.com/';
+
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 

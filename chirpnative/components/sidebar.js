@@ -31,7 +31,7 @@ function Sidebar(props) {
         />
         <DrawerItem
           label="business"
-          onPress={() => props.navigation.navigate('bussiness')}
+          onPress={() => props.navigation.navigate('business')}
           style={styles.drawerItem}
         />
         <DrawerItem
