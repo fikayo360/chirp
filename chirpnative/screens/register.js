@@ -4,6 +4,7 @@ import axios from "axios";
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
 import ErrorComponent from '../components/errorComponent';
+import NotificationAlert from '../components/notificationAlert';
 
 export default function Register() {
   const navigation = useNavigation();
@@ -23,7 +24,8 @@ export default function Register() {
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [confirm,setConfirm] = useState("")
-  const [error,setError] = useState("ekek")
+  const [error,setError] = useState("error")
+  const [notification,setNotification] = useState("")
   const [isLoading, setIsLoading] = useState(false);
   
     
@@ -55,6 +57,7 @@ export default function Register() {
     
     <ScrollView style={styles.container}>
        {error !== "" && (<ErrorComponent text={error} />)}
+       {notification !== "" && (<NotificationAlert text={notification}/>)}
        <Spinner visible={isLoading} textStyle={{ color: 'blue' }} />
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
         <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{`ChirpSignup`}</Text>
