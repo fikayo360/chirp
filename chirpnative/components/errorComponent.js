@@ -1,11 +1,11 @@
-import {View,Text,StyleSheet,Dimensions,Image} from 'react-native'
+import {View,Text,StyleSheet,Dimensions,Image,TouchableOpacity} from 'react-native'
 
 const ErrorComponent = (props) => {
     const windowWidth = Dimensions.get('window').width;
     return (
-        <View style={[styles.errorContainer,{padding:windowWidth * 0.01}]}>
-            <Text style={[styles.errorText,{fontSize:windowWidth * 0.03}]}>{props.text}</Text>
-            <Image style={{ width:10, height:10,}} source={require('../assets/anime2.png')} resizeMode='cover' />
+        <View style={[styles.errorContainer,{padding:windowWidth * 0.01,paddingHorizontal:windowWidth * 0.05,borderRadius:windowWidth * 0.03}]}>
+            <Text style={[styles.errorText,{fontSize:windowWidth * 0.04}]}>{props.text}</Text>
+            <TouchableOpacity><Image style={{ width:windowWidth * 0.04, height:windowWidth * 0.04,}} source={require('../assets/close.png')} resizeMode='cover' /></TouchableOpacity>
         </View>
     )
 }
@@ -20,8 +20,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#DA3E52',
         position:"absolute",
         width:'95%',
-        height:'8%',
-        top:80
+        height:'7%',
+        top:80,
+        flexDirection: 'row',
       },
       errorText:{
         color:'white',
