@@ -5,7 +5,7 @@ const ErrorComponent = (props) => {
     return (
         <View style={[styles.errorContainer,{padding:windowWidth * 0.01,paddingHorizontal:windowWidth * 0.05,borderRadius:windowWidth * 0.03}]}>
             <Text style={[styles.errorText,{fontSize:windowWidth * 0.04}]}>{props.text}</Text>
-            <TouchableOpacity><Image style={{ width:windowWidth * 0.04, height:windowWidth * 0.04,}} source={require('../assets/close.png')} resizeMode='cover' /></TouchableOpacity>
+            <TouchableOpacity onPress={() => props.clearError() }><Image style={{ width:windowWidth * 0.04, height:windowWidth * 0.04,}} source={require('../assets/close.png')} resizeMode='cover' /></TouchableOpacity>
         </View>
     )
 }

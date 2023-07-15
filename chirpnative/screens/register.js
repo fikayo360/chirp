@@ -28,7 +28,10 @@ export default function Register() {
   const [notification,setNotification] = useState("")
   const [isLoading, setIsLoading] = useState(false);
   
-    
+  const clearError = () => {
+    setError("")
+  }
+
     const handleLogin = async () => {
       try {
         const formData = { username, password, email };
@@ -56,7 +59,7 @@ export default function Register() {
   return (
     
     <ScrollView style={styles.container}>
-       {error !== "" && (<ErrorComponent text={error} />)}
+       {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
        {notification !== "" && (<NotificationAlert text={notification}/>)}
        <Spinner visible={isLoading} textStyle={{ color: 'blue' }} />
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
