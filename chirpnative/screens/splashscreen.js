@@ -1,6 +1,14 @@
 import { StyleSheet, Text, View,Image,Dimensions } from 'react-native';
+import { useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
-export const Splashscreen = () => {
+ const Splashscreen = () => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate('Register');
+    }, 5000);
+  }, []);
 
   const windowWidth = Dimensions.get('window').width;
   const fontSize = windowWidth * 0.2;
@@ -30,3 +38,5 @@ const styles = StyleSheet.create({
     }
     
   });
+
+  export default Splashscreen

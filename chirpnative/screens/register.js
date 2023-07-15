@@ -2,9 +2,10 @@ import { StyleSheet, Text,View,TouchableOpacity,TextInput,Image,Dimensions,Scrol
 import { useState } from 'react';
 import axios from "axios";
 import Spinner from 'react-native-loading-spinner-overlay';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Register() {
-
+  const navigation = useNavigation();
   const windowWidth = Dimensions.get('window').width;
   const headerFontSize = windowWidth * 0.07;
   const imageWidth = windowWidth * 0.14
@@ -90,7 +91,7 @@ export default function Register() {
         <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06}]}>signup</Text>
         </TouchableOpacity>
        <Text style={[styles.footerTxt,{fontSize: windowWidth * 0.04,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03}]}>
-        already a user <Text style={styles.footerOtherTxt}>Login</Text> </Text>
+        already a user <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.footerOtherTxt}><Text>Login</Text></TouchableOpacity> </Text>
         </View>
     </ScrollView>
    

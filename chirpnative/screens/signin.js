@@ -3,8 +3,10 @@ import { useState } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Login() {
+  const navigation = useNavigation();
   const windowWidth = Dimensions.get('window').width;
   const headerFontSize = windowWidth * 0.07;
   const imageWidth = windowWidth * 0.14
@@ -46,6 +48,7 @@ export default function Login() {
           setUsername('');
           setPassword('');
           setError('');
+          navigation.navigate('Home');
         }
       } catch (error) {
         

@@ -1,12 +1,17 @@
 import * as Icons from "react-native-heroicons/solid"
 import React from 'react'
-import {View,Text,StyleSheet} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity} from 'react-native'
 import ProfilePlaceholder from '../components/Profiletextplace'
+import { useNavigation } from '@react-navigation/native';
 
 const Header = (props) => {
+  const navigation = useNavigation();
+  const toggleSidebar = () => {
+    navigation.toggleDrawer();
+  }
   return (
     <View style={styles.header}>
-    <Icons.Bars3Icon width={30} height={30} color="black" />
+    <TouchableOpacity onPress={toggleSidebar}><Icons.Bars3Icon width={30} height={30} color="black" /></TouchableOpacity>
     <Text style={styles.Txt}>{props.title}</Text>
     <ProfilePlaceholder username={'morayo'}/>
     </View>

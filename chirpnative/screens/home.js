@@ -5,6 +5,7 @@ import Header from '../components/header'
 import axios from "axios";
 import { useState,useEffect } from 'react'
 
+
 const Home = () => {
 
   const [newsItems,setNewsItems] = useState([])
