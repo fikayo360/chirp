@@ -23,7 +23,7 @@ export default function Register() {
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [confirm,setConfirm] = useState("")
-  const [error,setError] = useState("")
+  const [error,setError] = useState("ekek")
   const [isLoading, setIsLoading] = useState(false);
   
     
@@ -61,7 +61,7 @@ export default function Register() {
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
         </View>
 
-        <View style={[styles.inputs,{paddingTop:windowWidth * 0.2}]}>
+        <View style={[styles.inputs,{paddingTop:windowWidth * 0.25}]}>
         <TextInput
         style={[styles.input, inputStyles ]}
         value={username}
