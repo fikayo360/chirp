@@ -19,7 +19,9 @@ const Header = (props) => {
   const getUser = async () => {
     try {
       const currentUser = await AsyncStorage.getItem('user');
-      const parsedValue = JSON.parse(currentUser);
+      console.log(currentUser);
+      //const parsedValue = JSON.parse(currentUser);
+      //console.log(parsedValue);
       setUser(parsedValue);
     } catch (error) {
       console.log('Error getting user:', error);
@@ -29,14 +31,14 @@ const Header = (props) => {
 
   useEffect(()=> {
     getUser()
-    console.log(userr.user.username);
+    //console.log(userr.user.username);
   },[])
  
   return (
     <View style={styles.header}>
     <TouchableOpacity onPress={toggleSidebar}><Icons.Bars3Icon width={windowWidth * 0.085} height={windowWidth * 0.085} color="black" /></TouchableOpacity>
     <Text style={styles.Txt}>{props.title}</Text>
-    <ProfilePlaceholder username={userr.user.username}/>
+    <ProfilePlaceholder username={userr?.user?.username}/>
     </View>
   )
 }
