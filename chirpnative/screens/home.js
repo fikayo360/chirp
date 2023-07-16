@@ -9,7 +9,7 @@ import { useState,useEffect } from 'react'
 const Home = () => {
 
   const [newsItems,setNewsItems] = useState([])
- 
+
   const submit = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
