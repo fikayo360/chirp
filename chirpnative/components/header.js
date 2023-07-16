@@ -1,6 +1,6 @@
 import * as Icons from "react-native-heroicons/solid"
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Dimensions} from 'react-native'
 import ProfilePlaceholder from '../components/Profiletextplace'
 import { useNavigation } from '@react-navigation/native';
 import { useState,useEffect } from "react";
@@ -8,19 +8,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const Header = (props) => {
-  const [user, setUser] = useState({});
+  const [userr, setUser] = useState({});
   const navigation = useNavigation();
+  const windowWidth = Dimensions.get('window').width;
+
   const toggleSidebar = () => {
     navigation.toggleDrawer();
   }
 
- 
   const getUser = async () => {
     try {
       const currentUser = await AsyncStorage.getItem('user');
-      console.log(currentUser);
-      setUser(currentUser);
-      //console.log(user);
+      const parsedValue = JSON.parse(currentUser);
+      setUser(parsedValue)
     } catch (error) {
       console.log('Error getting user:', error);
       setUser(null);
@@ -33,9 +33,9 @@ const Header = (props) => {
  
   return (
     <View style={styles.header}>
-    <TouchableOpacity onPress={toggleSidebar}><Icons.Bars3Icon width={30} height={30} color="black" /></TouchableOpacity>
+    <TouchableOpacity onPress={toggleSidebar}><Icons.Bars3Icon width={windowWidth * 0.07} height={windowWidth * 0.07} color="black" /></TouchableOpacity>
     <Text style={styles.Txt}>{props.title}</Text>
-    <ProfilePlaceholder username={'mor'}/>
+    <ProfilePlaceholder username={userr.user.username}/>
     </View>
   )
 }
