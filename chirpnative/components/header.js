@@ -5,37 +5,36 @@ import ProfilePlaceholder from '../components/Profiletextplace'
 import { useNavigation } from '@react-navigation/native';
 import { useState,useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const Header = (props) => {
-  const [userr,setUser] = useState({})
+  const [user, setUser] = useState({});
   const navigation = useNavigation();
   const toggleSidebar = () => {
     navigation.toggleDrawer();
   }
 
+ 
   const getUser = async () => {
     try {
       const currentUser = await AsyncStorage.getItem('user');
-      return currentUser
+      console.log(currentUser);
+      setUser(currentUser);
+      //console.log(user);
     } catch (error) {
       console.log('Error getting user:', error);
-      return null; 
+      setUser(null);
     }
   };
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await getUser();
-      setUser(userData);
-      console.log(userr);
-    };
-  
-    fetchUser();
-  }, []);
+  useEffect(()=> {
+    getUser()
+  },[])
+ 
   return (
     <View style={styles.header}>
     <TouchableOpacity onPress={toggleSidebar}><Icons.Bars3Icon width={30} height={30} color="black" /></TouchableOpacity>
-    <Text style={styles.Txt}>{userr.user.username}</Text>
+    <Text style={styles.Txt}>{props.title}</Text>
     <ProfilePlaceholder username={'mor'}/>
     </View>
   )
