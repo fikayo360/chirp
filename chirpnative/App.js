@@ -67,7 +67,6 @@ export default function App() {
         <Drawer.Screen name="savedPost" component={Savedpost} options={{ headerShown: false }}/>
         <Drawer.Screen name="search" component={Aroundyou} options={{ headerShown: false }}/>
         <Drawer.Screen name="notifications" component={Notifications} options={{ headerShown: false }}/>
-        <Drawer.Screen name="logout" component={Login} options={{ headerShown: false }}/>
       </Drawer.Navigator>
   );
 
@@ -85,10 +84,11 @@ export default function App() {
         <Stack.Screen name="forgotPassword" component={Forgotpassword} options={{ headerShown: false }} />
         <Stack.Screen name="article" component={Article} options={{ headerShown: false }}/>
         <Stack.Screen name="comment" component={Commentscreen} options={{ headerShown: false }} />
-        <Stack.Screen name="editProfile" component={EditProfile} options={{ headerShown: false }}/>
         <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
+        <Stack.Screen name="editProfile" component={EditProfile} options={{ headerShown: false }}/>
         <Stack.Screen name="webview" component={Webview} options={{ headerShown: false }}/>
         <Stack.Screen name="Home" component={MainFlow} options={{ headerShown: false }} />
+        <Drawer.Screen name="logout" component={Login} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -41,9 +41,9 @@ const EditProfile = () => {
       requestMediaLibraryPermissions();
 
       const submit = async () => {
-        if(!phonenumber || !profilepic || !Bio || !country || !state || !zipcode){
-            setError('fields cant be empty');
-        }
+        //if(!phonenumber || !profilepic || !Bio || !country || !state || !zipcode){
+         //   setError('fields cant be empty');
+        //}
         try {
          uploadImageToFirebase(profilepic)
          .then(async(downloadURL) => {

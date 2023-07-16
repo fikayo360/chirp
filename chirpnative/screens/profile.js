@@ -1,17 +1,20 @@
 import {React,useState} from 'react'
-import {View,Text,ScrollView,SafeAreaView,StyleSheet} from 'react-native'
+import {View,Text,ScrollView,SafeAreaView,StyleSheet,TouchableOpacity} from 'react-native'
 import * as Icons from "react-native-heroicons/solid"
 import Header from '../components/header'
 import ProfilePlaceholder from '../components/Profiletextplace'
 import Discoveredusers from '../components/discoveredusers'
 import { Discovered } from '../mockdata/Discoveredpeople'
 import NewscategoryItems from '../components/newscategoryItems'
+import { useNavigation } from '@react-navigation/native';
 import Following from '../components/following'
 import Wallcomponents from '../components/wallcomponent'
 import axios from 'axios'
 import {useEffect }from 'react'
 
+
 const Profile = () => {
+  const navigation = useNavigation();
   const [friends,setFriends] = useState([])
   const [sessionUser,setSessionUser] = useState({})
   const [posts,setPosts] = useState([])
@@ -95,7 +98,7 @@ const Profile = () => {
 
           <View >
           <View style={styles.imgContainer}><ProfilePlaceholder username={'fikayo'} /></View>
-          <Text style={styles.imgtext}>Edit</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('editProfile')}><Text style={styles.imgtext}>Edit</Text></TouchableOpacity>
           </View>
 
           <View style={styles.quickInfoContainer}>
