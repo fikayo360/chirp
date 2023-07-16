@@ -5,7 +5,7 @@ import ProfilePlaceholder from '../components/Profiletextplace'
 import { useNavigation } from '@react-navigation/native';
 import { useState,useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+
 
 const Header = (props) => {
   const [userr, setUser] = useState({});
@@ -20,7 +20,7 @@ const Header = (props) => {
     try {
       const currentUser = await AsyncStorage.getItem('user');
       const parsedValue = JSON.parse(currentUser);
-      setUser(parsedValue)
+      setUser(parsedValue);
     } catch (error) {
       console.log('Error getting user:', error);
       setUser(null);
@@ -29,11 +29,12 @@ const Header = (props) => {
 
   useEffect(()=> {
     getUser()
+    console.log(userr.user.username);
   },[])
  
   return (
     <View style={styles.header}>
-    <TouchableOpacity onPress={toggleSidebar}><Icons.Bars3Icon width={windowWidth * 0.07} height={windowWidth * 0.07} color="black" /></TouchableOpacity>
+    <TouchableOpacity onPress={toggleSidebar}><Icons.Bars3Icon width={windowWidth * 0.085} height={windowWidth * 0.085} color="black" /></TouchableOpacity>
     <Text style={styles.Txt}>{props.title}</Text>
     <ProfilePlaceholder username={userr.user.username}/>
     </View>
@@ -42,11 +43,11 @@ const Header = (props) => {
 
 const styles = StyleSheet.create({
     header:{
+        width: '100%',
+        height:'10%',
         flexDirection:'row',
         alignItems:'center',
         justifyContent:'space-between',
-        padding:20,
-        paddingTop:34,
         borderBottomColor:'grey',
         borderBottomWidth:0.5
       },

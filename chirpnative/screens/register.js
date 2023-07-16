@@ -24,7 +24,7 @@ export default function Register() {
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [confirm,setConfirm] = useState("")
-  const [error,setError] = useState("error")
+  const [error,setError] = useState("")
   const [notification,setNotification] = useState("")
   const [isLoading, setIsLoading] = useState(false);
   

@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,ScrollView} from 'react-native'
+import {SafeAreaView,ScrollView,StyleSheet} from 'react-native'
 import HomeComponents from '../components/homeComponents'
 import Header from '../components/header'
 import axios from "axios";
@@ -30,7 +30,7 @@ const Home = () => {
   // use effect to get the data 
   // loading indicator
   return (
-    <SafeAreaView> 
+    <SafeAreaView style={styles.container}> 
        <Header title={'Home'} />
         <ScrollView>
         <HomeComponents data={newsItems} />
@@ -38,5 +38,11 @@ const Home = () => {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container:{
+      flex: 1,
+    }
+})
 
 export default Home
