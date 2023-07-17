@@ -1,36 +1,44 @@
 import React from 'react'
 import {View,Text,StyleSheet,Image,TouchableOpacity,Dimensions} from 'react-native'
 import truncateText from '../utils/truncate'
+import { format as timeAgo } from 'timeago.js';
 import * as Icons from "react-native-heroicons/solid"
 
 
 
 const NewscategoryItem = (props) => {
+  const windowWidth = Dimensions.get('window').width;
   return (
-    <TouchableOpacity style={styles.container}>
-      
-       <View style={styles.imgcontainer}><Image resizeMode='contain' style={{ width: '100%', height: '100%' }} 
-       source={{uri:props.data.urlToImage}}/></View>
-        <Text>{props.data.author}</Text>
-        <Text>{ truncateText(props.data.title,20)}</Text>
-        <View>
-          <Text>{props.data.publishedAt}</Text>
+    <TouchableOpacity style={[styles.container,{height:windowWidth * 0.20,margin:windowWidth * 0.02,paddingLeft:windowWidth * 0.01,fontSize:windowWidth * 0.03}]}>
+      <Image style={{borderRadius:windowWidth * 0.5,
+        width:windowWidth * 0.12, height:windowWidth * 0.12}} source={require('../assets/anime2.png')} resizeMode='cover' />
+        
+        <View style={[styles.body]}>
+        <Text style={[styles.textSize,{fontSize:windowWidth * 0.05}]}>{props.data.author}</Text>
+         <Text style={[styles.textSize,{fontSize:windowWidth * 0.035}]}>{ truncateText(props.data.title,41)}</Text>
+          <Text style={[styles.textSize,{fontSize:windowWidth * 0.031}]}>{timeAgo(props.data.publishedAt)}</Text>
         </View>
+
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   container:{
-    padding:15,
+    width: '100%',
     borderBottomWidth:1,
     borderBottomColor:'grey',
-    position:'relative'
+    position:'relative',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center'
   },
- imgcontainer:{
-  width:360,
-  height:240
- },
+  body:{
+    width:'84%'
+  },
+  textSize:{
+    color:'black',
+  },
 iconcontainer:{
   flexDirection:'row',
   position:'absolute',

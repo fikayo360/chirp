@@ -38,7 +38,7 @@ const Header = (props) => {
     <Text style={[styles.Txt,{fontSize:windowWidth * 0.05}]}>{props.title}</Text>
     <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
       {
-        userr.profilepic?<Image style={{borderRadius:windowWidth * 0.5,borderWidth:0.5,borderColor:'#3A1772', 
+        userr.profilepic?<Image style={{borderRadius:windowWidth * 0.5,borderWidth:2,borderColor:'#0A1128', 
         width:windowWidth * 0.09, height:windowWidth * 0.09}} source={{ uri: userr.profilepic }} resizeMode='cover' /> :
         <ProfilePlaceholder username={userr.username || "fikayo"}/>
       }
