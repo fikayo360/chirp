@@ -26,8 +26,6 @@ const Home = () => {
   submit()
  },[])
 
-  // use effect to get the data 
-  // loading indicator
   return (
     <SafeAreaView style={styles.container}> 
        <Header title={'Home'} />

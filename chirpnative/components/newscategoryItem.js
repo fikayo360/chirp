@@ -1,5 +1,6 @@
 import React from 'react'
-import {View,Text,StyleSheet,Image,TouchableOpacity} from 'react-native'
+import {View,Text,StyleSheet,Image,TouchableOpacity,Dimensions} from 'react-native'
+import truncateText from '../utils/truncate'
 import * as Icons from "react-native-heroicons/solid"
 
 
@@ -10,15 +11,11 @@ const NewscategoryItem = (props) => {
       
        <View style={styles.imgcontainer}><Image resizeMode='contain' style={{ width: '100%', height: '100%' }} 
        source={{uri:props.data.urlToImage}}/></View>
-       
-        <Text>{props.data.title}</Text>
+        <Text>{props.data.author}</Text>
+        <Text>{ truncateText(props.data.title,20)}</Text>
         <View>
           <Text>{props.data.publishedAt}</Text>
-          <View style={styles.iconcontainer}>
-          <View style={styles.iconsubcontainer}><Icons.HeartIcon width={20} height={20} color="black" /><Text>{10}</Text></View>
-          <View style={styles.iconsubcontainer}><Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{13}</Text></View>
-          </View>
-          </View>
+        </View>
     </TouchableOpacity>
   )
 }

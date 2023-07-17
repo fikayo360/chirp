@@ -34,12 +34,12 @@ const Header = (props) => {
  
   return (
     <SafeAreaView style={[styles.header,{paddingHorizontal:windowWidth * 0.05,paddingTop: windowWidth * 0.05}]}>
-    <TouchableOpacity onPress={toggleSidebar}><Icons.Bars3Icon width={windowWidth * 0.085} height={windowWidth * 0.085} color="black" /></TouchableOpacity>
+    <TouchableOpacity onPress={toggleSidebar}><Icons.Bars3Icon width={windowWidth * 0.09} height={windowWidth * 0.09} color="black" /></TouchableOpacity>
     <Text style={[styles.Txt,{fontSize:windowWidth * 0.05}]}>{props.title}</Text>
     <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
       {
-        userr.profilepic?<Image style={{borderRadius:windowWidth * 0.5,borderWidth:3,borderColor:'#3A1772', 
-        width:windowWidth * 0.085, height:windowWidth * 0.085}} source={{ uri: userr.profilepic }} resizeMode='cover' /> :
+        userr.profilepic?<Image style={{borderRadius:windowWidth * 0.5,borderWidth:0.5,borderColor:'#3A1772', 
+        width:windowWidth * 0.09, height:windowWidth * 0.09}} source={{ uri: userr.profilepic }} resizeMode='cover' /> :
         <ProfilePlaceholder username={userr.username || "fikayo"}/>
       }
       </TouchableOpacity>
