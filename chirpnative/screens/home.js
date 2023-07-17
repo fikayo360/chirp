@@ -12,7 +12,6 @@ const Home = () => {
 
   const submit = async () => {
     try {
-      const token = await AsyncStorage.getItem('token');
       const response = await axios.get('api/v1/news/getTopStories');
       setNewsItems(response.data.articles);
       console.log(response.data);
