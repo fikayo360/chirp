@@ -16,22 +16,22 @@ function Sidebar(props) {
         />
         <DrawerItem
           label="technology"
-          onPress={() => props.navigation.navigate('technology')}
+          onPress={() => props.navigation.navigate('technology',{cat: 'technology'})}
           style={styles.drawerItem}
         />
         <DrawerItem
           label="entertainment"
-          onPress={() => props.navigation.navigate('entertainment')}
+          onPress={() => props.navigation.navigate('entertainment',{cat: 'entertainment'})}
           style={styles.drawerItem}
         />
         <DrawerItem
           label="sport"
-          onPress={() => props.navigation.navigate('sport')}
+          onPress={() => props.navigation.navigate('sport',{cat: 'sport'})}
           style={styles.drawerItem}
         />
         <DrawerItem
           label="business"
-          onPress={() => props.navigation.navigate('business')}
+          onPress={() => props.navigation.navigate('business',{cat: 'business'})}
           style={styles.drawerItem}
         />
         <DrawerItem

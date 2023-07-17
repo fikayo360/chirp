@@ -78,7 +78,7 @@ const Aroundyou = () => {
         <TouchableOpacity onPress={search}><Icons.PaperAirplaneIcon width={20} height={20} color="black" /></TouchableOpacity>
         </View>
         {<Discovereduser data={discovered}/> && <View style={styles.imageContainer}>
-          <Image source={require('../assets/searchillus.jpg')} resizeMode='contain' style={{ width: '100%', height: '100%' }}  />
+          <Image source={require('../assets/search3.png')} resizeMode='contain' style={{ width: '100%', height: '100%' }}  />
         </View>}
         <View style={styles.discoverContainer}>
         <Text style={styles.discoverpeople}> Discoverd people {items.length} </Text>

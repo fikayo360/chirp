@@ -2,14 +2,19 @@ import React from 'react'
 import {View,Text,StyleSheet,Image,TouchableOpacity,Dimensions} from 'react-native'
 import truncateText from '../utils/truncate'
 import { format as timeAgo } from 'timeago.js';
+import { useNavigation } from '@react-navigation/native';
 import * as Icons from "react-native-heroicons/solid"
 
 
 
 const NewscategoryItem = (props) => {
   const windowWidth = Dimensions.get('window').width;
+  const navigation = useNavigation();
+  const handleNavigate = () => {
+    navigation.navigate('webview', { url:props.data.url });
+  };
   return (
-    <TouchableOpacity style={[styles.container,{height:windowWidth * 0.20,margin:windowWidth * 0.02,paddingLeft:windowWidth * 0.01,fontSize:windowWidth * 0.03}]}>
+    <TouchableOpacity onPress={handleNavigate} style={[styles.container,{height:windowWidth * 0.20,margin:windowWidth * 0.02,paddingLeft:windowWidth * 0.01,fontSize:windowWidth * 0.03}]}>
       <Image style={{borderRadius:windowWidth * 0.5,
         width:windowWidth * 0.12, height:windowWidth * 0.12}} source={require('../assets/anime2.png')} resizeMode='cover' />
         

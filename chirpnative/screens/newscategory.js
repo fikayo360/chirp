@@ -7,14 +7,14 @@ import Header from '../components/header'
 import axios from "axios";
 
 
-const Newscategory = () => {
-
+const Newscategory = ({route}) => {
+  const {cat} = route.params
   const [data,setData]= useState([])
-  let category = 'sport'
+
  
   const submit = async () => {
     try {
-      const response = await axios.get(`api/v1/news/getNewsCategory/${category}`);
+      const response = await axios.get(`api/v1/news/getNewsCategory/${cat}`);
       console.log(response.data.articles);
       setData(response.data.articles);
     } catch (error) {
@@ -30,7 +30,7 @@ const Newscategory = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Header title={'Category'} />
+        <Header title={cat} />
         <ScrollView>
         <NewscategoryItems data={data} />
         </ScrollView>
