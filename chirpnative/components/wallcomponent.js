@@ -39,15 +39,15 @@ const Wallcomponent = ({data,likePost,savePost}) => {
 
       <View style={styles.bodyContainer}><Text>{truncateText(data.postBody,120)}</Text></View>
 
-      <View style={styles.footer}>
+      <View style={[styles.footer,{paddingHorizontal:windowWidth * 0.0}]}>
         <Text>{timeAgo(data.createdAt)}</Text>
         <View style={styles.icons}>
-        <TouchableOpacity  style={styles.icon} onPress={handleFollow}>
+        <TouchableOpacity   onPress={handleFollow}>
           <Icons.HeartIcon width={20} height={20} color="black" /><Text>{data.postLikes.length}</Text>
           </TouchableOpacity>
-        <TouchableOpacity style={styles.icon}> <Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{data.postComments.length}</Text>
+        <TouchableOpacity > <Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{data.postComments.length}</Text>
         </TouchableOpacity>
-        <TouchableOpacity  style={styles.icon} onPress={()=>savePost(postData)}>
+        <TouchableOpacity onPress={()=>savePost(postData)}>
           <Icons.BookmarkIcon width={20} height={20} color="black" /></TouchableOpacity>
         </View>
       </View>
