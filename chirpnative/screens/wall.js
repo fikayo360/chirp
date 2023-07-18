@@ -7,7 +7,7 @@ import { useState,useEffect } from 'react'
 
 
 const Wall = () => {
-  const windowWidth = Dimensions.get('window').width;
+ 
   const [items,setItems] = useState([])
   const [error,setError] = useState("")
   const getFriendsPost = async () => {

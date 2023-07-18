@@ -1,12 +1,14 @@
 import * as Icons from "react-native-heroicons/solid"
 import React from 'react'
-import {View,Text,StyleSheet,TouchableOpacity,Image} from 'react-native'
+import {View,Text,StyleSheet,TouchableOpacity,Image,Dimensions} from 'react-native'
 import ProfilePlaceholder from './Profiletextplace'
 import { useEffect } from "react"
 import truncateText from '../utils/truncate'
 import { format as timeAgo } from 'timeago.js';
 
 const Wallcomponent = ({data,likePost,savePost}) => {
+  const windowWidth = Dimensions.get('window').width;
+
   let postData = {
           SavedPostImg:data.postImg,
           SavedPostAuthor:data.postAuthor,
@@ -23,15 +25,15 @@ const Wallcomponent = ({data,likePost,savePost}) => {
     };
     
   return (
-      <View style={styles.wallcontainer}>
+      <View style={styles.container}>
 
-      <View><ProfilePlaceholder username={data.postAuthor}/>
+      <View style={[styles.heading,{paddingHorizontal: windowWidth * 0.03}]}>
+      <ProfilePlaceholder username={data.postAuthor}/>
       <Text >{data.postAuthor}</Text>
       </View>
 
       <View>
-      <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} 
-      source={{uri:data.postImg}}/>
+      <Image resizeMode='contain' source={{uri:data.postImg}} />
       </View>
 
       <Text>{truncateText(data.postBody,120)}</Text>
@@ -50,45 +52,12 @@ const Wallcomponent = ({data,likePost,savePost}) => {
 }
 
 const styles = StyleSheet.create({
-  body:{
-    marginBottom:20,
-    fontSize:15,
-    
+  container:{
+    width: '100%'
   },
-  timestamp:{
-    fontSize:15
-  },
-  footer:{
-    justifyContent:'center'
-  },
-  wallheader:{
-    flexDirection:'row',
-    alignItems:'center'
-  },
-  wallheaderTxt:{
-    fontSize:18,
-    marginLeft:10
-  },
-  wallcontainer:{
-    width:'100%',
-    height:'100%',
-    padding:15,
-    position:'relative',
-  },
- wallimgcontainer:{
-  width:'80%',
-  height:'30%'
- },
-iconcontainer:{
-  flexDirection:'row',
-  position:'absolute',
-  justifyContent:'space-between',
-  width:'40%',
-  right:20
-},
-iconsubcontainer:{
-  flexDirection:'row',
-  margin:10
-}
+  heading:{
+    flexDirection: 'row',
+    justifyContent:'space-between'
+  }
 })
 export default Wallcomponent
