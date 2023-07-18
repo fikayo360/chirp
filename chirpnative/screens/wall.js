@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,StyleSheet,View,ScrollView,Text} from 'react-native'
+import {SafeAreaView,StyleSheet,View,ScrollView,Text,Dimensions} from 'react-native'
 import Header from '../components/header'
 import Wallcomponents from '../components/wallcomponents'
 import axios from 'axios'
@@ -7,6 +7,7 @@ import { useState,useEffect } from 'react'
 
 
 const Wall = () => {
+  const windowWidth = Dimensions.get('window').width;
   const [items,setItems] = useState([])
   const [error,setError] = useState("")
   const getFriendsPost = async () => {
@@ -52,6 +53,7 @@ const Wall = () => {
  useEffect(() => {
   getFriendsPost()
  },[])
+
  const flattenedArray = [].concat(...items);
   return (
     <SafeAreaView style={styles.container}>

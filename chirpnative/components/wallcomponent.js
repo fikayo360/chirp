@@ -3,6 +3,8 @@ import React from 'react'
 import {View,Text,StyleSheet,TouchableOpacity,Image} from 'react-native'
 import ProfilePlaceholder from './Profiletextplace'
 import { useEffect } from "react"
+import truncateText from '../utils/truncate'
+import { format as timeAgo } from 'timeago.js';
 
 const Wallcomponent = ({data,likePost,savePost}) => {
   let postData = {
@@ -17,8 +19,6 @@ const Wallcomponent = ({data,likePost,savePost}) => {
       likePost(likeData); 
       if(likePost){
         data.postLikes.push(likeData)
-      } else{
-        return null
       }
     };
     
@@ -29,9 +29,9 @@ const Wallcomponent = ({data,likePost,savePost}) => {
       <View style={styles.wallimgcontainer}>
       <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} 
       source={{uri:data.postImg}}/></View>
-      <Text style={styles.body}>{data.postBody}</Text>
+      <Text style={styles.body}>{truncateText(data.postBody,120)}</Text>
       <View style={styles.footer}>
-        <Text style={styles.timestamp}>{data.createdAt}</Text>
+        <Text style={styles.timestamp}>{timeAgo(data.createdAt)}</Text>
         <View style={styles.iconcontainer}>
         <TouchableOpacity style={styles.iconsubcontainer} onPress={handleFollow}>
           <Icons.HeartIcon width={20} height={20} color="black" /><Text>{data.postLikes.length}</Text></TouchableOpacity>
