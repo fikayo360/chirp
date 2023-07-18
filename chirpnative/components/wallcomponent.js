@@ -14,11 +14,11 @@ const Wallcomponent = ({data,likePost,savePost}) => {
           SavedPostBody:data.postBody
         }
    
-    const handleFollow = () => {
+    const handleFollow = async() => {
       let likeData = {authorName:data.postAuthor,postId:data._id}
-      likePost(likeData); 
-      if(likePost){
-        data.postLikes.push(likeData)
+      const result = await likePost(likeData);
+      if (result) {
+        data.postLikes.push(likeData);
       }
     };
     
