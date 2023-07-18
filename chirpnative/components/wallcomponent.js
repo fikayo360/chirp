@@ -25,23 +25,23 @@ const Wallcomponent = ({data,likePost,savePost}) => {
   return (
       <View style={styles.wallcontainer}>
 
-      <View style={styles.wallheader}><ProfilePlaceholder username={data.postAuthor}/>
-      <Text style={styles.wallheaderTxt}>{data.postAuthor}</Text>
+      <View><ProfilePlaceholder username={data.postAuthor}/>
+      <Text >{data.postAuthor}</Text>
       </View>
 
-      <View style={styles.wallimgcontainer}>
+      <View>
       <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} 
       source={{uri:data.postImg}}/>
       </View>
 
-      <Text style={styles.body}>{truncateText(data.postBody,120)}</Text>
-      <View style={styles.footer}>
-        <Text style={styles.timestamp}>{timeAgo(data.createdAt)}</Text>
-        <View style={styles.iconcontainer}>
-        <TouchableOpacity style={styles.iconsubcontainer} onPress={handleFollow}>
+      <Text>{truncateText(data.postBody,120)}</Text>
+      <View>
+        <Text>{timeAgo(data.createdAt)}</Text>
+        <View>
+        <TouchableOpacity  onPress={handleFollow}>
           <Icons.HeartIcon width={20} height={20} color="black" /><Text>{data.postLikes.length}</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.iconsubcontainer}><Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{data.postComments.length}</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.iconsubcontainer} onPress={()=>savePost(postData)}>
+        <TouchableOpacity ><Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{data.postComments.length}</Text></TouchableOpacity>
+        <TouchableOpacity  onPress={()=>savePost(postData)}>
           <Icons.BookmarkIcon width={20} height={20} color="black" /></TouchableOpacity>
         </View>
       </View>

@@ -61,7 +61,7 @@ const Wall = () => {
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
       <Header title={'Wall'} />
      
-      <ScrollView >
+      <ScrollView style={styles.scrollComponent}>
       <Wallcomponents data={flattenedArray} likePost={likePost} savePost={savePost}/>
       </ScrollView>
     
@@ -87,11 +87,10 @@ const styles = StyleSheet.create({
     color:'white'
   },
   container:{
-   width:'100%',
-   height:'100%',
+   flex: 1,
    position:'relative'
   },
-  friendsComponent:{
+  scrollComponent:{
     width:'100%',
     height:'80%'
   }
