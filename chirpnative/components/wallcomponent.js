@@ -27,13 +27,14 @@ const Wallcomponent = ({data,likePost,savePost}) => {
   return (
       <View style={styles.container}>
 
-      <View style={[styles.heading,{paddingHorizontal: windowWidth * 0.03}]}>
-      <ProfilePlaceholder username={data.postAuthor}/>
+      <View style={[styles.heading,{paddingHorizontal: windowWidth * 0.02}]}>
+      <Image style={{borderRadius:windowWidth * 0.5,
+      width:windowWidth * 0.12, height:windowWidth * 0.12}} source={require('../assets/anime2.png')} resizeMode='cover' />
       <Text >{data.postAuthor}</Text>
       </View>
 
-      <View>
-      <Image resizeMode='contain' source={{uri:data.postImg}} />
+      <View style={[styles.imgContainer,{alignSelf:'center',height:windowWidth * 0.6}]} >
+      <Image style={styles.img} resizeMode='cover' source={{uri:data.postImg}} />
       </View>
 
       <Text>{truncateText(data.postBody,120)}</Text>
@@ -57,7 +58,15 @@ const styles = StyleSheet.create({
   },
   heading:{
     flexDirection: 'row',
-    justifyContent:'space-between'
+    justifyContent:'space-between',
+    alignItems:'center'
+  },
+  imgContainer:{
+    width:'90%'
+  },
+  img:{
+    width:'100%',
+    height:'100%'
   }
 })
 export default Wallcomponent
