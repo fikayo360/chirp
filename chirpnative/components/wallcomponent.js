@@ -33,6 +33,7 @@ const Wallcomponent = ({data,likePost,savePost}) => {
       <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} 
       source={{uri:data.postImg}}/>
       </View>
+
       <Text style={styles.body}>{truncateText(data.postBody,120)}</Text>
       <View style={styles.footer}>
         <Text style={styles.timestamp}>{timeAgo(data.createdAt)}</Text>
@@ -69,12 +70,14 @@ const styles = StyleSheet.create({
     marginLeft:10
   },
   wallcontainer:{
+    width:'100%',
+    height:'100%',
     padding:15,
     position:'relative',
   },
  wallimgcontainer:{
-  width:360,
-  height:240
+  width:'80%',
+  height:'30%'
  },
 iconcontainer:{
   flexDirection:'row',

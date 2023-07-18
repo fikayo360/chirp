@@ -61,7 +61,7 @@ const Wall = () => {
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
       <Header title={'Wall'} />
      
-      <ScrollView style={styles.friendsComponent}>
+      <ScrollView >
       <Wallcomponents data={flattenedArray} likePost={likePost} savePost={savePost}/>
       </ScrollView>
     
