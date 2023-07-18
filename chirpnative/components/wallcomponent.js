@@ -33,18 +33,21 @@ const Wallcomponent = ({data,likePost,savePost}) => {
       <Text >{data.postAuthor}</Text>
       </View>
 
-      <View style={[styles.imgContainer,{alignSelf:'center',height:windowWidth * 0.6}]} >
+      <View style={[styles.imgContainer,{alignSelf:'center',height:windowWidth * 0.7}]} >
       <Image style={styles.img} resizeMode='cover' source={{uri:data.postImg}} />
       </View>
 
-      <Text>{truncateText(data.postBody,120)}</Text>
-      <View>
+      <View style={styles.bodyContainer}><Text>{truncateText(data.postBody,120)}</Text></View>
+
+      <View style={styles.footer}>
         <Text>{timeAgo(data.createdAt)}</Text>
-        <View>
-        <TouchableOpacity  onPress={handleFollow}>
-          <Icons.HeartIcon width={20} height={20} color="black" /><Text>{data.postLikes.length}</Text></TouchableOpacity>
-        <TouchableOpacity ><Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{data.postComments.length}</Text></TouchableOpacity>
-        <TouchableOpacity  onPress={()=>savePost(postData)}>
+        <View style={styles.icons}>
+        <TouchableOpacity  style={styles.icon} onPress={handleFollow}>
+          <Icons.HeartIcon width={20} height={20} color="black" /><Text>{data.postLikes.length}</Text>
+          </TouchableOpacity>
+        <TouchableOpacity style={styles.icon}> <Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{data.postComments.length}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity  style={styles.icon} onPress={()=>savePost(postData)}>
           <Icons.BookmarkIcon width={20} height={20} color="black" /></TouchableOpacity>
         </View>
       </View>
@@ -62,11 +65,22 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   imgContainer:{
-    width:'90%'
+    width:'95%'
   },
   img:{
     width:'100%',
     height:'100%'
+  },
+  bodyContainer:{
+    width:'100%'
+  },
+  footer:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center'
+  },
+  icons:{
+    flexDirection:'row'
   }
 })
 export default Wallcomponent
