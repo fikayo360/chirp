@@ -24,11 +24,15 @@ const Wallcomponent = ({data,likePost,savePost}) => {
     
   return (
       <View style={styles.wallcontainer}>
+
       <View style={styles.wallheader}><ProfilePlaceholder username={data.postAuthor}/>
-      <Text style={styles.wallheaderTxt}>{data.postAuthor}</Text></View>
+      <Text style={styles.wallheaderTxt}>{data.postAuthor}</Text>
+      </View>
+
       <View style={styles.wallimgcontainer}>
       <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} 
-      source={{uri:data.postImg}}/></View>
+      source={{uri:data.postImg}}/>
+      </View>
       <Text style={styles.body}>{truncateText(data.postBody,120)}</Text>
       <View style={styles.footer}>
         <Text style={styles.timestamp}>{timeAgo(data.createdAt)}</Text>

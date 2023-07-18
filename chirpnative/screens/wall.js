@@ -28,6 +28,7 @@ const Wall = () => {
       const likePost = await axios.post('api/v1/post/LikePost', formData)
       setError(likePost.data);
       setError('')
+      return true
     }catch(error){
       if (error.response) {
         setError(error.response.data)
