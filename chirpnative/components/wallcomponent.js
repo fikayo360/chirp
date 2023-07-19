@@ -31,19 +31,21 @@ const Wallcomponent = ({data,likePost,savePost}) => {
       </View>
       <Text>{data.postAuthor}</Text>
       <View style={styles.bodyContainer}><Text>{truncateText(data.postBody,120)}</Text></View>
-      {/*
+
       <View style={[styles.footer,{paddingHorizontal:windowWidth * 0.0}]}>
         <Text>{timeAgo(data.createdAt)}</Text>
         <View style={styles.icons}>
-        <TouchableOpacity   onPress={handleFollow}>
-          <Icons.HeartIcon width={20} height={20} color="black" /><Text>{data.postLikes.length}</Text>
+        <TouchableOpacity style={styles.iconContainer} onPress={handleFollow}>
+          <Icons.HeartIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{data.postLikes.length}</Text>
           </TouchableOpacity>
-        <TouchableOpacity > <Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{data.postComments.length}</Text>
+          <TouchableOpacity style={styles.iconContainer}><Icons.ChatBubbleLeftIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{data.postComments.length}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>savePost(postData)}>
-          <Icons.BookmarkIcon width={20} height={20} color="black" /></TouchableOpacity>
+        <TouchableOpacity style={[styles.iconContainer,{marginRight:windowWidth * 0.05}]} onPress={()=>{savePost(postData)}}>
+          <Icons.BookmarkIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /></TouchableOpacity>
         </View>
       </View>
+      {/*
+      <
       */}
   </View>
   )
@@ -69,6 +71,9 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   icons:{
+    flexDirection:'row'
+  },
+  iconContainer:{
     flexDirection:'row'
   }
 })
