@@ -8,6 +8,7 @@ import { format as timeAgo } from 'timeago.js';
 
 const Wallcomponent = ({data,likePost,savePost}) => {
   const windowWidth = Dimensions.get('window').width;
+  const fontSize = windowWidth * 0.03
 
   let postData = {
           SavedPostImg:data.postImg,
@@ -29,18 +30,18 @@ const Wallcomponent = ({data,likePost,savePost}) => {
       <View style={[styles.imgContainer,{alignSelf:'center',height:windowWidth * 0.8}]} >
       <Image style={styles.img} resizeMode='cover' source={{uri:data.postImg}} />
       </View>
-      <Text>{data.postAuthor}</Text>
-      <View style={styles.bodyContainer}><Text>{truncateText(data.postBody,120)}</Text></View>
+      <Text style={[{fontSize:fontSize}]}>{data.postAuthor}</Text>
+      <View style={[styles.bodyContainer,{fontSize:fontSize}]}><Text>{truncateText(data.postBody,120)}</Text></View>
 
       <View style={[styles.footer,{paddingHorizontal:windowWidth * 0.0}]}>
-        <Text>{timeAgo(data.createdAt)}</Text>
+        <Text style={[{fontSize:fontSize}]}>{timeAgo(data.createdAt)}</Text>
         <View style={styles.icons}>
-        <TouchableOpacity style={styles.iconContainer} onPress={handleFollow}>
+        <TouchableOpacity style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} onPress={handleFollow}>
           <Icons.HeartIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{data.postLikes.length}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconContainer}><Icons.ChatBubbleLeftIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{data.postComments.length}</Text>
+          <TouchableOpacity style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} ><Icons.ChatBubbleLeftIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{data.postComments.length}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.iconContainer,{marginRight:windowWidth * 0.05}]} onPress={()=>{savePost(postData)}}>
+        <TouchableOpacity style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} onPress={()=>{savePost(postData)}}>
           <Icons.BookmarkIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /></TouchableOpacity>
         </View>
       </View>
