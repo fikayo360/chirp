@@ -25,20 +25,13 @@ const Wallcomponent = ({data,likePost,savePost}) => {
     };
     
   return (
-      <View style={styles.container}>
-
-      <View style={[styles.heading,{paddingHorizontal: windowWidth * 0.02}]}>
-      <Image style={{borderRadius:windowWidth * 0.5,
-      width:windowWidth * 0.12, height:windowWidth * 0.12}} source={require('../assets/anime2.png')} resizeMode='cover' />
-      <Text >{data.postAuthor}</Text>
-      </View>
-
-      <View style={[styles.imgContainer,{alignSelf:'center',height:windowWidth * 0.7}]} >
+      <View style={[styles.container,{paddingHorizontal: windowWidth * 0.02,marginTop: windowWidth * 0.05}]}>
+      <View style={[styles.imgContainer,{alignSelf:'center',height:windowWidth * 0.8}]} >
       <Image style={styles.img} resizeMode='cover' source={{uri:data.postImg}} />
       </View>
-
+      <Text>{data.postAuthor}</Text>
       <View style={styles.bodyContainer}><Text>{truncateText(data.postBody,120)}</Text></View>
-
+      {/*
       <View style={[styles.footer,{paddingHorizontal:windowWidth * 0.0}]}>
         <Text>{timeAgo(data.createdAt)}</Text>
         <View style={styles.icons}>
@@ -51,6 +44,7 @@ const Wallcomponent = ({data,likePost,savePost}) => {
           <Icons.BookmarkIcon width={20} height={20} color="black" /></TouchableOpacity>
         </View>
       </View>
+      */}
   </View>
   )
 }
@@ -59,13 +53,8 @@ const styles = StyleSheet.create({
   container:{
     width: '100%'
   },
-  heading:{
-    flexDirection: 'row',
-    justifyContent:'space-between',
-    alignItems:'center'
-  },
   imgContainer:{
-    width:'95%'
+    width:'98%'
   },
   img:{
     width:'100%',

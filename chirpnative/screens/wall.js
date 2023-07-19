@@ -10,6 +10,7 @@ const Wall = () => {
  
   const [items,setItems] = useState([])
   const [error,setError] = useState("")
+  
   const getFriendsPost = async () => {
     try {
       const response = await axios.get('api/v1/post/getFriendsPost')
