@@ -45,7 +45,6 @@ const Commentscreen = () => {
   return (
         <SafeAreaView>
           {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-        <Header title={'Comments'} />
         <View style={styles.upperContainer}>
         <ProfilePlaceholder username={'fikayo'}/>
 

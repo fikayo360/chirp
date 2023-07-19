@@ -1,14 +1,24 @@
 import * as Icons from "react-native-heroicons/solid"
 import React from 'react'
 import {View,Text,StyleSheet,TouchableOpacity,Image,Dimensions} from 'react-native'
-import ProfilePlaceholder from './Profiletextplace'
-import { useEffect } from "react"
 import truncateText from '../utils/truncate'
 import { format as timeAgo } from 'timeago.js';
+import { useNavigation } from '@react-navigation/native';
 
 const Wallcomponent = ({data,likePost,savePost}) => {
   const windowWidth = Dimensions.get('window').width;
-  const fontSize = windowWidth * 0.03
+  const navigation = useNavigation();
+  const authorFontSize = windowWidth * 0.055
+  const otherFontSize = windowWidth * 0.04
+
+  const navigate2Article = () => {
+    navigation.navigate('article');
+  };
+
+  const navigate2comments = () => {
+    navigation.navigate('comment');
+  };
+  
 
   let postData = {
           SavedPostImg:data.postImg,
@@ -26,20 +36,20 @@ const Wallcomponent = ({data,likePost,savePost}) => {
     };
     
   return (
-      <View style={[styles.container,{paddingHorizontal: windowWidth * 0.02,marginTop: windowWidth * 0.05}]}>
-      <View style={[styles.imgContainer,{alignSelf:'center',height:windowWidth * 0.8}]} >
-      <Image style={styles.img} resizeMode='cover' source={{uri:data.postImg}} />
-      </View>
-      <Text style={[{fontSize:fontSize}]}>{data.postAuthor}</Text>
-      <View style={[styles.bodyContainer,{fontSize:fontSize}]}><Text>{truncateText(data.postBody,120)}</Text></View>
+      <View style={[styles.container,{paddingHorizontal: windowWidth * 0.02,marginTop: windowWidth * 0.07,borderBottomWidth:1,paddingBottom: windowWidth * 0.04}]}>
+      <TouchableOpacity onPress={navigate2Article} style={[styles.imgContainer,{alignSelf:'center',height:windowWidth * 0.8}]} >
+      <Image style={[styles.img,{borderRadius:windowWidth * 0.03}]} resizeMode='cover' source={{uri:data.postImg}} />
+      </TouchableOpacity>
+      <Text style={[{fontSize:authorFontSize}]}>{data.postAuthor}</Text>
+      <View style={[styles.bodyContainer]}><Text style={[{fontSize:otherFontSize}]}>{truncateText(data.postBody,120)}</Text></View>
 
       <View style={[styles.footer,{paddingHorizontal:windowWidth * 0.0}]}>
-        <Text style={[{fontSize:fontSize}]}>{timeAgo(data.createdAt)}</Text>
+        <Text style={[{fontSize:otherFontSize}]}>{timeAgo(data.createdAt)}</Text>
         <View style={styles.icons}>
         <TouchableOpacity style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} onPress={handleFollow}>
           <Icons.HeartIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{data.postLikes.length}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} ><Icons.ChatBubbleLeftIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{data.postComments.length}</Text>
+          <TouchableOpacity onPress={navigate2comments} style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} ><Icons.ChatBubbleLeftIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{data.postComments.length}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} onPress={()=>{savePost(postData)}}>
           <Icons.BookmarkIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /></TouchableOpacity>
