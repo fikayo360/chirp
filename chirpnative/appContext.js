@@ -10,6 +10,7 @@ const AppProvider = ({ children }) => {
     console.log('hi');
     setCurrentUser(user)
     setToken(token)
+    console.log(currentUser);
   }
   const logout = () => {
     setCurrentUser({})

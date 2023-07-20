@@ -38,7 +38,7 @@ const Home = () => {
   }
 
  useEffect(()=>{
-  console.log({token, currentUser});
+  //console.log({token, currentUser});
  },[])
 
  useEffect(() => {

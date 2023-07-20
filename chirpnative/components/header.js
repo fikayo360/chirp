@@ -4,10 +4,11 @@ import {View,Text,StyleSheet,TouchableOpacity,Dimensions,SafeAreaView,Image} fro
 import ProfilePlaceholder from '../components/Profiletextplace'
 import { useNavigation } from '@react-navigation/native';
 import { useState,useEffect } from "react";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useApp from "../hooks/useApp";
 
 
 const Header = (props) => {
+  const {currentUser} = useApp();
   const [userr, setUser] = useState({});
   const navigation = useNavigation();
   const windowWidth = Dimensions.get('window').width;
@@ -16,17 +17,9 @@ const Header = (props) => {
     navigation.toggleDrawer();
   }
 
-  const getUser = async () => {
-    try {
-      const currentUser = await AsyncStorage.getItem('user');
-      //console.log(currentUser);
-      const parsedValue = JSON.parse(currentUser);
-      setUser(parsedValue.user);
-      //console.log(userr)
-    } catch (error) {
-      console.log('Error getting user:', error);
-      setUser(null);
-    }
+  const getUser = () => {
+    setUser(currentUser.user)
+      console.log(`current user is ${currentUser.user.username}`)
   };
 
   useEffect(()=> {
