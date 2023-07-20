@@ -33,7 +33,7 @@ const Profile = () => {
     }
   }
   
-  getUserProfile = async () => {
+  const getUserProfile = async () => {
     try{
       const response = await axios.get('api/v1/user/getUser');
        setSessionUser(response.data)
@@ -45,7 +45,7 @@ const Profile = () => {
     }
   }
 
-  getUserPost = async () => {
+  const getUserPost = async () => {
     try{
       const response = await axios.get('api/v1/post/postByUser');
        setPosts(response.data)
@@ -80,11 +80,13 @@ const Profile = () => {
     }
   };
 
+
   useEffect(() => {
     getFriends();
     getUserProfile()
     getUserPost()
     getAround()
+    getToken()
   }, []);
 
   return (
@@ -117,7 +119,7 @@ const Profile = () => {
 
         <View style={styles.bioContainer}>
           <Text style={styles.contHeaderTxt}>Bio</Text>
-          <Text>{sessionUser.Bio}</Text>
+          <Text>{sessionUser.bio?sessionUser.Bio:<Text>no bio</Text>}</Text>
           <Text style={styles.contHeaderTxt}>Username</Text>
           <Text>{sessionUser.username}</Text>
           <Text style={styles.contHeaderTxt}>Email</Text>

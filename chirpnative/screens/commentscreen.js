@@ -5,18 +5,21 @@ import Header from '../components/header'
 import ProfilePlaceholder from '../components/Profiletextplace'
 import axios from 'axios'
 import CommentItems from '../components/comments'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Commentscreen = () => {
   const [error,setError] = useState("")
-  const [PostId,setPostId] = useState("64ad27f684d5529baf5f7ffa")
   const [PostcommentAuthor,setPostCommentAuthor] = useState("fikayo")
   const [PostcommentBody,setPostcommentBody] = useState("")
   const [items,setItems] = useState([ ])
 
   const [ProfilePic,setProfilePic] = useState("https://firebasestorage.googleapis.com/v0/b/chirp-3e947.appspot.com/o/images%2F1688932202963?alt=media&token=cd511d7a-600a-4b4d-b7d7-b842d055d3a5")
  
+
   const createComment = async () => {
     try {
+      const PostId = await AsyncStorage.getItem('postId')
+      console.log({PostId,PostcommentAuthor,PostcommentBody,ProfilePic});
       const response = await axios.post('api/v1/post/commentPost', {PostId,PostcommentAuthor,PostcommentBody,ProfilePic})
       setError('Saved')
       setPostcommentBody('')
@@ -29,6 +32,7 @@ const Commentscreen = () => {
 
   const getComments = async () => {
     try {
+      const PostId = await AsyncStorage.getItem('postId')
       const response = await axios.get('api/v1/post/getComments', { params: { PostId } });
        setItems(response.data.postComments)
     } catch (error) {
@@ -37,7 +41,8 @@ const Commentscreen = () => {
       } 
     }
   }
-  
+
+
   useEffect(() => {
     getComments();
   }, []);

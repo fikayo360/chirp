@@ -2,10 +2,15 @@ import React from 'react';
 import { View, Text, StyleSheet,Dimensions } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Sidebar(props) {
     const windowWidth = Dimensions.get('window').width;
     const navigation = useNavigation();
+    const logout = async () => {
+      //await AsyncStorage.setItem('token', '');
+      navigation.navigate('Login')
+    }
   return (
     <View style={[styles.container,{ paddingTop: windowWidth * 0.07}]}>
       <DrawerContentScrollView {...props}>
@@ -61,7 +66,7 @@ function Sidebar(props) {
         />
         <DrawerItem
           label="logout"
-          onPress={() => props.navigation.navigate('logout')}
+          onPress={logout}
           style={styles.drawerItem}
         />
       </DrawerContentScrollView>

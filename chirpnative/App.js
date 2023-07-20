@@ -33,6 +33,7 @@ export default function App() {
   const getToken = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
+      console.log('userToken: ' + token);
       return token;
     } catch (error) {
       console.log('Error getting token:', error);

@@ -1,5 +1,5 @@
 import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView,Dimensions,ScrollView,Image} from 'react-native';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -25,9 +25,20 @@ export default function Login() {
     const [passwordAttempt,setPasswordAttempt] = useState(0)
     const [isLoading, setIsLoading] = useState(false);
 
+    const getToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        console.log('userToken: ' + token);
+        return token;
+      } catch (error) {
+        console.log('Error getting token:', error);
+        return null; 
+      }
+    };
+
     const setTokenToAsyncStorage = async (value) => {
       try {
-        await AsyncStorage.setItem('token', value);
+        await AsyncStorage.setItem('token',value);
         console.log('Token saved successfully');
       } catch (error) {
         console.log('Error saving token:', error);
@@ -55,7 +66,7 @@ export default function Login() {
         }
       } catch (error) {
         
-        if (error.response.data === "wrong password"){
+        if (error.response === "wrong password"){
           setIsLoading(false)
           setPasswordAttempt(current => current + 1)
           console.log(passwordAttempt)
@@ -70,6 +81,17 @@ export default function Login() {
         }
       }
     };
+
+    const getDetails = async() =>{
+      let tk = await AsyncStorage.getItem('token')
+      let pid =  await AsyncStorage.getItem('postId')
+      let us = await AsyncStorage.getItem('user')
+      console.log({tk,pid,us});
+    }
+
+    useEffect(()=>{
+      getDetails()
+    },[])
 
   return (
     <ScrollView style={styles.container}>

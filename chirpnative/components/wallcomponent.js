@@ -3,9 +3,11 @@ import React from 'react'
 import {View,Text,StyleSheet,TouchableOpacity,Image,Dimensions} from 'react-native'
 import truncateText from '../utils/truncate'
 import { format as timeAgo } from 'timeago.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 const Wallcomponent = ({data,likePost,savePost}) => {
+  
   const windowWidth = Dimensions.get('window').width;
   const navigation = useNavigation();
   const authorFontSize = windowWidth * 0.055
@@ -15,11 +17,11 @@ const Wallcomponent = ({data,likePost,savePost}) => {
     navigation.navigate('article');
   };
 
-  const navigate2comments = () => {
+  const navigate2comments = async() => {
+    await AsyncStorage.setItem('postId', data._id);
     navigation.navigate('comment');
   };
   
-
   let postData = {
           SavedPostImg:data.postImg,
           SavedPostAuthor:data.postAuthor,

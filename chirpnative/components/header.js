@@ -19,9 +19,10 @@ const Header = (props) => {
   const getUser = async () => {
     try {
       const currentUser = await AsyncStorage.getItem('user');
+      //console.log(currentUser);
       const parsedValue = JSON.parse(currentUser);
       setUser(parsedValue.user);
-      console.log(userr)
+      //console.log(userr)
     } catch (error) {
       console.log('Error getting user:', error);
       setUser(null);
@@ -40,7 +41,7 @@ const Header = (props) => {
       {
         userr.profilepic?<Image style={{borderRadius:windowWidth * 0.5,borderWidth:2.2,borderColor:'#0B0500', 
         width:windowWidth * 0.09, height:windowWidth * 0.09}} source={{ uri: userr.profilepic }} resizeMode='cover' /> :
-        <ProfilePlaceholder username={userr.username || "fikayo"}/>
+        (<ProfilePlaceholder username={userr.username || "fikayo"}/>)
       }
       </TouchableOpacity>
     </SafeAreaView>

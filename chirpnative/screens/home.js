@@ -4,6 +4,8 @@ import HomeComponents from '../components/homeComponents'
 import Header from '../components/header'
 import axios from "axios";
 import { useState,useEffect } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const Home = () => {
@@ -13,8 +15,8 @@ const Home = () => {
   const submit = async () => {
     try {
       const response = await axios.get('api/v1/news/getTopStories');
-      setNewsItems(response.data.articles);
-      console.log(response.data);
+      //setNewsItems(response.data.articles);
+     // console.log(response.data);
     } catch (error) {
       if (error.response) {
         console.log(error.response);
@@ -22,9 +24,27 @@ const Home = () => {
     }
   };
 
+  const getUserProfile = async () => {
+    try{
+      const response = await axios.get('api/v1/user/getUser');
+       //setSessionUser(response.data)
+       console.log(response.data.username);
+    }catch(error) {
+      if (error.response) {
+        setError(error.response.data)
+      } 
+    }
+  }
+
  useEffect(() => {
   submit()
  },[])
+
+ useEffect(() => {
+  getUserProfile()
+ },[])
+
+
 
   return (
     <SafeAreaView style={styles.container}> 
