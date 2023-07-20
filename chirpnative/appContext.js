@@ -3,15 +3,16 @@ import React, { useState } from 'react';
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [token, setToken] = useState('');
+  const [currentUser, setCurrentUser] = useState({});
+
   const login = (user,token) => {
     setCurrentUser(user)
     setToken(token)
   }
   const logout = () => {
-    setCurrentUser(null)
-    setToken(null)
+    setCurrentUser({})
+    setToken('')
   }
 
   return (

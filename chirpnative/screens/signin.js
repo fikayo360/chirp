@@ -49,17 +49,17 @@ export default function Login() {
           navigation.navigate('Home');
         }
       } catch (error) {
-        
-        if (error.response === "wrong password"){
-          setIsLoading(false)
-          setPasswordAttempt(current => current + 1)
-          console.log(passwordAttempt)
-        }
         if (error.response) {
           setIsLoading(false)
           setError(error.response.data);
           console.log(error.response.data);
         }
+        else if (error.response.data === "wrong password"){
+          setIsLoading(false)
+          setPasswordAttempt(current => current + 1)
+          console.log(passwordAttempt)
+        }
+       
          else {
           setError("An error occurred. Please try again later.");
         }
