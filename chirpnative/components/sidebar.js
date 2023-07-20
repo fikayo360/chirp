@@ -3,12 +3,14 @@ import { View, Text, StyleSheet,Dimensions } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useApp from '../hooks/useApp';
 
 function Sidebar(props) {
     const windowWidth = Dimensions.get('window').width;
     const navigation = useNavigation();
-    const logout = async () => {
-      //await AsyncStorage.setItem('token', '');
+    const { logout } = useApp();
+    const signOut = async () => {
+      logout()
       navigation.navigate('Login')
     }
   return (
@@ -66,7 +68,7 @@ function Sidebar(props) {
         />
         <DrawerItem
           label="logout"
-          onPress={logout}
+          onPress={signOut}
           style={styles.drawerItem}
         />
       </DrawerContentScrollView>

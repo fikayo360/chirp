@@ -7,6 +7,7 @@ const AppProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
 
   const login = (user,token) => {
+    console.log('hi');
     setCurrentUser(user)
     setToken(token)
   }

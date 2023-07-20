@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import useApp from '../hooks/useApp';
 
 export default function Login() {
-  const { token, currentUser, setToken, setCurrentUser } = useApp();
+  const { token, currentUser, setToken, setCurrentUser,login, logout} = useApp();
   const navigation = useNavigation();
   const windowWidth = Dimensions.get('window').width;
   const headerFontSize = windowWidth * 0.07;
@@ -40,7 +40,8 @@ export default function Login() {
           const response = await axios.post('api/v1/user/login', formData);
           const restoken = response.data.cookie
           const sesUser = response.data
-          Login(sesUser, restoken)
+          console.log({restoken,sesUser});
+          login(sesUser, restoken)
           console.log('user details saved');
           setIsLoading(false)
           setUsername('');
@@ -49,7 +50,10 @@ export default function Login() {
           navigation.navigate('Home');
         }
       } catch (error) {
-        if (error.response) {
+        console.log(error);
+        {
+          /*
+          if (error.response.data) {
           setIsLoading(false)
           setError(error.response.data);
           console.log(error.response.data);
@@ -59,9 +63,11 @@ export default function Login() {
           setPasswordAttempt(current => current + 1)
           console.log(passwordAttempt)
         }
-       
          else {
-          setError("An error occurred. Please try again later.");
+          setE
+           */
+        
+        //error("An error occurred. Please try again later.");
         }
       }
     };
