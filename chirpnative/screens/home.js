@@ -4,13 +4,14 @@ import HomeComponents from '../components/homeComponents'
 import Header from '../components/header'
 import axios from "axios";
 import { useState,useEffect } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import useApp from '../hooks/useApp';
 
 
 
 const Home = () => {
 
   const [newsItems,setNewsItems] = useState([])
+  const { token, currentUser, setToken, setCurrentUser } = useApp();
 
   const submit = async () => {
     try {
@@ -36,15 +37,13 @@ const Home = () => {
     }
   }
 
+ useEffect(()=>{
+  console.log({token, currentUser});
+ },[])
+
  useEffect(() => {
   submit()
  },[])
-
- useEffect(() => {
-  getUserProfile()
- },[])
-
-
 
   return (
     <SafeAreaView style={styles.container}> 

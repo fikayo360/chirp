@@ -2,15 +2,15 @@ import { useContext } from 'react';
 import { AppContext } from '../appContext';
 
 const useApp = () => {
-  const context = useContext(AppContext);
+  const context = useContext(AppContext)
 
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useAuth must be used within an AuthProvider')
   }
 
-  const { token, currentUser, setToken, setCurrentUser } = context;
+  const { token, currentUser, setToken, setCurrentUser,login,logout } = context
 
-  return { token, currentUser, setToken, setCurrentUser };
+  return { token, currentUser, setToken, setCurrentUser,login, logout }
 };
 
 export default useApp;

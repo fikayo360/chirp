@@ -23,6 +23,7 @@ import Profile from './screens/profile';
 import Webview from './screens/webview';
 import { ArrowLongDownIcon } from 'react-native-heroicons/solid';
 import Sidebar from './components/sidebar';
+import { AppProvider } from './appContext';
 
 axios.defaults.baseURL = 'https://chirpserver.onrender.com/';
 
@@ -72,6 +73,7 @@ export default function App() {
   );
 
   return (
+    <AppProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Splash">
         <Stack.Screen
@@ -89,9 +91,10 @@ export default function App() {
         <Stack.Screen name="editProfile" component={EditProfile} />
         <Stack.Screen name="webview" component={Webview} />
         <Stack.Screen name="Home" component={MainFlow} options={{ headerShown: false }} />
-        <Drawer.Screen name="logout" component={Login} options={{ headerShown: false }}/>
+        <Stack.Screen name="logout" component={Login} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
+    </AppProvider>
   );
 }
 

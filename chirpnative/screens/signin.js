@@ -1,11 +1,12 @@
 import { StyleSheet, Text,View,TouchableOpacity,TextInput,SafeAreaView,Dimensions,ScrollView,Image} from 'react-native';
 import { useState,useEffect } from 'react';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
+import useApp from '../hooks/useApp';
 
 export default function Login() {
+  const { token, currentUser, setToken, setCurrentUser } = useApp();
   const navigation = useNavigation();
   const windowWidth = Dimensions.get('window').width;
   const headerFontSize = windowWidth * 0.07;
@@ -25,24 +26,8 @@ export default function Login() {
     const [passwordAttempt,setPasswordAttempt] = useState(0)
     const [isLoading, setIsLoading] = useState(false);
 
-    const getToken = async () => {
-      try {
-        const token = await AsyncStorage.getItem('token');
-        console.log('userToken: ' + token);
-        return token;
-      } catch (error) {
-        console.log('Error getting token:', error);
-        return null; 
-      }
-    };
-
-    const setTokenToAsyncStorage = async (value) => {
-      try {
-        await AsyncStorage.setItem('token',value);
-        console.log('Token saved successfully');
-      } catch (error) {
-        console.log('Error saving token:', error);
-      }
+    const getDetails = () => {
+      console.log({ token, currentUser, setToken, setCurrentUser });
     };
 
     const handleLogin = async () => {
@@ -53,12 +38,11 @@ export default function Login() {
           const formData = { username, password };
           setIsLoading(true)
           const response = await axios.post('api/v1/user/login', formData);
-          const userDetails = JSON.stringify(response.data);
-          await AsyncStorage.setItem('user', userDetails);
+          const restoken = response.data.cookie
+          const sesUser = response.data
+          Login(sesUser, restoken)
           console.log('user details saved');
           setIsLoading(false)
-          console.log(response.data.cookie);
-          setTokenToAsyncStorage(response.data.cookie)
           setUsername('');
           setPassword('');
           setError('');
@@ -81,13 +65,6 @@ export default function Login() {
         }
       }
     };
-
-    const getDetails = async() =>{
-      let tk = await AsyncStorage.getItem('token')
-      let pid =  await AsyncStorage.getItem('postId')
-      let us = await AsyncStorage.getItem('user')
-      console.log({tk,pid,us});
-    }
 
     useEffect(()=>{
       getDetails()
