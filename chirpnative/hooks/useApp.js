@@ -8,9 +8,9 @@ const useApp = () => {
     throw new Error('useAuth must be used within an AuthProvider')
   }
 
-  const { token, currentUser, setToken, setCurrentUser,login,logout } = context
+  const { token, currentUser, setToken, setCurrentUser,login,logout,savePostId,postId } = context
 
-  return { token, currentUser, setToken, setCurrentUser,login, logout }
+  return { token, currentUser, setToken, setCurrentUser,login, logout,savePostId,postId }
 };
 
 export default useApp;

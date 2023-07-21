@@ -2,7 +2,10 @@ import React from 'react'
 import ProfilePlaceholder from './Profiletextplace'
 import {View,Text,StyleSheet} from 'react-native'
 
+
+
 const CommentComponent = (props) => {
+   
     return (
         <View style={styles.container}>     
         <ProfilePlaceholder username={props.data.PostcommentAuthor} />

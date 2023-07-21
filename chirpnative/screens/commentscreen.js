@@ -6,8 +6,13 @@ import ProfilePlaceholder from '../components/Profiletextplace'
 import axios from 'axios'
 import CommentItems from '../components/comments'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import useApp from '../hooks/useApp'
 
 const Commentscreen = () => {
+  const { token,postId } = useApp()
+  useEffect(()=>{
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    },[])
   const [error,setError] = useState("")
   const [PostcommentAuthor,setPostCommentAuthor] = useState("fikayo")
   const [PostcommentBody,setPostcommentBody] = useState("")
@@ -32,8 +37,8 @@ const Commentscreen = () => {
 
   const getComments = async () => {
     try {
-      const PostId = await AsyncStorage.getItem('postId')
-      const response = await axios.get('api/v1/post/getComments', { params: { PostId } });
+      
+      const response = await axios.get('api/v1/post/getComments', { params: { PostId:postId } });
        setItems(response.data.postComments)
     } catch (error) {
       if (error.response) {

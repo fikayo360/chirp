@@ -4,6 +4,7 @@ const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [token, setToken] = useState('');
   const [currentUser, setCurrentUser] = useState({});
+  const [postId,setPostId] = useState('')
 
   const login = (user,token) => {
     console.log('hi');
@@ -15,16 +16,21 @@ const AppProvider = ({ children }) => {
     setCurrentUser({})
     setToken('')
   }
+  const savePostId = (id) => {
+    setPostId(id)
+  }
 
   return (
     <AppContext.Provider
       value={{
         token,
         currentUser,
+        postId,
         setToken,
         setCurrentUser,
         login,
-        logout
+        logout,
+        savePostId
       }}
     >
       {children}

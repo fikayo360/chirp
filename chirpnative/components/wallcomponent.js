@@ -6,9 +6,10 @@ import { format as timeAgo } from 'timeago.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { useState,useEffect } from "react";
+import useApp from "../hooks/useApp";
 
 const Wallcomponent = ({data,likePost,savePost}) => {
-  
+  const {savePostId,postId} = useApp()
   const windowWidth = Dimensions.get('window').width;
   const navigation = useNavigation();
   const authorFontSize = windowWidth * 0.055
@@ -21,8 +22,9 @@ const Wallcomponent = ({data,likePost,savePost}) => {
   };
 
   const navigate2comments = async() => {
-    await AsyncStorage.setItem('postId', data._id);
-    navigation.navigate('comment');
+    savePostId(data._id)
+    console.log(postId);
+    //navigation.navigate('comment');
   };
 
   useEffect(()=> {
@@ -40,6 +42,9 @@ const Wallcomponent = ({data,likePost,savePost}) => {
     const handleFollow = async() => {
       let likeData = {authorName:data.postAuthor,postId:data._id}
       likePost(likeData)
+      if(likes.length === 0){
+        likes.push(likeData)
+      }
     };
     
   return (
