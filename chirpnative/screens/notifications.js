@@ -4,8 +4,14 @@ import Header from '../components/header'
 import Notifications from '../components/notifications'
 import axios from 'axios'
 import { useState,useEffect } from 'react'
+import useApp from '../hooks/useApp'
 
 const AppNotifications = () => {
+  const {token} = useApp();
+
+  useEffect(()=>{
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },[])
   const [items,setItems] = useState([])
   const [error,setError] = useState("")
 

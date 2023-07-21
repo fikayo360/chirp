@@ -9,10 +9,15 @@ import * as Icons from "react-native-heroicons/solid"
 import { useState,useEffect } from 'react'
 import axios from "axios";
 import { Discovered } from '../mockdata/Discoveredpeople'
+import useApp from '../hooks/useApp'
 /* import spinner component */
 
 const Aroundyou = () => {
+  const {token} = useApp();
 
+  useEffect(()=>{
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },[])
  const [items,setItems] = useState([])
  const [username,setUsername] = useState('')
  const [error,setError] = useState("")

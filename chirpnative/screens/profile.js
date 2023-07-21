@@ -11,9 +11,14 @@ import Following from '../components/following'
 import Wallcomponents from '../components/wallcomponent'
 import axios from 'axios'
 import {useEffect }from 'react'
-
+import useApp from '../hooks/useApp'
 
 const Profile = () => {
+  const {token} = useApp();
+
+  useEffect(()=>{
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },[])
   const navigation = useNavigation();
   const [friends,setFriends] = useState([])
   const [sessionUser,setSessionUser] = useState({})

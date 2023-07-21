@@ -5,9 +5,14 @@ import { useState } from 'react'
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios'
 import uploadImageToFirebase from '../utils/uploadImage'
+import useApp from '../hooks/useApp';
 
 const Post = () => {
-  
+  const {token} = useApp();
+
+  useEffect(()=>{
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },[])
   const [postImg, setSelectedImage] = useState('')
   const [postAuthor, setAuthor] = useState('')
   const [postTitle,setPostTitle]= useState('')

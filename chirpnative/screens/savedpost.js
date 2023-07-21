@@ -4,11 +4,18 @@ import Header from '../components/header'
 import Savedposts from '../components/savedposts'
 import { useState,useEffect } from 'react'
 import axios from 'axios'
+import useApp from '../hooks/useApp'
 
 const Savedpost = () => {
+
+  const {token} = useApp();
+
+  useEffect(()=>{
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },[])
+
   const [items,setItems] = useState([])
   const [error,setError] = useState("")
-
 
 const getSavedPost = async () => {
   try {

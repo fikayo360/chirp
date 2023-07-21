@@ -5,8 +5,16 @@ import axios from 'axios'
 import * as ImagePicker from 'expo-image-picker';
 import uploadImageToFirebase from '../utils/uploadImage'
 import { useState } from 'react';
+import useApp from '../hooks/useApp';
 
 const EditProfile = () => {
+
+  const {token} = useApp();
+
+  useEffect(()=>{
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },[])
+
     const [phonenumber,setPhonenumber] = useState('')
     const [profilepic,setProfilePic] = useState('')
     const [Bio,setBio] = useState('')

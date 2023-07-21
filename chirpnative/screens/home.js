@@ -14,7 +14,7 @@ const Home = () => {
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },[])
-  
+
   const submit = async () => {
     try {
       const response = await axios.get('api/v1/news/getTopStories');
@@ -27,9 +27,6 @@ const Home = () => {
     }
   };
 
- useEffect(()=>{
-  //console.log({token, currentUser});
- },[])
 
  useEffect(() => {
   submit()

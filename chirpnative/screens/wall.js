@@ -4,10 +4,14 @@ import Header from '../components/header'
 import Wallcomponents from '../components/wallcomponents'
 import axios from 'axios'
 import { useState,useEffect } from 'react'
-
+import useApp from '../hooks/useApp'
 
 const Wall = () => {
- 
+  const {token} = useApp();
+
+  useEffect(()=>{
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },[])
   const [items,setItems] = useState([])
   const [error,setError] = useState("")
   

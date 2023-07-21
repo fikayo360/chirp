@@ -22,8 +22,6 @@ import Profile from './screens/profile';
 import Webview from './screens/webview';
 import Sidebar from './components/sidebar';
 import { AppProvider } from './appContext';
-import { useEffect } from 'react';
-import useApp from './hooks/useApp';
 
 axios.defaults.baseURL = 'https://chirpserver.onrender.com/';
 
