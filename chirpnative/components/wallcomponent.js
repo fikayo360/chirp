@@ -40,9 +40,6 @@ const Wallcomponent = ({data,likePost,savePost}) => {
     const handleFollow = async() => {
       let likeData = {authorName:data.postAuthor,postId:data._id}
       likePost(likeData)
-      if(likes.length === 0){
-        likes.push(likeData)
-      }
     };
     
   return (

@@ -3,7 +3,7 @@ import {SafeAreaView,StyleSheet,View,ScrollView,Text,Dimensions} from 'react-nat
 import Header from '../components/header'
 import Wallcomponents from '../components/wallcomponents'
 import axios from 'axios'
-import { useState,useEffect } from 'react'
+import { useState,useEffect,useCallback } from 'react'
 import useApp from '../hooks/useApp'
 
 const Wall = () => {
@@ -26,19 +26,21 @@ const Wall = () => {
     }
   };
 
-  const likePost = async ({authorName,postId}) => {
-    const formData = {authorName,postId};
-    try{
-      console.log(formData);
-      const likePost = await axios.post('api/v1/post/LikePost', formData)
-      setError(likePost.data);
-      setError('')
-    }catch(error){
-      if (error.response) {
-        setError(error.response.data)
-      } 
+  const likePost = 
+    async({authorName,postId}) => {
+      const formData = {authorName,postId};
+      try{
+        console.log(formData);
+        const likePost = await axios.post('api/v1/post/LikePost', formData)
+        setError(likePost.data);
+        setError('')
+      }catch(error){
+        if (error.response) {
+          setError(error.response.data)
+        } 
+      }
     }
-  }
+  
 
   const savePost = async ({ SavedPostImg, SavedPostAuthor, SavedPostTitle, SavedPostBody }) => {
     try {
