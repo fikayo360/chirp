@@ -6,36 +6,26 @@ import axios from "axios";
 import { useState,useEffect } from 'react'
 import useApp from '../hooks/useApp';
 
-
-
 const Home = () => {
-
   const [newsItems,setNewsItems] = useState([])
-  const { token, currentUser, setToken, setCurrentUser } = useApp();
 
+  const { token} = useApp();
+
+  useEffect(()=>{
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },[])
+  
   const submit = async () => {
     try {
       const response = await axios.get('api/v1/news/getTopStories');
-      //setNewsItems(response.data.articles);
-     // console.log(response.data);
+      setNewsItems(response.data.articles);
+      console.log(response.data);
     } catch (error) {
       if (error.response) {
         console.log(error.response);
       } 
     }
   };
-
-  const getUserProfile = async () => {
-    try{
-      const response = await axios.get('api/v1/user/getUser');
-       //setSessionUser(response.data)
-       console.log(response.data.username);
-    }catch(error) {
-      if (error.response) {
-        setError(error.response.data)
-      } 
-    }
-  }
 
  useEffect(()=>{
   //console.log({token, currentUser});

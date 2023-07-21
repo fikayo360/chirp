@@ -1,6 +1,5 @@
 
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -21,39 +20,18 @@ import Commentscreen from './screens/commentscreen';
 import EditProfile from './screens/editProfile';
 import Profile from './screens/profile';
 import Webview from './screens/webview';
-import { ArrowLongDownIcon } from 'react-native-heroicons/solid';
 import Sidebar from './components/sidebar';
 import { AppProvider } from './appContext';
+import { useEffect } from 'react';
+import useApp from './hooks/useApp';
 
 axios.defaults.baseURL = 'https://chirpserver.onrender.com/';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-export default function App() {
-  const getToken = async () => {
-    try {
-      const token = await AsyncStorage.getItem('token');
-      console.log('userToken: ' + token);
-      return token;
-    } catch (error) {
-      console.log('Error getting token:', error);
-      return null; 
-    }
-  };
+const App =  () => {
   
-  // Set the bearer token for Axios requests
-  const setBearerToken = async () => {
-    const token = await getToken();
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    } else {
-      console.log('no token provided');
-    }
-  };
-
-  setBearerToken();
-
   const MainFlow = () => (
     <Drawer.Navigator
         initialRouteName="topStories"
@@ -98,3 +76,4 @@ export default function App() {
   );
 }
 
+export default App;
