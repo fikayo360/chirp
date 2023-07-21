@@ -1,23 +1,25 @@
 import React from 'react'
 import {SafeAreaView,Text,TextInput,TouchableOpacity,StyleSheet,View} from 'react-native'
 import  Header  from '../components/header'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios'
 import uploadImageToFirebase from '../utils/uploadImage'
 import useApp from '../hooks/useApp';
 
 const Post = () => {
-  const {token} = useApp();
-
-  useEffect(()=>{
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  },[])
+  const {token,currentUser} = useApp();
   const [postImg, setSelectedImage] = useState('')
   const [postAuthor, setAuthor] = useState('')
   const [postTitle,setPostTitle]= useState('')
   const [postBody,setPostBody]= useState('')
   const [error,setError] = useState("")
+
+  useEffect(()=>{
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    setAuthor(currentUser.user.username)
+  },[])
+  
   const handleImageSelection = async () => {
   try {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -48,6 +50,7 @@ requestMediaLibraryPermissions();
      try {
       uploadImageToFirebase(postImg)
       .then(async(downloadURL) => {
+        console.log({postImg:downloadURL,postAuthor,postTitle,postBody});
         const response = await axios.post('api/v1/post/publish', {postImg:downloadURL,postAuthor,postTitle,postBody});
         setError(response.data)
         setSelectedImage('')
@@ -55,7 +58,6 @@ requestMediaLibraryPermissions();
         setPostTitle('')
         setPostBody('')
         setError('')
-        console.log(response.data);
     })
     .catch((error) => {
       // Handle the error
@@ -89,13 +91,7 @@ requestMediaLibraryPermissions();
         placeholder="title"
         placeholderTextColor={'black'}
         />
-        <TextInput
-        style={styles.otherinput}
-        onChangeText={text => setAuthor(text)}
-        value={postAuthor}
-        placeholder="username"
-        placeholderTextColor={'black'}
-        />
+       
         <View style={styles.buttonsComponent}>
         <TouchableOpacity style={styles.button} onPress={handleImageSelection}>
           <Text style={styles.buttonTxt}>AttachMedia</Text> 

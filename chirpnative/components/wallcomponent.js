@@ -5,6 +5,7 @@ import truncateText from '../utils/truncate'
 import { format as timeAgo } from 'timeago.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { useState,useEffect } from "react";
 
 const Wallcomponent = ({data,likePost,savePost}) => {
   
@@ -12,6 +13,8 @@ const Wallcomponent = ({data,likePost,savePost}) => {
   const navigation = useNavigation();
   const authorFontSize = windowWidth * 0.055
   const otherFontSize = windowWidth * 0.04
+  const [likes,setLikes] =useState([])
+  const [comments,setComments] = useState([])
 
   const navigate2Article = () => {
     navigation.navigate('article');
@@ -21,6 +24,11 @@ const Wallcomponent = ({data,likePost,savePost}) => {
     await AsyncStorage.setItem('postId', data._id);
     navigation.navigate('comment');
   };
+
+  useEffect(()=> {
+    setLikes(data.postLikes)
+    setComments(data.postComments)
+  },[])
   
   let postData = {
           SavedPostImg:data.postImg,
@@ -31,9 +39,9 @@ const Wallcomponent = ({data,likePost,savePost}) => {
    
     const handleFollow = async() => {
       let likeData = {authorName:data.postAuthor,postId:data._id}
-      const result = await likePost(likeData);
-      if (result) {
-        data.postLikes.push(likeData);
+      likePost(likeData)
+      if(likes.length === 0){
+        likes.push(likeData)
       }
     };
     
@@ -49,9 +57,10 @@ const Wallcomponent = ({data,likePost,savePost}) => {
         <Text style={[{fontSize:otherFontSize}]}>{timeAgo(data.createdAt)}</Text>
         <View style={styles.icons}>
         <TouchableOpacity style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} onPress={handleFollow}>
-          <Icons.HeartIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{data.postLikes.length}</Text>
+          <Icons.HeartIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{likes.length}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={navigate2comments} style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} ><Icons.ChatBubbleLeftIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{data.postComments.length}</Text>
+          <TouchableOpacity onPress={navigate2comments} style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} >
+            <Icons.ChatBubbleLeftIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{comments.length}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} onPress={()=>{savePost(postData)}}>
           <Icons.BookmarkIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /></TouchableOpacity>
