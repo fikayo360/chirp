@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,Text,TextInput,ScrollView,StyleSheet,View,Image,TouchableOpacity} from 'react-native'
+import {SafeAreaView,Text,TextInput,ScrollView,StyleSheet,View,Image,TouchableOpacity,Dimensions} from 'react-native'
 import Searchresult from '../components/searchresult'
 import Discovereduser from '../components/discovereduser'
 import  Header  from '../components/header'
@@ -14,6 +14,7 @@ import useApp from '../hooks/useApp'
 
 const Aroundyou = () => {
   const {token} = useApp();
+  const windowWidth = Dimensions.get('window').width;
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -71,26 +72,33 @@ const Aroundyou = () => {
     <SafeAreaView>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
         <Header title={'Search'} />
-        <View style={styles.bodyContainer}>
-        <View style={styles.customSearchInput}> 
-        <Icons.MagnifyingGlassIcon width={20} height={20} color="black"/> 
+        <ScrollView style={[styles.bodyContainer,{height:'90%',padding:windowWidth *0.03}]}>
+        <View style={[styles.customSearchInput,{
+          padding:windowWidth * 0.04,
+          borderRadius:windowWidth * 0.01,
+          alignSelf:'center',
+          marginTop:windowWidth * 0.06,
+          marginBottom:windowWidth * 0.09,
+          height:windowWidth * 0.15}]}> 
+        <Icons.MagnifyingGlassIcon width={windowWidth * 0.07} height={windowWidth * 0.07} color="black"/> 
         <TextInput
-        style={styles.searchInput}
+        style={[styles.searchInput,{fontSize:windowWidth * 0.04}]}
         onChangeText={text => setUsername(text)}
         value={username}
         placeholder="username"
         />
-        <TouchableOpacity onPress={search}><Icons.PaperAirplaneIcon width={20} height={20} color="black" /></TouchableOpacity>
+        <TouchableOpacity onPress={search}><Icons.PaperAirplaneIcon width={windowWidth * 0.07} height={windowWidth * 0.07} color="black" /></TouchableOpacity>
         </View>
-        {<Discovereduser data={discovered}/> && <View style={styles.imageContainer}>
-          <Image source={require('../assets/search3.png')} resizeMode='contain' style={{ width: '100%', height: '100%' }}  />
-        </View>}
-        <View style={styles.discoverContainer}>
-        <Text style={styles.discoverpeople}> Discoverd people {items.length} </Text>
-        <Discoveredusers data={items} follow={follow} />
-        </View>
+        {<Discovereduser data={discovered}/> && (<View style={{width:windowWidth * 0.6,height:windowWidth * 0.6,alignSelf:'center',marginBottom:windowWidth * 0.2}}>
+          <Image source={require('../assets/search3.png')} resizeMode='cover' style={{ width: '100%', height: '100%' }}  />
+        </View>)}
 
-        </View>
+       {items && <View style={styles.discoverContainer}>
+        <Text style={{fontSize:windowWidth * 0.06,marginBottom:windowWidth * 0.05}}> People </Text>
+        <Discoveredusers data={items} follow={follow} />
+        </View>}
+
+        </ScrollView>
     </SafeAreaView>
   )
 }
@@ -113,8 +121,7 @@ const styles = StyleSheet.create({
     color:'white'
   },
   bodyContainer:{
-    width:'100%',
-    padding:3
+    width:'100%'
   },
   Creativity:{
     fontSize:20,
@@ -124,30 +131,19 @@ const styles = StyleSheet.create({
     width:'95%',
     alignItems:'center',
     justifyContent:'space-between',
-    height:45,
     flexDirection:'row',
     borderWidth:1,
-    borderColor:'grey',
-    padding:10,
-    borderRadius:5,
-    marginLeft:10,
-    marginTop:5
+    borderColor:'grey'
   },
   searchInput:{
     width:'70%',
-    fontSize:18,
     color:'black'
-  },
-  imageContainer:{
-    width:320,
-    height:320
   },
   discoverContainer:{
     width:'100%'
   },
   discoverpeople:{
-    fontSize:18,
-    marginBottom:20
+    
   }
 })
 

@@ -1,14 +1,12 @@
 import React from 'react'
-import {View,Text,StyleSheet} from 'react-native'
-import { useState,useEffect } from 'react'
+import {View,Text,StyleSheet,Dimensions} from 'react-native'
 
-let cwidth;
-let cheight;
 
 const ProfilePlaceholder = ({username,width,height}) => {
+  const windowWidth = Dimensions.get('window').width;
   return (
-    <View style={styles.wrapper}>
-        <Text style={styles.text}>{username[0].toUpperCase()}</Text>
+    <View style={[styles.wrapper,{height:height, width:width, borderWidth:0.5, borderRadius:width / 2,}]}>
+        <Text style={[styles.text,{fontSize:windowWidth*0.04}]}>{username[0].toUpperCase()}</Text>
     </View>
   )
 }
@@ -16,16 +14,11 @@ const ProfilePlaceholder = ({username,width,height}) => {
 const styles = StyleSheet.create({
   
   text:{
-    fontSize:15,
     color:'white'
   },
   wrapper:{
-    height:30,
-    width:30,
     backgroundColor:'#A4508B',
     borderColor:'#A4508B',
-    borderWidth:0.3,
-    borderRadius:50 / 2,
     justifyContent:'center',
     alignItems:'center'
   }

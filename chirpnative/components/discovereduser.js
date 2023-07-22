@@ -1,22 +1,24 @@
 import React from 'react'
-import {View,TouchableOpacity,Text,StyleSheet,Image} from 'react-native'
+import {View,TouchableOpacity,Text,StyleSheet,Image,Dimensions} from 'react-native'
 import * as Icons from "react-native-heroicons/solid"
 import ProfilePlaceholder from './Profiletextplace'
 
 const Discovereduser = (props) => {
+  const windowWidth = Dimensions.get('window').width;
   const handleFollow = () => {
     props.follow(props.data.username); 
   };
   return (
     <View style={styles.container}>
       <View style={styles.xIconContainer}><Icons.XMarkIcon width={15} height={15} color="black"/></View>
-      <View style={styles.ImgContainer}>
-        {props.data.profilePic ? (
-          <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} source={{ uri: props.data.profilePic }} />
-        ) : (
-          <ProfilePlaceholder username={props.data.username} />
+      {props.data.profilePic?(
+        <View style={styles.ImgContainer}>
+        <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} source={{ uri: props.data.profilePic }} />
+        </View>
+        ):(
+          <ProfilePlaceholder username={props.data.username} width={windowWidth * 0.2} height={windowWidth * 0.2} />
         )}
-      </View>
+      
       <Text>{props.data.username}</Text>
       <TouchableOpacity style={styles.button} onPress={handleFollow}> 
         <Text style={styles.buttonTxt}>follow</Text>
