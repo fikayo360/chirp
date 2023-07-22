@@ -1,14 +1,13 @@
 import React from 'react'
 import {SafeAreaView,Text,TextInput,ScrollView,StyleSheet,View,Image,TouchableOpacity,Dimensions} from 'react-native'
 import Searchresult from '../components/searchresult'
-import Discovereduser from '../components/discovereduser'
+import Founduser from '../components/founduser'
 import  Header  from '../components/header'
 import { ForwardIcon } from 'react-native-heroicons/solid'
 import Discoveredusers from '../components/discoveredusers'
 import * as Icons from "react-native-heroicons/solid"
 import { useState,useEffect } from 'react'
 import axios from "axios";
-import { Discovered } from '../mockdata/Discoveredpeople'
 import useApp from '../hooks/useApp'
 /* import spinner component */
 
@@ -28,7 +27,7 @@ const Aroundyou = () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
       setItems(response.data);
-      console.log(items)
+      //console.log(items)
       
     } catch (error) {
       console.log(err.response);
@@ -37,13 +36,15 @@ const Aroundyou = () => {
 
   const search = async () => {
     const formData = {username}
+    console.log(formData);
     if(!username){
       setError('fields cant be empty')
     }
     try {
       const response = await axios.post('api/v1/user/search', formData);
+      console.log(response.data);
       setDiscovered(response.data);
-      //console.log(discovered);
+      console.log(discovered);
       setUsername('')
     } catch (error) {
       if (error.response) {
@@ -89,11 +90,13 @@ const Aroundyou = () => {
         />
         <TouchableOpacity onPress={search}><Icons.PaperAirplaneIcon width={windowWidth * 0.07} height={windowWidth * 0.07} color="black" /></TouchableOpacity>
         </View>
-        {<Discovereduser data={discovered}/> && (<View style={{width:windowWidth * 0.6,height:windowWidth * 0.6,alignSelf:'center',marginBottom:windowWidth * 0.2}}>
+
+        {discovered?(<View style={{alignSelf:'center'}}><Founduser data={discovered} follow={follow} /></View>):
+        (<View style={{width:windowWidth * 0.6,height:windowWidth * 0.6,alignSelf:'center',marginBottom:windowWidth * 0.2}}>
           <Image source={require('../assets/search3.png')} resizeMode='cover' style={{ width: '100%', height: '100%' }}  />
         </View>)}
 
-       {items && <View style={styles.discoverContainer}>
+       {items && <View style={[styles.discoverContainer,{marginTop:windowWidth*0.20}]}>
         <Text style={{fontSize:windowWidth * 0.06,marginBottom:windowWidth * 0.05}}> People </Text>
         <Discoveredusers data={items} follow={follow} />
         </View>}

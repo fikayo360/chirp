@@ -3,7 +3,7 @@ import {View,TouchableOpacity,Text,StyleSheet,Image,Dimensions} from 'react-nati
 import * as Icons from "react-native-heroicons/solid"
 import ProfilePlaceholder from './Profiletextplace'
 
-const Discovereduser = (props) => {
+const Founduser = (props) => {
   const windowWidth = Dimensions.get('window').width;
   const handleFollow = () => {
     props.follow(props.data.username); 
@@ -16,12 +16,16 @@ const Discovereduser = (props) => {
       borderRadius:windowWidth * 0.02,
       borderWidth:1}]}>
 
-      {props.data.profilePic?(
-        <View style={styles.ImgContainer}>
-        <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} source={{ uri: props.data.profilePic }} />
+      {props.data.profilepic?(
+        <View style={{
+            width:windowWidth * 0.20,
+            height:windowWidth * 0.20
+        }}>
+        <Image resizeMode='cover' style={{ width: '100%', height: '100%',borderRadius:windowWidth * 0.5 }} source={{ uri: props.data.profilepic }} />
         </View>
-        ):(
-          <ProfilePlaceholder username={props.data.username} width={windowWidth * 0.2} height={windowWidth * 0.2} />
+        ):(<>
+        </>
+          /*<ProfilePlaceholder username={props?.data?.username} width={windowWidth * 0.2} height={windowWidth * 0.2}/>*/ 
         )}
       
       <Text>{props.data.username}</Text>
@@ -47,18 +51,6 @@ const styles = StyleSheet.create({
     alignItems:'center',
     
   },
-  ImgContainer:{
-    width:100,
-    height:100,
-    borderWidth:0.8,
-    borderRadius:50,
-    marginBottom:10
-  },
-  xIconContainer:{
-    position:'absolute',
-    top:3,
-    right:3
-  },
   button:{
     alignItems: 'center',
     justifyContent:'center',
@@ -69,4 +61,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Discovereduser
+export default Founduser
