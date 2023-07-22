@@ -15,7 +15,8 @@ const NewscategoryItem = (props) => {
   };
   return (
     <TouchableOpacity onPress={handleNavigate} style={[styles.container,{height:windowWidth * 0.20,margin:windowWidth * 0.02,paddingLeft:windowWidth * 0.01,fontSize:windowWidth * 0.03}]}>
-      <Image style={{borderRadius:windowWidth * 0.5, width:windowWidth * 0.12, height:windowWidth * 0.12}} source={require('../assets/anime2.png')} resizeMode='cover' />
+      <Image style={{borderRadius:windowWidth * 0.5,
+        width:windowWidth * 0.12, height:windowWidth * 0.12}} source={require('../assets/anime2.png')} resizeMode='cover' />
         
         <View style={[styles.body]}>
         <Text style={[styles.textSize,{fontSize:windowWidth * 0.05}]}>{props.data.author}</Text>

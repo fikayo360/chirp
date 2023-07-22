@@ -32,7 +32,7 @@ const Discovereduser = (props) => {
         borderRadius:windowWidth * 0.4,
         marginTop:windowWidth * 0.05
       }]} onPress={handleFollow}> 
-        <Text style={[styles.buttonTxt,{fontSize:windowWidth * 0.04}]}>follow</Text>
+        <Text style={[styles.buttonTxt,{fontSize:windowWidth * 0.05}]}>follow</Text>
       </TouchableOpacity>
     </View>
   )
