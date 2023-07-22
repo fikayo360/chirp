@@ -17,13 +17,7 @@ const Discovereduser = (props) => {
       borderWidth:1}]}>
 
       {props.data.profilePic?(
-        <View style={{
-          width:windowWidth * 0.2,
-          height:windowWidth * 0.2,
-          borderWidth:0.5,
-          borderRadius:windowWidth * 0.2
-        }}>
-
+        <View style={styles.ImgContainer}>
         <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} source={{ uri: props.data.profilePic }} />
         </View>
         ):(
@@ -52,6 +46,13 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     
+  },
+  ImgContainer:{
+    width:100,
+    height:100,
+    borderWidth:0.8,
+    borderRadius:50,
+    marginBottom:10
   },
   xIconContainer:{
     position:'absolute',
