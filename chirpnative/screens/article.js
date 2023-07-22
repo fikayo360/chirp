@@ -16,19 +16,18 @@ const Article = () => {
     <SafeAreaView style={styles.container}>
         <Header title={'Article'} />
         <ScrollView style={[styles.bodycontainer,{padding:windowWidth * 0.03}]}>
-        <Text style={[styles.title,{fontSize:windowWidth*0.06}]}>{article.postTitle}</Text>
+        <Text style={[styles.title,{fontSize:windowWidth*0.06,marginBottom:windowWidth*0.04}]}>{article.postTitle}</Text>
         <View>
 
-        {article.postImg &&
-         (<View style={styles.imgContainer}>
+        {article.postImg && (<View style={[styles.imgContainer,{ height:windowWidth * 0.8,marginBottom:windowWidth*0.06}]}>
         <Image resizeMode='cover' style={{ width: '100%', height: '100%' }} 
         source={{uri:article.postImg}}/>
-        </View>)}
+        </View>) }
 
-        <Text style={styles.writtenBy}>written by {article.postAuthor}</Text>
+        <Text style={[styles.writtenBy,{fontSize:windowWidth*0.05,marginBottom:windowWidth*0.03}]}>written by {article.postAuthor}</Text>
 
         <View style={styles.articleBodyContainer}>
-        <Text style={styles.articleBody}>
+        <Text style={{fontSize:windowWidth*0.04}}>
         {article.postBody}
         </Text>
         </View>
@@ -41,7 +40,7 @@ const Article = () => {
 
 const styles = StyleSheet.create({
   container:{
-    flex: 1,
+    width:'100%'
   },
   bodycontainer:{
     width:'100%',
@@ -52,18 +51,13 @@ const styles = StyleSheet.create({
     fontWeight:'bold'
   },
   imgContainer:{
-    width:'90%',
-    height:'80%'
+    width:'98%'
   },
   articleBodyContainer:{
     width:'100%',
     height:'60%',
   },
-  articleBody:{
-    fontSize:16
-  },
   writtenBy:{
-    fontSize:14,
     fontWeight:'bold'
   },
   iconcontainer:{
