@@ -1,32 +1,34 @@
 import React from 'react'
-import {View,Text,SafeAreaView,StyleSheet,Image,ScrollView} from 'react-native'
+import {View,Text,SafeAreaView,StyleSheet,Image,ScrollView,Dimensions} from 'react-native'
 import { sampleArticle } from '../mockdata/article'
 import * as Icons from "react-native-heroicons/solid"
 import Header from '../components/header'
+import useApp from "../hooks/useApp";
+import { useState,useEffect } from 'react'
 
 const Article = () => {
+  const {savePostId,article,saveArticle} = useApp()
+  const windowWidth = Dimensions.get('window').width;
+  useEffect(()=>{
+    console.log(article);
+  },[])
   return (
     <SafeAreaView style={styles.container}>
         <Header title={'Article'} />
-        <ScrollView style={styles.bodycontainer}>
-        <Text style={styles.title}>{sampleArticle.title}</Text>
-
+        <ScrollView style={[styles.bodycontainer,{padding:windowWidth * 0.03}]}>
+        <Text style={[styles.title,{fontSize:windowWidth*0.05}]}>{article.postTitle}</Text>
         <View>
 
-        <View style={styles.imgContainer}>
+        {article.postImg && (<View style={styles.imgContainer}>
         <Image resizeMode='contain' style={{ width: '100%', height: '100%' }} 
-        source={{uri:sampleArticle.img}}/>
-        </View>
-        <Text style={styles.writtenBy}>written by {sampleArticle.author}</Text>
-        
-        <View style={styles.iconcontainer}>
-          <View style={styles.iconsubcontainer}><Icons.HeartIcon width={20} height={20} color="black" /><Text>{10}</Text></View>
-          <View style={styles.iconsubcontainer}><Icons.ChatBubbleLeftIcon width={20} height={20} color="black" /><Text>{13}</Text></View>
-        </View>
+        source={{uri:article.postImg}}/>
+        </View>) }
+
+        <Text style={styles.writtenBy}>written by {article.postAuthor}</Text>
 
         <View style={styles.articleBodyContainer}>
         <Text style={styles.articleBody}>
-        {sampleArticle.articleBody}
+        {article.postBody}
         </Text>
         </View>
 
@@ -42,11 +44,10 @@ const styles = StyleSheet.create({
   },
   bodycontainer:{
     width:'100%',
-    height:'89%',
-    paddingHorizontal:10
+    height:'90%'
   },
   title:{
-    fontSize:25,
+   
     fontWeight:'bold'
   },
   imgContainer:{

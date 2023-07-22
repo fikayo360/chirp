@@ -1,6 +1,6 @@
 import {React,useState,useEffect} from 'react'
 import * as Icons from "react-native-heroicons/solid"
-import {SafeAreaView,TextInput,ScrollView,StyleSheet,View,TouchableOpacity,Text} from 'react-native'
+import {SafeAreaView,TextInput,ScrollView,StyleSheet,View,TouchableOpacity,Text,Dimensions} from 'react-native'
 import Header from '../components/header'
 import ProfilePlaceholder from '../components/Profiletextplace'
 import axios from 'axios'
@@ -16,6 +16,7 @@ const Commentscreen = () => {
   const [PostcommentBody,setPostcommentBody] = useState("")
   const [items,setItems] = useState([])
   const [ProfilePic,setProfilePic] = useState("")
+  const windowWidth = Dimensions.get('window').width;
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -68,21 +69,25 @@ const Commentscreen = () => {
   }, []);
   
   return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
           {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-        <View style={styles.upperContainer}>
+
+        <View style={styles.body}>
+        <View style={[styles.upperContainer,{height:windowWidth * 0.40,padding:windowWidth * 0.04}]}>
         <ProfilePlaceholder username={'fikayo'}/>
 
-        <View style={styles.textinputContainer}>
+        <View style={[styles.textinputContainer,{height:windowWidth * 0.25,borderRadius:windowWidth* 0.01,
+        padding:windowWidth * 0.02,marginRight:windowWidth*0.03,marginLeft:windowWidth * 0.01}]}>
         <TextInput
-        style={styles.input}
+        style={[styles.input,{fontSize:windowWidth * 0.05}]}
         multiline={true}
         value={PostcommentBody}
         onChangeText={(value) => setPostcommentBody(value)}
         placeholder="add comment"
         placeholderTextColor={'black'}
+
         /> 
-        <TouchableOpacity style={styles.paperIconCont} onPress={createComment}><Icons.PaperAirplaneIcon width={20} height={20} color="black" /></TouchableOpacity>
+        <TouchableOpacity style={[styles.paperIconCont,{top:windowWidth * 0.04, right:windowWidth * 0.02}]} onPress={createComment}><Icons.PaperAirplaneIcon width={windowWidth * 0.06} height={windowWidth * 0.06} color="black" /></TouchableOpacity>
         </View>
         </View>
         
@@ -90,12 +95,17 @@ const Commentscreen = () => {
           <CommentItems data={items} />
         </ScrollView>  
 
+        </View>
+
         </SafeAreaView>
       
   )
 }
 
 const styles = StyleSheet.create({
+  container:{
+ flex: 1,
+  },
   errorContainer:{
     alignItems: 'center',
     marginTop:40,
@@ -117,39 +127,32 @@ const styles = StyleSheet.create({
     height:'70%'
   },
   paperIconCont:{
-    position:'absolute',
-    top:10,
-    right:5
+    position:'absolute'
   },
   textinputContainer:{
     width:'90%',
-    marginLeft:10,
-    height:95,
     borderWidth:1,
     borderColor:'grey',
-    borderRadius:5,
-    padding:5,
     flexDirection:'row',
     justifyContent:'space-between',
     position:'relative'
   },
   upperContainer:{
     width:'100%',
-    height:150,
     flexDirection:'row',
-    padding:17,
-    paddingTop:25,
+    justifyContent:'space-between',
     borderBottomColor:'grey',
     borderBottomWidth:0.5
   },
   input:{
     borderColor: '#9CA3AF',
-    borderRadius: 5,
-    fontSize:17,
     color: '#1F2937',
     textAlignVertical: 'top'
   },
-
+  body:{
+    width: '100%',
+    height:'80%'
+  }
 })
 
 export default Commentscreen

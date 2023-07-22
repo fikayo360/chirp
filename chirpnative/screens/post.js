@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,Text,TextInput,TouchableOpacity,StyleSheet,View} from 'react-native'
+import {SafeAreaView,Text,TextInput,TouchableOpacity,StyleSheet,View,Dimensions,ScrollView,Image} from 'react-native'
 import  Header  from '../components/header'
 import { useState,useEffect } from 'react'
 import * as ImagePicker from 'expo-image-picker';
@@ -8,6 +8,7 @@ import uploadImageToFirebase from '../utils/uploadImage'
 import useApp from '../hooks/useApp';
 
 const Post = () => {
+  const windowWidth = Dimensions.get('window').width;
   const {token,currentUser} = useApp();
   const [postImg, setSelectedImage] = useState('')
   const [postAuthor, setAuthor] = useState('')
@@ -71,12 +72,28 @@ requestMediaLibraryPermissions();
   };
 
   return (
-    <SafeAreaView>
+    <>
+    <Header title={'Post'}/>
+    <ScrollView style={styles.container} >
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-        <Header title={'Post'}/>
-        <View style={styles.container}>
+       
+        <View style={[styles.body,{paddingVertical:windowWidth * 0.16}]}>
+          {
+            postImg && 
+            (<View style={[{width:windowWidth *0.8,borderRadius:windowWidth * 0.02,alignSelf:'center',height:windowWidth * 0.6,borderWidth: 1.4,marginBottom:windowWidth * 0.05}]} >
+            <Image style={[styles.img,{opacity:0.6}]} resizeMode='cover' source={{uri:postImg}}  />
+            </View>)
+          } 
+     
         <TextInput
-        style={styles.input}
+        style={[styles.input,
+          {borderRadius: windowWidth * 0.02,
+          borderWidth: 2,
+          paddingHorizontal: windowWidth * 0.03,
+          paddingVertical:windowWidth * 0.02,
+          height:windowWidth * 0.5,
+          fontSize: windowWidth * 0.05,
+          marginBottom: windowWidth * 0.1}]}
         multiline={true}
         numberOfLines={4}
         value={postBody}
@@ -85,27 +102,52 @@ requestMediaLibraryPermissions();
         placeholderTextColor={'black'}
         />
         <TextInput
-        style={styles.otherinput}
+        style={[styles.otherinput,
+          {borderRadius: windowWidth * 0.02,
+            borderWidth: 2,
+            paddingHorizontal: windowWidth * 0.03,
+            paddingVertical:windowWidth * 0.02,
+            height:windowWidth * 0.15,
+            fontSize: windowWidth * 0.05,
+            marginBottom: windowWidth * 0.06}]}
         onChangeText={text => setPostTitle(text)}
         value={postTitle}
         placeholder="title"
         placeholderTextColor={'black'}
         />
        
-        <View style={styles.buttonsComponent}>
-        <TouchableOpacity style={styles.button} onPress={handleImageSelection}>
+        </View>
+        <View style={[styles.buttonsComponent,{bottom:0,marginTop:windowWidth * 0.03,paddingHorizontal:windowWidth*0.02}]}>
+        <TouchableOpacity style={[styles.button,{
+        padding: windowWidth * 0.05,
+        height: windowWidth * 0.16,
+        width:windowWidth * 0.48,
+        borderRadius:windowWidth * 0.4,}]} onPress={handleImageSelection}>
           <Text style={styles.buttonTxt}>AttachMedia</Text> 
         </TouchableOpacity>  
-        <TouchableOpacity style={styles.button} onPress={submit}>
+        <TouchableOpacity style={[styles.button,{
+        padding: windowWidth * 0.05,
+        height: windowWidth * 0.16,
+        width:windowWidth * 0.48,
+        borderRadius:windowWidth * 0.4,}]} onPress={submit}>
           <Text style={styles.buttonTxt}>Publish</Text>
         </TouchableOpacity>
         </View>
-        </View>
-    </SafeAreaView>
+    </ScrollView>
+    </>
   )
 }
 
 const styles = StyleSheet.create({
+  body:{
+    width: '100%',
+    height:'100%',
+    alignItems:'center'
+  },
+  img:{
+    width:'100%',
+    height:'100%'
+  },
   errorContainer:{
     alignItems: 'center',
     marginTop:60,
@@ -123,56 +165,33 @@ const styles = StyleSheet.create({
     color:'white'
   },
   container:{
-    padding:10,
     position:'relative',
     width:'100%',
-    height:'88%'
+    height:'90%'
   },
   input:{
     borderColor: 'black',
-    borderRadius: 5,
-    borderWidth: 2,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    fontSize: 20,
     color: '#1F2937',
     textAlignVertical: 'top',
-    marginBottom: 20,
-    width: '85%',
-    height:150
+    width: '85%'
   },
   otherinput:{
     borderColor: 'black',
-    borderRadius: 5,
-    borderWidth: 2,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    fontSize: 20,
     color: '#1F2937',
     textAlignVertical: 'top',
-    marginBottom: 20,
-    width: '85%',
-    height:50
+    width: '85%'
   },
   button:{
     alignItems: 'center',
     backgroundColor: 'rgb(15, 20, 25)',
-    padding: 10,
-    height: 70,
-    width:170,
-    margin: 12,
-    marginTop:20,
-    borderRadius:8,
-    margin:10,
     justifyContent:'center',
     alignItems:'center'
   },
   buttonsComponent:{
     width:'100%',
     flexDirection:'row',
-    position:'absolute',
-    bottom:20,
-    marginLeft:5
+    justifyContent:'space-between',
+    position:'absolute'
   },
   buttonTxt:{
     fontSize:14,

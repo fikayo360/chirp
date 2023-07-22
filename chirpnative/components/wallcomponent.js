@@ -9,7 +9,7 @@ import { useState,useEffect } from "react";
 import useApp from "../hooks/useApp";
 
 const Wallcomponent = ({data,likePost,savePost}) => {
-  const {savePostId,postId} = useApp()
+  const {savePostId,article,saveArticle} = useApp()
   const windowWidth = Dimensions.get('window').width;
   const navigation = useNavigation();
   const authorFontSize = windowWidth * 0.055
@@ -18,6 +18,7 @@ const Wallcomponent = ({data,likePost,savePost}) => {
   const [comments,setComments] = useState([])
 
   const navigate2Article = () => {
+    saveArticle(data)
     navigation.navigate('article');
   };
 

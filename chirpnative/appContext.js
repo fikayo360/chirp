@@ -5,6 +5,7 @@ const AppProvider = ({ children }) => {
   const [token, setToken] = useState('');
   const [currentUser, setCurrentUser] = useState({});
   const [postId,setPostId] = useState('')
+  const [article,setArticle] = useState({})
 
   const login = (user,token) => {
     console.log('hi');
@@ -19,6 +20,9 @@ const AppProvider = ({ children }) => {
   const savePostId = (id) => {
     setPostId(id)
   }
+  const saveArticle = (article) => {
+    setArticle(article)
+  }
 
   return (
     <AppContext.Provider
@@ -26,11 +30,13 @@ const AppProvider = ({ children }) => {
         token,
         currentUser,
         postId,
+        article,
         setToken,
         setCurrentUser,
         login,
         logout,
-        savePostId
+        savePostId,
+        saveArticle
       }}
     >
       {children}
