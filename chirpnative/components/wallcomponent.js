@@ -21,13 +21,13 @@ const Wallcomponent = ({data,likePost,savePost}) => {
     navigation.navigate('article');
   };
 
-  const navigate2comments = async() => {
+  const navigate2comments = () => {
     savePostId(data._id)
-    console.log(postId);
-    //navigation.navigate('comment');
+    navigation.navigate('comment');
   };
 
   useEffect(()=> {
+    console.log(data);
     setLikes(data.postLikes)
     setComments(data.postComments)
   },[])

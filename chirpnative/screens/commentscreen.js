@@ -9,23 +9,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import useApp from '../hooks/useApp'
 
 const Commentscreen = () => {
-  const { token,postId } = useApp()
-  useEffect(()=>{
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    },[])
+  const { token,postId,currentUser } = useApp()
+  const [PostId,setPostId] = useState('')
   const [error,setError] = useState("")
-  const [PostcommentAuthor,setPostCommentAuthor] = useState("fikayo")
+  const [PostcommentAuthor,setPostCommentAuthor] = useState("")
   const [PostcommentBody,setPostcommentBody] = useState("")
-  const [items,setItems] = useState([ ])
+  const [items,setItems] = useState([])
+  const [ProfilePic,setProfilePic] = useState("")
 
-  const [ProfilePic,setProfilePic] = useState("https://firebasestorage.googleapis.com/v0/b/chirp-3e947.appspot.com/o/images%2F1688932202963?alt=media&token=cd511d7a-600a-4b4d-b7d7-b842d055d3a5")
+  useEffect(()=>{
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },[])
+
+  const getUser = () => {
+    setPostId(postId)
+    setPostCommentAuthor(currentUser.user.username)
+    setProfilePic(currentUser.user.profilepic || '')
+  };
+
+  useEffect(()=> {
+    getUser()
+  },[])
+
+
  
 
   const createComment = async () => {
     try {
-      const PostId = await AsyncStorage.getItem('postId')
       console.log({PostId,PostcommentAuthor,PostcommentBody,ProfilePic});
       const response = await axios.post('api/v1/post/commentPost', {PostId,PostcommentAuthor,PostcommentBody,ProfilePic})
+      console.log(response.data);
       setError('Saved')
       setPostcommentBody('')
     } catch (error) {
@@ -37,12 +50,14 @@ const Commentscreen = () => {
 
   const getComments = async () => {
     try {
-      
-      const response = await axios.get('api/v1/post/getComments', { params: { PostId:postId } });
+      console.log(postId);
+      const response = await axios.get('api/v1/post/getComments', {params: {PostId:postId}});
+      //console.log(response.data.postComments);
        setItems(response.data.postComments)
     } catch (error) {
       if (error.response) {
-        setError(error.response.data)
+        console.log(error.response.data);
+        //setError(error.response.data)
       } 
     }
   }
