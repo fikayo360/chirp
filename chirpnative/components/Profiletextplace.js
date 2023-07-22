@@ -6,7 +6,7 @@ const ProfilePlaceholder = ({username,width,height}) => {
   const windowWidth = Dimensions.get('window').width;
   return (
     <View style={[styles.wrapper,{height:height, width:width, borderWidth:0.5, borderRadius:width / 2,}]}>
-        <Text style={[styles.text,{fontSize:windowWidth*0.04}]}>{username[0].toUpperCase()}</Text>
+        <Text style={[styles.text,{fontSize:windowWidth*0.06}]}>{username[0].toUpperCase()}</Text>
     </View>
   )
 }
