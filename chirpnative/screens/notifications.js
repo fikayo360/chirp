@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,ScrollView,StyleSheet} from 'react-native'
+import {SafeAreaView,ScrollView,StyleSheet,Dimensions} from 'react-native'
 import Header from '../components/header'
 import Notifications from '../components/notifications'
 import axios from 'axios'
@@ -8,7 +8,7 @@ import useApp from '../hooks/useApp'
 
 const AppNotifications = () => {
   const {token} = useApp();
-
+  const windowWidth = Dimensions.get('window').width;
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },[])
@@ -33,10 +33,10 @@ useEffect(()=>{
 },[])
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
     <Header title={'Notifications'}/>
-      <ScrollView>
+      <ScrollView style={styles.body}>
       <Notifications data={items}/>
       </ScrollView>
     </SafeAreaView>
@@ -59,6 +59,13 @@ const styles = StyleSheet.create({
   errorText:{
     fontSize: 15,
     color:'white'
+  },
+  container:{
+    flex:1,
+  },
+  body:{
+    height:'90%',
+    width:'100%'
   }
 })
 

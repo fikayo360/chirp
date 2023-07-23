@@ -1,5 +1,5 @@
 import {React,useState} from 'react'
-import {View,Text,ScrollView,SafeAreaView,StyleSheet,TouchableOpacity} from 'react-native'
+import {View,Text,ScrollView,SafeAreaView,StyleSheet,TouchableOpacity,Dimensions} from 'react-native'
 import * as Icons from "react-native-heroicons/solid"
 import Header from '../components/header'
 import ProfilePlaceholder from '../components/Profiletextplace'
@@ -14,6 +14,7 @@ import {useEffect }from 'react'
 import useApp from '../hooks/useApp'
 
 const Profile = () => {
+  const windowWidth = Dimensions.get('window').width;
   const {token} = useApp();
 
   useEffect(()=>{
@@ -91,13 +92,11 @@ const Profile = () => {
     getUserProfile()
     getUserPost()
     getAround()
-    getToken()
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={[styles.container,{padding:windowWidth * 0.05}]}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-        <Header title={'Fikayo'} />
 
         <ScrollView style={styles.wrapper}>
 
@@ -163,10 +162,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color:'white'
   },
+  container:{
+    flex: 1
+  },
   wrapper:{
     width:'100%',
-    height:'89%',
-    paddingHorizontal:5
+    height:'90%'
   },
   profileQuickInfo:{
     width:'100%',

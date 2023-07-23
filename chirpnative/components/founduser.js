@@ -23,9 +23,8 @@ const Founduser = (props) => {
         }}>
         <Image resizeMode='cover' style={{ width: '100%', height: '100%',borderRadius:windowWidth * 0.5 }} source={{ uri: props.data.profilepic }} />
         </View>
-        ):(<>
-        </>
-          /*<ProfilePlaceholder username={props?.data?.username} width={windowWidth * 0.2} height={windowWidth * 0.2}/>*/ 
+        ):(
+          <ProfilePlaceholder username={props?.data?.username} width={windowWidth * 0.2} height={windowWidth * 0.2}/>
         )}
       
       <Text>{props.data.username}</Text>

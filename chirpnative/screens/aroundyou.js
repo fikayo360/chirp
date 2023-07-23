@@ -58,6 +58,7 @@ const Aroundyou = () => {
     try {
       const response = await axios.get(`api/v1/user/follow/${username}`);
       setError(response.data)
+      console.log(response.data);
     } catch (error) {
       if (error.response) {
         setError(error.response.data)
@@ -66,6 +67,7 @@ const Aroundyou = () => {
   };
 
   useEffect(() => {
+    console.log(discovered);
     getAround()
   },[])
 
