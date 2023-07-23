@@ -1,5 +1,5 @@
 import {React,useState} from 'react'
-import {View,Text,ScrollView,SafeAreaView,StyleSheet,TouchableOpacity,Dimensions} from 'react-native'
+import {View,Text,ScrollView,SafeAreaView,StyleSheet,TouchableOpacity,Dimensions,Image} from 'react-native'
 import * as Icons from "react-native-heroicons/solid"
 import Header from '../components/header'
 import ProfilePlaceholder from '../components/Profiletextplace'
@@ -102,8 +102,13 @@ const Profile = () => {
 
         <View style={styles.profileQuickInfo}>
 
-          <View >
-          <View style={styles.imgContainer}><ProfilePlaceholder username={'fikayo'} /></View>
+          <View style={{alignItems:'center'}}>
+          {sessionUser.profilepic?
+          (<View style={{width:windowWidth * 0.20, height:windowWidth * 0.20}}>
+          <Image resizeMode='cover' style={{ width: '100%', height: '100%',borderRadius:windowWidth * 0.5 }} source={{ uri: props.data.profilepic }} />
+          </View>):
+          (<View style={styles.imgContainer}><ProfilePlaceholder username={'fikayo'} width={windowWidth * 0.2} height={windowWidth * 0.2} /></View>)
+          }
           <TouchableOpacity onPress={() => navigation.navigate('editProfile')}><Text style={styles.imgtext}>Edit</Text></TouchableOpacity>
           </View>
 
