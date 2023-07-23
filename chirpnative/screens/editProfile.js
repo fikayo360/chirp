@@ -4,7 +4,7 @@ import * as Icons from "react-native-heroicons/solid"
 import axios from 'axios'
 import * as ImagePicker from 'expo-image-picker';
 import uploadImageToFirebase from '../utils/uploadImage'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import useApp from '../hooks/useApp';
 
 const EditProfile = () => {

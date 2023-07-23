@@ -95,53 +95,52 @@ const Profile = () => {
   }, []);
 
   return (
-    <SafeAreaView style={[styles.container,{padding:windowWidth * 0.05}]}>
+    <SafeAreaView style={[styles.container,{padding:windowWidth * 0.02}]}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
 
         <ScrollView style={styles.wrapper}>
 
-        <View style={styles.profileQuickInfo}>
+        <View style={[styles.profileQuickInfo,{padding:windowWidth*0.03, height:windowWidth * 0.3,marginBottom:windowWidth * 0.07}]}>
 
           <View style={{alignItems:'center'}}>
           {sessionUser.profilepic?
           (<View style={{width:windowWidth * 0.20, height:windowWidth * 0.20}}>
-          <Image resizeMode='cover' style={{ width: '100%', height: '100%',borderRadius:windowWidth * 0.5 }} source={{ uri: props.data.profilepic }} />
+          <Image resizeMode='cover' style={{ width: '100%', height: '100%',borderRadius:windowWidth * 0.5 }} source={{ uri: sessionUser.profilepic }} />
           </View>):
-          (<View style={styles.imgContainer}><ProfilePlaceholder username={'fikayo'} width={windowWidth * 0.2} height={windowWidth * 0.2} /></View>)
+          (<View style={{marginBottom:windowWidth*0.02}}><ProfilePlaceholder username={'fikayo'} width={windowWidth * 0.16} height={windowWidth * 0.16} /></View>)
           }
           <TouchableOpacity onPress={() => navigation.navigate('editProfile')}><Text style={styles.imgtext}>Edit</Text></TouchableOpacity>
           </View>
 
           <View style={styles.quickInfoContainer}>
              <View style={styles.profileQuickInfoAnalContainer}>
-              <Text style={styles.quickinfoTxtUpper}>posts</Text>
-              <Text style={styles.quickInfoTxtLower}>{30}</Text>
+              <Text style={{fontSize:windowWidth * 0.045,marginBottom:windowWidth * 0.02}}>posts</Text>
+              <Text style={{fontSize:windowWidth * 0.045}}>{0}</Text>
               </View>
 
             <View style={styles.profileQuickInfoAnalContainer}>
-              <Text style={styles.quickinfoTxtUpper}>Following</Text>
-              <Text style={styles.quickInfoTxtLower}>{0}</Text>
+              <Text style={{fontSize:windowWidth * 0.045,marginBottom:windowWidth * 0.02}}>Following</Text>
+              <Text style={{fontSize:windowWidth * 0.045}}>{0}</Text>
             </View>
           </View>
-
         </View>
 
         <View style={styles.bioContainer}>
-          <Text style={styles.contHeaderTxt}>Bio</Text>
-          <Text>{sessionUser.bio?sessionUser.Bio:<Text>no bio</Text>}</Text>
-          <Text style={styles.contHeaderTxt}>Username</Text>
-          <Text>{sessionUser.username}</Text>
-          <Text style={styles.contHeaderTxt}>Email</Text>
-          <Text>{sessionUser.email}</Text>
+          <Text style={[styles.contHeaderTxt, {marginBottom:windowWidth * 0.02,fontSize:windowWidth*0.05}]}>Bio</Text>
+          <Text style={{fontSize:windowWidth * 0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.bio?sessionUser.Bio:(<Text>no bio</Text>)}</Text>
+          <Text style={[styles.contHeaderTxt,{fontSize:windowWidth*0.05,marginBottom:windowWidth * 0.02}]}>Username</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.username}</Text>
+          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02}}>Email</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.email}</Text>
         </View>
 
-        <View style={styles.people}>
-          <Text style={styles.contHeaderTxt}>Discover People</Text>
+        <View style={{height:windowWidth*0.7,marginTop:windowWidth*0.07}}>
+          <Text style={{fontSize:windowWidth*0.05}}>Discover People</Text>
           <Discoveredusers data={aroundYou} follow={follow} />
         </View>
 
-        <View style={styles.following}>
-          <Text style={styles.contHeaderTxt}>following</Text>
+        <View style={{height:windowWidth*0.4}}>
+          <Text style={{fontSize:windowWidth*0.05}}>following</Text>
           <Following data={friends} />
         </View>
         
@@ -176,27 +175,15 @@ const styles = StyleSheet.create({
   },
   profileQuickInfo:{
     width:'100%',
-    padding:5,
-    height:180,
     flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center'
-  },
-  imgContainer:{
-    marginBottom:10
+    justifyContent:'space-between'
   },
   imgtext:{
     fontSize:18
   },
   profileQuickInfoAnalContainer:{
-flexDirection:'column'
-  },
-  quickinfoTxtUpper:{
-    fontSize:16,
-    marginBottom:10
-  },
-  quickInfoTxtLower:{
-    fontSize:14
+  flexDirection:'column',
+  alignItems:'center'
   },
   quickInfoContainer:{
     width:'60%',
@@ -204,24 +191,20 @@ flexDirection:'column'
     justifyContent:'space-between'
   },
   bioContainer:{
-    width:'100%',
-    marginBottom:20
+    width:'100%'
   },
   people:{
-    width:'100%',
-    height:300,
+    width:'100%'
   },
   following:{
-    width:'100%',
-    height:200
+    width:'100%'
   },
   posts:{
     width:'100%',
     justifyContent:'center'
   },
   contHeaderTxt:{
-    fontSize:20,
-    marginBottom:10
+   
   }
 })
 
