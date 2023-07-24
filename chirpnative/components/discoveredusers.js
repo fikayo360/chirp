@@ -17,8 +17,7 @@ const Discoveredusers = (props) => {
 
 const styles= StyleSheet.create({
     Discovered:{
-        width:'100%',
-        marginTop:10
+        width:'100%'
     }
 })
 

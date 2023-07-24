@@ -66,8 +66,9 @@ const Profile = () => {
   const getAround = async () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
-      setAroundYou(response.data);
       console.log(response.data)
+      //setAroundYou(response.data);
+      
     } catch(error) {
       console.log(err.response);
     }
@@ -127,17 +128,23 @@ const Profile = () => {
 
         <View style={styles.bioContainer}>
           <Text style={[styles.contHeaderTxt, {marginBottom:windowWidth * 0.02,fontSize:windowWidth*0.05}]}>Bio</Text>
-          <Text style={{fontSize:windowWidth * 0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.bio?sessionUser.Bio:(<Text>no bio</Text>)}</Text>
+          <Text style={{fontSize:windowWidth * 0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.Bio?sessionUser.Bio:<Text>no Bio</Text>}</Text>
           <Text style={[styles.contHeaderTxt,{fontSize:windowWidth*0.05,marginBottom:windowWidth * 0.02}]}>Username</Text>
-          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.username}</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.username?sessionUser.username:<Text>no username</Text>}</Text>
           <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02}}>Email</Text>
-          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.email}</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.email?sessionUser.email:<Text>no email</Text>}</Text>
+          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02}}>State</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.state?sessionUser.state:<Text>no state</Text>}</Text>
+          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02}}>Country</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.country?sessionUser.country:<Text>no country</Text>}</Text>
+          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02}}>Zip</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.zipcode?sessionUser.zipcode:<Text>no zipcode</Text>}</Text>
         </View>
 
-        <View style={{height:windowWidth*0.7,marginTop:windowWidth*0.07}}>
+        {aroundYou && (<View style={{height:windowWidth*0.7,marginTop:windowWidth*0.07}}>
           <Text style={{fontSize:windowWidth*0.05}}>Discover People</Text>
           <Discoveredusers data={aroundYou} follow={follow} />
-        </View>
+        </View>)}
 
         <View style={{height:windowWidth*0.4,width:'100%',marginBottom:windowWidth*0.03}}>
           <Text style={{fontSize:windowWidth*0.05}}>following</Text>
@@ -202,9 +209,6 @@ const styles = StyleSheet.create({
   posts:{
     width:'100%',
     justifyContent:'center'
-  },
-  contHeaderTxt:{
-   
   }
 })
 

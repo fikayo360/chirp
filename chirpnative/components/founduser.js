@@ -1,14 +1,20 @@
 import React from 'react'
 import {View,TouchableOpacity,Text,StyleSheet,Image,Dimensions} from 'react-native'
-import * as Icons from "react-native-heroicons/solid"
 import ProfilePlaceholder from './Profiletextplace'
+import { useState,useEffect } from 'react'
 
-const Founduser = (props) => {
+const Founduser = ({data}) => {
   const windowWidth = Dimensions.get('window').width;
+  
+  useEffect(()=>{
+    console.log(data);
+  },[])
+
   const handleFollow = () => {
     props.follow(props.data.username); 
   };
-  return (
+  return (  
+    
     <View style={[styles.container,
       {width:windowWidth * 0.5,
       height:windowWidth * 0.5,
@@ -16,18 +22,18 @@ const Founduser = (props) => {
       borderRadius:windowWidth * 0.02,
       borderWidth:1}]}>
 
-      {props.data.profilepic?(
+      {data.profilepic?(
         <View style={{
             width:windowWidth * 0.20,
             height:windowWidth * 0.20
         }}>
-        <Image resizeMode='cover' style={{ width: '100%', height: '100%',borderRadius:windowWidth * 0.5 }} source={{ uri: props.data.profilepic }} />
+        <Image resizeMode='cover' style={{ width: '100%', height: '100%',borderRadius:windowWidth * 0.5 }} source={{ uri: data.profilepic }} />
         </View>
         ):(
-          <ProfilePlaceholder username={props?.data?.username} width={windowWidth * 0.2} height={windowWidth * 0.2}/>
+          <ProfilePlaceholder username={data.username} width={windowWidth * 0.2} height={windowWidth * 0.2}/>
         )}
       
-      <Text>{props.data.username}</Text>
+      <Text>{data.username}</Text>
       <TouchableOpacity style={[styles.button,
       {
         height:windowWidth* 0.1,
@@ -37,7 +43,7 @@ const Founduser = (props) => {
       }]} onPress={handleFollow}> 
         <Text style={[styles.buttonTxt,{fontSize:windowWidth * 0.04}]}>follow</Text>
       </TouchableOpacity>
-    </View>
+    </View> 
   )
 }
 

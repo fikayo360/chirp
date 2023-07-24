@@ -10,7 +10,8 @@ const Discovereduser = (props) => {
   };
   return (
     <View style={[styles.container,
-      {width:windowWidth * 0.5,
+      {
+      width:windowWidth * 0.5,
       height:windowWidth * 0.5,
       margin: windowWidth * 0.009,
       borderRadius:windowWidth * 0.02,
@@ -22,7 +23,8 @@ const Discovereduser = (props) => {
         </View>
         ):(
           <ProfilePlaceholder username={props.data.username} width={windowWidth * 0.2} height={windowWidth * 0.2} />
-        )}
+        )
+        }
       
       <Text>{props.data.username}</Text>
       <TouchableOpacity style={[styles.button,

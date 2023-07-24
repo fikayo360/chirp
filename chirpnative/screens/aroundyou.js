@@ -14,26 +14,29 @@ import useApp from '../hooks/useApp'
 const Aroundyou = () => {
   const {token} = useApp();
   const windowWidth = Dimensions.get('window').width;
+  const [items,setItems] = useState([])
+  const [username,setUsername] = useState('')
+  const [error,setError] = useState("")
+  const [discovered,setDiscovered] = useState({})
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },[])
- const [items,setItems] = useState([])
- const [username,setUsername] = useState('')
- const [error,setError] = useState("")
- const [discovered,setDiscovered] = useState({})
- 
+
   const getAround = async () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
-      setItems(response.data);
-      //console.log(items)
-      
+      //setItems(response.data);
+      console.log(response.data); 
     } catch (error) {
       console.log(err.response);
     }
   };
 
+  useEffect(() => {
+    getAround()
+  },[])
+  
   const search = async () => {
     const formData = {username}
     console.log(formData);
@@ -65,11 +68,6 @@ const Aroundyou = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(discovered);
-    getAround()
-  },[])
-
   return (
     <SafeAreaView>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
@@ -92,15 +90,15 @@ const Aroundyou = () => {
         <TouchableOpacity onPress={search}><Icons.PaperAirplaneIcon width={windowWidth * 0.07} height={windowWidth * 0.07} color="black" /></TouchableOpacity>
         </View>
 
-        {discovered?(<View style={{alignSelf:'center'}}><Founduser data={discovered} follow={follow} /></View>):
+        {discovered.username?(<View style={{alignSelf:'center'}}><Founduser data={discovered} follow={follow} /></View>):
         (<View style={{width:windowWidth * 0.6,height:windowWidth * 0.6,alignSelf:'center',marginBottom:windowWidth * 0.2}}>
           <Image source={require('../assets/search3.png')} resizeMode='cover' style={{ width: '100%', height: '100%' }}  />
         </View>)}
 
-       {items && <View style={[styles.discoverContainer,{marginTop:windowWidth*0.20}]}>
+       {items && (<View style={[styles.discoverContainer,{marginTop:windowWidth*0.20}]}>
         <Text style={{fontSize:windowWidth * 0.06,marginBottom:windowWidth * 0.05}}> People </Text>
         <Discoveredusers data={items} follow={follow} />
-        </View>}
+        </View>)}
 
         </ScrollView>
     </SafeAreaView>
