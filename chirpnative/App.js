@@ -64,7 +64,7 @@ const App =  () => {
         <Stack.Screen name="article" component={Article} options={{ headerShown: false }}/>
         <Stack.Screen name="comment" component={Commentscreen}  />
         <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="editProfile" component={EditProfile} />
+        <Stack.Screen name="editProfile" component={EditProfile} options={{ headerShown: false }}/>
         <Stack.Screen name="webview" component={Webview} />
         <Stack.Screen name="Home" component={MainFlow} options={{ headerShown: false }} />
         <Stack.Screen name="logout" component={Login} options={{ headerShown: false }}/>

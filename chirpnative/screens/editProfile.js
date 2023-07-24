@@ -1,5 +1,5 @@
 import React from 'react'
-import {View,Text,TextInput,SafeAreaView,StyleSheet,Image,ScrollView,TouchableOpacity} from 'react-native'
+import {View,Text,TextInput,SafeAreaView,StyleSheet,Image,ScrollView,TouchableOpacity,Dimensions} from 'react-native'
 import * as Icons from "react-native-heroicons/solid"
 import axios from 'axios'
 import * as ImagePicker from 'expo-image-picker';
@@ -8,7 +8,7 @@ import { useState,useEffect } from 'react';
 import useApp from '../hooks/useApp';
 
 const EditProfile = () => {
-
+  const windowWidth = Dimensions.get('window').width;
   const {token} = useApp();
 
   useEffect(()=>{
@@ -78,49 +78,81 @@ const EditProfile = () => {
   return (
     <SafeAreaView  >
      {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-    <View style={styles.header}>
-    <Text style={styles.editProfileTxt}>complete profile </Text>
-    <TouchableOpacity onPress={submit}>< Icons.CheckIcon width={30} height={30} color="black" /></TouchableOpacity>
+    <View style={[styles.header,{height:'10%',paddingHorizontal:windowWidth*0.03,marginTop:windowWidth*0.02}]}>
+    <Text style={{fontSize:windowWidth*0.05}}>complete profile </Text>
+    <TouchableOpacity onPress={submit}>< Icons.CheckIcon width={windowWidth*0.08} height={windowWidth*0.08} color="black" /></TouchableOpacity>
     </View>
 
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container,{padding:windowWidth*0.02}]}>
 
     <View style={styles.secondContainer}>
-    <TouchableOpacity style={styles.imgContainer} onPress={handleImageSelection}>
-     <Image source={require('../assets/photo1.png')} resizeMode='contain' style={{ width: '100%', height: '100%' }} />
-    </TouchableOpacity>
+    {profilepic?
+    (<View style={[{width:windowWidth *0.25,borderRadius:windowWidth * 0.5,alignSelf:'center',height:windowWidth * 0.25,borderWidth: 1,marginBottom:windowWidth * 0.05}]} >
+    <Image style={{width:'100%',height:'100%'}} resizeMode='cover' source={{ uri:profilepic }}/>
+   </View>):
+  (<TouchableOpacity style={{
+    width:windowWidth*0.25,
+    height:windowWidth*0.25,
+    borderRadius:0.5,
+    marginTop:windowWidth*0.05,
+    marginBottom:windowWidth*0.05}} onPress={handleImageSelection}>
+  <Image source={require('../assets/photo1.png')} resizeMode='cover' style={{ width: '100%', height: '100%' }} />
+  </TouchableOpacity>)
+    }
     </View>
-
     <View style={styles.formComponents}>
-    <View style={styles.formComponent}>
-        <Text style={styles.formLabel}> Phone Number </Text>
-        <TextInput style={ styles.formInput} placeholder='enter number' value={phonenumber} onChangeText={text => setPhonenumber(text)}/>
+    <View style={[styles.formComponent,{height:windowWidth*0.15, marginBottom:windowWidth*0.15}]}>
+        <Text style={{ fontSize:windowWidth*0.05}} >Phone Number </Text>
+        <TextInput style={[ styles.formInput,{
+        padding:windowWidth*0.03,
+        fontSize: windowWidth*0.05,
+        height:windowWidth*0.15
+      }]}
+       placeholder='enter number' value={phonenumber} onChangeText={text => setPhonenumber(text)}/>
     </View>
-    <View style={styles.formComponent}>
-        <Text style={styles.formLabel}>Bio</Text>
+    <View style={[styles.formComponent,{height:windowWidth*0.15, marginBottom:windowWidth*0.15}]}>
+    <Text style={{ fontSize:windowWidth*0.05}}>Bio</Text>
         <TextInput
-        style={styles.input}
+        style={[styles.input,{
+          padding:windowWidth*0.03,
+          fontSize: windowWidth*0.05,
+          height:windowWidth*0.15}]}
         multiline={true}
         numberOfLines={4}
         value={Bio}
         onChangeText={text => setBio(text)}
         placeholder="enter bio..."
-        placeholderTextColor={'black'}
         />
     </View>
-    <View style={styles.formComponent}>
-        <Text style={styles.formLabel}>country</Text>
-        <TextInput style={ styles.formInput} placeholder='enter country' value={country} onChangeText={text => setCountry(text)}/>
+
+    <View style={[styles.formComponent,{height:windowWidth*0.15, marginBottom:windowWidth*0.15}]}>
+        <Text style={{ fontSize:windowWidth*0.05}}>country</Text>
+        <TextInput style={[ styles.formInput,{
+        padding:windowWidth*0.03,
+        fontSize: windowWidth*0.05,
+        height:windowWidth*0.15
+      }]} placeholder='enter country' value={country} onChangeText={text => setCountry(text)}/>
     </View>
-    <View style={styles.formComponent}>
-        <Text style={styles.formLabel}>state</Text>
-        <TextInput style={ styles.formInput} placeholder='enter state' value={state} onChangeText={text => setState(text)}/>
+
+    <View style={[styles.formComponent,{height:windowWidth*0.15, marginBottom:windowWidth*0.15}]}>
+    <Text style={{ fontSize:windowWidth*0.05}}>state</Text>
+        <TextInput style={[ styles.formInput,{
+        padding:windowWidth*0.03,
+        fontSize: windowWidth*0.05,
+        height:windowWidth*0.15
+      }]} placeholder='enter state' value={state} onChangeText={text => setState(text)}/>
     </View>
-    <View style={styles.formComponent}>
-        <Text style={styles.formLabel}>Zip code</Text>
-        <TextInput style={ styles.formInput} placeholder='enter name' value={zipcode} onChangeText={text => setZipcode(text)}/>
+
+    <View style={[styles.formComponent,{height:windowWidth*0.15, marginBottom:windowWidth*0.15}]}>
+    <Text style={{ fontSize:windowWidth*0.05}}>Zip code</Text>
+        <TextInput style={[ styles.formInput,{
+        padding:windowWidth*0.03,
+        fontSize: windowWidth*0.05,
+        height:windowWidth*0.15
+      }]} placeholder='enter name' value={zipcode} onChangeText={text => setZipcode(text)}/>
     </View>
     </View>
+
     </ScrollView>
 </SafeAreaView>
   )
@@ -145,29 +177,20 @@ const styles = StyleSheet.create({
       },
     container:{
         width:'100%',
-        padding:20,
         height:'85%'
     },
     header:{
         width:'100%',
-        height:60,
         flexDirection:'row',
         justifyContent:'space-between',
-        alignItems:'center',
-        padding:5,
-        marginTop:15
+        alignItems:'center'
     },
     input:{
         borderBottomColor:'grey',
         borderBottomWidth:0.5,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        fontSize: 20,
         color: '#1F2937',
         textAlignVertical: 'top',
-        marginBottom: 20,
         width: '100%',
-        height:70
       },
     editProfileText:{
         fontSize:16,
@@ -176,40 +199,20 @@ const styles = StyleSheet.create({
     },
     secondContainer:{
         width:'100%',
-
         height:150,
         alignItems:'center'
     },
-    imgContainer:{
-        width:100,
-        height:100,
-        borderRadius:100/ 2,
-        marginTop:10,
-        marginBottom:3
-    },
-    editProfileTxt:{
-        fontSize:18
-    },
     formComponents:{
         width:'100%',
-        height:'70%'
+        height:'80%'
     },
     formComponent:{
-        width:'95%',
-        height:70,
-        marginBottom:30
-    },
-    formLabel:{
-        fontSize:16
+        width:'100%'
     },
     formInput:{
         width:'100%',
-        height:30,
         borderBottomColor:'grey',
-        borderBottomWidth:0.5,
-        padding:3,
-        fontSize:13
-        
+        borderBottomWidth:0.5
     }
 })
 export default EditProfile

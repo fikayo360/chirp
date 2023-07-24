@@ -10,7 +10,7 @@ const Savedpost = (props) => {
       (
         <View style={[styles.wallcontainer,{ padding:windowWidth * 0.02}]}>
         <View style={[styles.wallheader,{marginBottom:windowWidth * 0.02}]}>
-        <ProfilePlaceholder username={'fifk'}/>
+        <ProfilePlaceholder username={'fifk'} width={windowWidth*0.1} height={windowWidth*0.1}/>
         <Text style={[styles.wallheaderTxt,{fontSize:windowWidth*0.055}]}>{props.data.SavedPostAuthor}</Text>
         </View>
         <View style={[{height:windowWidth * 0.9}]}>

@@ -139,7 +139,7 @@ const Profile = () => {
           <Discoveredusers data={aroundYou} follow={follow} />
         </View>
 
-        <View style={{height:windowWidth*0.4,marginBottom:windowWidth*0.03}}>
+        <View style={{height:windowWidth*0.4,width:'100%',marginBottom:windowWidth*0.03}}>
           <Text style={{fontSize:windowWidth*0.05}}>following</Text>
           <Following data={friends} />
         </View>
