@@ -1,6 +1,6 @@
 
 import React from 'react'
-import {StyleSheet,SafeAreaView,ScrollView} from 'react-native'
+import {StyleSheet,SafeAreaView,ScrollView,ActivityIndicator} from 'react-native'
 import NewscategoryItems from '../components/newscategoryItems'
 import { useState,useEffect } from "react"
 import Header from '../components/header'
@@ -37,9 +37,13 @@ const Newscategory = ({route}) => {
   return (
     <SafeAreaView style={styles.container}>
         <Header title={cat} />
-        <ScrollView>
-        <NewscategoryItems data={data} />
-        </ScrollView>
+
+        
+        {data.length > 0? (
+          <ScrollView>
+          <NewscategoryItems data={data} />
+          </ScrollView>
+        ):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}}/>}
     </SafeAreaView>
   )
 }

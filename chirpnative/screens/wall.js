@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,StyleSheet,View,ScrollView,Text,Dimensions} from 'react-native'
+import {SafeAreaView,StyleSheet,View,ScrollView,Text,Dimensions,ActivityIndicator} from 'react-native'
 import Header from '../components/header'
 import Wallcomponents from '../components/wallcomponents'
 import axios from 'axios'
@@ -66,11 +66,10 @@ const Wall = () => {
     <SafeAreaView style={styles.container}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
       <Header title={'Wall'} />
-     
-      <ScrollView style={styles.scrollComponent}>
+     {items.length > 0?( 
+     <ScrollView style={styles.scrollComponent}>
       <Wallcomponents data={flattenedArray} likePost={likePost} savePost={savePost}/>
-      </ScrollView>
-    
+      </ScrollView>):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}} animating={true}/>}
     </SafeAreaView>
   )
 }

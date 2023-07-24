@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,Text,TextInput,ScrollView,StyleSheet,View,Image,TouchableOpacity,Dimensions} from 'react-native'
+import {SafeAreaView,Text,TextInput,ScrollView,StyleSheet,View,Image,TouchableOpacity,Dimensions,ActivityIndicator} from 'react-native'
 import Searchresult from '../components/searchresult'
 import Founduser from '../components/founduser'
 import  Header  from '../components/header'
@@ -26,7 +26,7 @@ const Aroundyou = () => {
   const getAround = async () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
-      //setItems(response.data);
+      setItems(response.data);
       console.log(response.data); 
     } catch (error) {
       console.log(err.response);
@@ -89,15 +89,15 @@ const Aroundyou = () => {
         />
         <TouchableOpacity onPress={search}><Icons.PaperAirplaneIcon width={windowWidth * 0.07} height={windowWidth * 0.07} color="black" /></TouchableOpacity>
         </View>
-
-        {discovered.username?(<View style={{alignSelf:'center'}}><Founduser data={discovered} follow={follow} /></View>):
+       
+        <>{discovered.username?(<View style={{alignSelf:'center'}}><Founduser data={discovered} follow={follow} /></View>):
         (<View style={{width:windowWidth * 0.6,height:windowWidth * 0.6,alignSelf:'center',marginBottom:windowWidth * 0.2}}>
           <Image source={require('../assets/search3.png')} resizeMode='cover' style={{ width: '100%', height: '100%' }}  />
-        </View>)}
+        </View>)}</>
 
        {items && (<View style={[styles.discoverContainer,{marginTop:windowWidth*0.20}]}>
         <Text style={{fontSize:windowWidth * 0.06,marginBottom:windowWidth * 0.05}}> People </Text>
-        <Discoveredusers data={items} follow={follow} />
+        {items.length>0?(<Discoveredusers data={items} follow={follow} />):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
         </View>)}
 
         </ScrollView>

@@ -1,5 +1,5 @@
 import {React,useState} from 'react'
-import {View,Text,ScrollView,SafeAreaView,StyleSheet,TouchableOpacity,Dimensions,Image} from 'react-native'
+import {View,Text,ScrollView,SafeAreaView,StyleSheet,TouchableOpacity,Dimensions,Image,ActivityIndicator} from 'react-native'
 import * as Icons from "react-native-heroicons/solid"
 import Header from '../components/header'
 import ProfilePlaceholder from '../components/Profiletextplace'
@@ -98,11 +98,9 @@ const Profile = () => {
   return (
     <SafeAreaView style={[styles.container,{padding:windowWidth * 0.02}]}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
-
+      
         <ScrollView style={styles.wrapper}>
-
-        <View style={[styles.profileQuickInfo,{padding:windowWidth*0.03, height:windowWidth * 0.3,marginBottom:windowWidth * 0.07}]}>
-
+          {sessionUser?( <View style={[styles.profileQuickInfo,{padding:windowWidth*0.03, height:windowWidth * 0.3,marginBottom:windowWidth * 0.07}]}>
           <View style={{alignItems:'center'}}>
           {sessionUser.profilepic?
           (<View style={{width:windowWidth * 0.20, height:windowWidth * 0.20}}>
@@ -124,9 +122,9 @@ const Profile = () => {
               <Text style={{fontSize:windowWidth * 0.045}}>{0}</Text>
             </View>
           </View>
-        </View>
-
-        <View style={styles.bioContainer}>
+        </View>):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
+          
+        {sessionUser?( <View style={styles.bioContainer}>
           <Text style={[styles.contHeaderTxt, {marginBottom:windowWidth * 0.02,fontSize:windowWidth*0.05}]}>Bio</Text>
           <Text style={{fontSize:windowWidth * 0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.Bio?sessionUser.Bio:<Text>no Bio</Text>}</Text>
           <Text style={[styles.contHeaderTxt,{fontSize:windowWidth*0.05,marginBottom:windowWidth * 0.02}]}>Username</Text>
@@ -139,16 +137,17 @@ const Profile = () => {
           <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.country?sessionUser.country:<Text>no country</Text>}</Text>
           <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02}}>Zip</Text>
           <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.zipcode?sessionUser.zipcode:<Text>no zipcode</Text>}</Text>
-        </View>
+        </View>):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
+       
 
         {aroundYou && (<View style={{height:windowWidth*0.7,marginTop:windowWidth*0.07}}>
           <Text style={{fontSize:windowWidth*0.05}}>Discover People</Text>
-          <Discoveredusers data={aroundYou} follow={follow} />
+          {aroundYou?(<Discoveredusers data={aroundYou} follow={follow} />):<ActivityIndicator size="large" color="black" />}
         </View>)}
 
         <View style={{height:windowWidth*0.4,width:'100%',marginBottom:windowWidth*0.03}}>
           <Text style={{fontSize:windowWidth*0.05}}>following</Text>
-          <Following data={friends} />
+          {friends.length>0?(<Following data={friends} />):<ActivityIndicator size="large" color="black" />}
         </View>
         
       </ScrollView>

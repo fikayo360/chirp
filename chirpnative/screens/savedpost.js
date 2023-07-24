@@ -1,5 +1,5 @@
 import React from 'react'
-import {View,Text,SafeAreaView,ScrollView,StyleSheet} from 'react-native'
+import {View,Text,SafeAreaView,ScrollView,StyleSheet,ActivityIndicator} from 'react-native'
 import Header from '../components/header'
 import Savedposts from '../components/savedposts'
 import { useState,useEffect } from 'react'
@@ -9,13 +9,12 @@ import useApp from '../hooks/useApp'
 const Savedpost = () => {
 
   const {token} = useApp();
+  const [items,setItems] = useState([])
+  const [error,setError] = useState("")
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },[])
-
-  const [items,setItems] = useState([])
-  const [error,setError] = useState("")
 
 const getSavedPost = async () => {
   try {
@@ -51,11 +50,10 @@ return (
   <SafeAreaView style={styles.container}>
     {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
     <Header title={'SavedPosts'} />
-   
-    <ScrollView style={styles.friendsComponent}>
+    {items.length > 0?(<ScrollView style={styles.friendsComponent}>
     <Savedposts data={flattenedArray} deleteSavedPost={deleteSavedPost}/>
-    </ScrollView>
-  
+    </ScrollView>):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}}/>
+    }
   </SafeAreaView>
 )
 }

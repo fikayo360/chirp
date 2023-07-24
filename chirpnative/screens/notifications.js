@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,ScrollView,StyleSheet,Dimensions} from 'react-native'
+import {SafeAreaView,ScrollView,StyleSheet,Dimensions,ActivityIndicator} from 'react-native'
 import Header from '../components/header'
 import Notifications from '../components/notifications'
 import axios from 'axios'
@@ -8,14 +8,13 @@ import useApp from '../hooks/useApp'
 
 const AppNotifications = () => {
   const {token} = useApp();
+  const [items,setItems] = useState([])
+  const [error,setError] = useState("")
   const windowWidth = Dimensions.get('window').width;
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },[])
-  const [items,setItems] = useState([])
-  const [error,setError] = useState("")
-
-
+  
 const getNotifications = async () => {
   try {
     const response = await axios.get('api/v1/notification/getAll')
@@ -36,9 +35,11 @@ useEffect(()=>{
     <SafeAreaView style={styles.container}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
     <Header title={'Notifications'}/>
-      <ScrollView style={styles.body}>
+    {items.length > 0?
+    (<ScrollView style={styles.body}>
       <Notifications data={items}/>
-      </ScrollView>
+    </ScrollView>):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}}/>}
+      
     </SafeAreaView>
   )
 }

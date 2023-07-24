@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,ScrollView,StyleSheet} from 'react-native'
+import {SafeAreaView,ScrollView,StyleSheet,ActivityIndicator} from 'react-native'
 import HomeComponents from '../components/homeComponents'
 import Header from '../components/header'
 import axios from "axios";
@@ -27,24 +27,26 @@ const Home = () => {
     }
   };
 
-
  useEffect(() => {
   submit()
  },[])
-
+ 
   return (
     <SafeAreaView style={styles.container}> 
-       <Header title={'Home'} />
-        <ScrollView>
-        <HomeComponents data={newsItems} />
-        </ScrollView> 
+       <Header title={'Home'} /> 
+        {
+          newsItems.length > 0?( 
+          <ScrollView>
+            <HomeComponents data={newsItems} />
+            </ScrollView> ):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}}/>
+        }       
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container:{
-      flex: 1
+      flex: 1,
     }
 })
 
