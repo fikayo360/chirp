@@ -100,7 +100,7 @@ const Profile = () => {
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
       
         <ScrollView style={styles.wrapper}>
-          {sessionUser?( <View style={[styles.profileQuickInfo,{padding:windowWidth*0.03, height:windowWidth * 0.3,marginBottom:windowWidth * 0.07}]}>
+          <View style={[styles.profileQuickInfo,{padding:windowWidth*0.03, height:windowWidth * 0.3,marginBottom:windowWidth * 0.07}]}>
           <View style={{alignItems:'center'}}>
           {sessionUser.profilepic?
           (<View style={{width:windowWidth * 0.20, height:windowWidth * 0.20}}>
@@ -122,7 +122,7 @@ const Profile = () => {
               <Text style={{fontSize:windowWidth * 0.045}}>{0}</Text>
             </View>
           </View>
-        </View>):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
+        </View>
           
         {sessionUser?( <View style={styles.bioContainer}>
           <Text style={[styles.contHeaderTxt, {marginBottom:windowWidth * 0.02,fontSize:windowWidth*0.05}]}>Bio</Text>
@@ -142,7 +142,7 @@ const Profile = () => {
 
         {aroundYou && (<View style={{height:windowWidth*0.7,marginTop:windowWidth*0.07}}>
           <Text style={{fontSize:windowWidth*0.05}}>Discover People</Text>
-          {aroundYou?(<Discoveredusers data={aroundYou} follow={follow} />):<ActivityIndicator size="large" color="black" />}
+          {aroundYou.length>0?(<Discoveredusers data={aroundYou} follow={follow} />):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
         </View>)}
 
         <View style={{height:windowWidth*0.4,width:'100%',marginBottom:windowWidth*0.03}}>
