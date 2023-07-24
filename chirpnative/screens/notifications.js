@@ -32,7 +32,7 @@ useEffect(()=>{
   getNotifications()
 },[])
 
-const onRefresh = useCallback(async()=>{
+const onRefresh = useCallback(async ()=>{
   setRefreshing(true);
   getNotifications()
   setRefreshing(false);

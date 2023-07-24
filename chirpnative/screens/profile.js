@@ -1,5 +1,5 @@
 import {React,useState} from 'react'
-import {View,Text,ScrollView,SafeAreaView,StyleSheet,TouchableOpacity,Dimensions,Image,ActivityIndicator} from 'react-native'
+import {View,Text,ScrollView,SafeAreaView,StyleSheet,TouchableOpacity,Dimensions,Image,ActivityIndicator,RefreshControl} from 'react-native'
 import * as Icons from "react-native-heroicons/solid"
 import Header from '../components/header'
 import ProfilePlaceholder from '../components/Profiletextplace'
@@ -10,11 +10,12 @@ import { useNavigation } from '@react-navigation/native';
 import Following from '../components/following'
 import Wallcomponents from '../components/wallcomponent'
 import axios from 'axios'
-import {useEffect }from 'react'
+import {useEffect,useCallback }from 'react'
 import useApp from '../hooks/useApp'
 
 const Profile = () => {
   const windowWidth = Dimensions.get('window').width;
+  const [refreshing, setRefreshing] = useState(false);
   const {token} = useApp();
 
   useEffect(()=>{
@@ -87,6 +88,14 @@ const Profile = () => {
     }
   };
 
+  const onRefresh = useCallback(async()=>{
+    setRefreshing(true);
+    getFriends();
+    getUserProfile()
+    getUserPost()
+    getAround()
+    setRefreshing(false);
+  },[])
 
   useEffect(() => {
     getFriends();
@@ -99,7 +108,7 @@ const Profile = () => {
     <SafeAreaView style={[styles.container,{padding:windowWidth * 0.02}]}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
       
-        <ScrollView style={styles.wrapper}>
+        <ScrollView style={styles.wrapper} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
           <View style={[styles.profileQuickInfo,{padding:windowWidth*0.03, height:windowWidth * 0.3,marginBottom:windowWidth * 0.07}]}>
           <View style={{alignItems:'center'}}>
           {sessionUser.profilepic?
@@ -147,7 +156,7 @@ const Profile = () => {
 
         <View style={{height:windowWidth*0.4,width:'100%',marginBottom:windowWidth*0.03}}>
           <Text style={{fontSize:windowWidth*0.05}}>following</Text>
-          {friends.length>0?(<Following data={friends} />):<ActivityIndicator size="large" color="black" />}
+          {friends.length>0?(<Following data={friends} />):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
         </View>
         
       </ScrollView>
