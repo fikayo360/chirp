@@ -1,14 +1,15 @@
 import React from 'react'
-import {SafeAreaView,ScrollView,StyleSheet,Dimensions,ActivityIndicator} from 'react-native'
+import {SafeAreaView,ScrollView,StyleSheet,Dimensions,ActivityIndicator,RefreshControl} from 'react-native'
 import Header from '../components/header'
 import Notifications from '../components/notifications'
 import axios from 'axios'
-import { useState,useEffect } from 'react'
+import { useState,useEffect,useCallback } from 'react'
 import useApp from '../hooks/useApp'
 
 const AppNotifications = () => {
   const {token} = useApp();
   const [items,setItems] = useState([])
+  const [refreshing, setRefreshing] = useState(false);
   const [error,setError] = useState("")
   const windowWidth = Dimensions.get('window').width;
   useEffect(()=>{
@@ -31,12 +32,18 @@ useEffect(()=>{
   getNotifications()
 },[])
 
+const onRefresh = useCallback(async()=>{
+  setRefreshing(true);
+  getNotifications()
+  setRefreshing(false);
+},[])
+
   return (
     <SafeAreaView style={styles.container}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
     <Header title={'Notifications'}/>
     {items.length > 0?
-    (<ScrollView style={styles.body}>
+    (<ScrollView style={styles.body} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
       <Notifications data={items}/>
     </ScrollView>):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}}/>}
       

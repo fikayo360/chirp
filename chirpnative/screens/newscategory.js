@@ -1,8 +1,8 @@
 
 import React from 'react'
-import {StyleSheet,SafeAreaView,ScrollView,ActivityIndicator} from 'react-native'
+import {StyleSheet,SafeAreaView,ScrollView,ActivityIndicator,RefreshControl} from 'react-native'
 import NewscategoryItems from '../components/newscategoryItems'
-import { useState,useEffect } from "react"
+import { useState,useEffect,useCallback } from "react"
 import Header from '../components/header'
 import axios from "axios";
 import useApp from '../hooks/useApp'
@@ -11,7 +11,7 @@ import useApp from '../hooks/useApp'
 const Newscategory = ({route}) => {
   const {cat} = route.params
   const [data,setData]= useState([])
-
+  const [refreshing, setRefreshing] = useState(false);
   const { token} = useApp();
 
   useEffect(()=>{
@@ -30,21 +30,27 @@ const Newscategory = ({route}) => {
     }
   };
 
+  const onRefresh = useCallback(async()=>{
+    setRefreshing(true);
+    submit()
+    setRefreshing(false);
+  },[])
+
  useEffect(() => {
   submit()
  },[])
 
   return (
+    
     <SafeAreaView style={styles.container}>
         <Header title={cat} />
-
-        
         {data.length > 0? (
-          <ScrollView>
+          <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} >
           <NewscategoryItems data={data} />
           </ScrollView>
         ):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}}/>}
     </SafeAreaView>
+  
   )
 }
 

@@ -1,8 +1,8 @@
 import React from 'react'
-import {View,Text,SafeAreaView,ScrollView,StyleSheet,ActivityIndicator} from 'react-native'
+import {View,Text,SafeAreaView,ScrollView,StyleSheet,ActivityIndicator,RefreshControl} from 'react-native'
 import Header from '../components/header'
 import Savedposts from '../components/savedposts'
-import { useState,useEffect } from 'react'
+import { useState,useEffect,useCallback } from 'react'
 import axios from 'axios'
 import useApp from '../hooks/useApp'
 
@@ -11,6 +11,7 @@ const Savedpost = () => {
   const {token} = useApp();
   const [items,setItems] = useState([])
   const [error,setError] = useState("")
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -41,6 +42,12 @@ const deleteSavedPost = async (id) => {
   }
  }
 
+ const onRefresh = useCallback(async()=>{
+  setRefreshing(true);
+  getSavedPost()
+  setRefreshing(false);
+},[])
+
 useEffect(()=>{
   getSavedPost()
 },[])
@@ -50,7 +57,7 @@ return (
   <SafeAreaView style={styles.container}>
     {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
     <Header title={'SavedPosts'} />
-    {items.length > 0?(<ScrollView style={styles.friendsComponent}>
+    {items.length > 0?(<ScrollView style={styles.friendsComponent} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
     <Savedposts data={flattenedArray} deleteSavedPost={deleteSavedPost}/>
     </ScrollView>):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}}/>
     }

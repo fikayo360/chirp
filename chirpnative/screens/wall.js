@@ -1,5 +1,5 @@
 import React from 'react'
-import {SafeAreaView,StyleSheet,View,ScrollView,Text,Dimensions,ActivityIndicator} from 'react-native'
+import {SafeAreaView,StyleSheet,View,ScrollView,Text,Dimensions,ActivityIndicator,RefreshControl} from 'react-native'
 import Header from '../components/header'
 import Wallcomponents from '../components/wallcomponents'
 import axios from 'axios'
@@ -8,6 +8,7 @@ import useApp from '../hooks/useApp'
 
 const Wall = () => {
   const {token} = useApp();
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -61,13 +62,19 @@ const Wall = () => {
   getFriendsPost()
  },[])
 
+ const onRefresh = useCallback(async()=>{
+  setRefreshing(true);
+  getFriendsPost()
+  setRefreshing(false);
+},[])
+
  const flattenedArray = [].concat(...items);
   return (
     <SafeAreaView style={styles.container}>
       {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
       <Header title={'Wall'} />
      {items.length > 0?( 
-     <ScrollView style={styles.scrollComponent}>
+     <ScrollView style={styles.scrollComponent} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
       <Wallcomponents data={flattenedArray} likePost={likePost} savePost={savePost}/>
       </ScrollView>):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}} animating={true}/>}
     </SafeAreaView>
