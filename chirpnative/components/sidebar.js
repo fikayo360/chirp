@@ -6,8 +6,10 @@ import useApp from '../hooks/useApp';
 
 function Sidebar(props) {
     const windowWidth = Dimensions.get('window').width;
-    const [active,setActive] = useState(false)
-    let bgcolor = '#A6A6A8'
+    const [selectedView, setSelectedView] = useState('topStories');
+    const isViewSelected = (view) => {
+      return selectedView === view;
+    };
     const navigation = useNavigation();
     const { logout } = useApp();
     const signOut = async () => {
@@ -16,94 +18,190 @@ function Sidebar(props) {
     }
   return (
     <View style={[styles.container,{}]}>
-      <View style={[styles.header, {height:'10%',paddingTop:windowWidth*0.05}]}>
-        <Text style={[styles.headerTxt,{fontSize:windowWidth*0.05,marginLeft:windowWidth * 0.01}]}>Chirp</Text>
+      <View style={[styles.header, {height:'10%',paddingTop:windowWidth*0.05,paddingHorizontal:windowWidth*0.02}]}>
+        <Text style={[styles.headerTxt,{fontSize:windowWidth*0.06,marginLeft:windowWidth * 0.01}]}>Chirp</Text>
         <Image style={{ width:windowWidth *0.1, height:windowWidth*0.1, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
       </View>
       <DrawerContentScrollView {...props}>
-        <View style={{width:'90%',borderEndStartRadius:5,borderEndEndRadius:5,backgroundColor:active && '#A6A6A8'}} >
+        <View style={[styles.drawerItemWrap,isViewSelected('topStories') && styles.selectedItem, { borderTopRightRadius: windowWidth*0.25, borderBottomRightRadius: windowWidth*0.25} ]} >
         <DrawerItem
           label="topStories"
+          pressColor="transparent"
+          pressOpacity={0.8}
           onPress={() => {
-            setActive(true)
+            setSelectedView('topStories')
             props.navigation.navigate('topStories')
           }}
           style={[styles.drawerItem,{marginRight:windowWidth*0.05}]}
+          labelStyle={{
+            fontSize:windowWidth*0.05,
+            fontWeight:'bold',
+            color:'black'
+          }}
         />
         </View>
 
-        <View style={{width:'90%',backgroundColor:'#A6A6A8',borderEndStartRadius:5,borderEndEndRadius:5}}>
+        <View style={[styles.drawerItemWrap,isViewSelected('technology') && styles.selectedItem,{ borderTopRightRadius: windowWidth*0.25, borderBottomRightRadius: windowWidth*0.25}]} >
         <DrawerItem
           label="technology"
-          onPress={() => props.navigation.navigate('technology',{cat: 'technology'})}
+          onPress={() =>{
+             setSelectedView('technology');
+             props.navigation.navigate('technology',{cat: 'technology'})
+            }}
           style={styles.drawerItem}
+          pressColor="transparent"
+          pressOpacity={0.8}
+          labelStyle={{
+            fontSize:windowWidth*0.05,
+            fontWeight:'bold',
+            color:'black'
+          }}
         />
         </View>
 
-        <View style={{width:'90%',backgroundColor:'#A6A6A8',borderEndStartRadius:5,borderEndEndRadius:5}}>
+        <View style={[styles.drawerItemWrap,isViewSelected('entertainment') && styles.selectedItem,{ borderTopRightRadius: windowWidth*0.25, borderBottomRightRadius: windowWidth*0.25}]} >
         <DrawerItem
           label="entertainment"
-          onPress={() => props.navigation.navigate('entertainment',{cat: 'entertainment'})}
+          onPress={() => {
+          setSelectedView('entertainment');
+          props.navigation.navigate('entertainment',{cat: 'entertainment'})}}
           style={styles.drawerItem}
+          pressColor="transparent"
+          pressOpacity={0.8}
+          labelStyle={{
+            fontSize:windowWidth*0.05,
+            fontWeight:'bold',
+            color:'black'
+          }}
         />
         </View>
 
-        <View style={{width:'90%',backgroundColor:'#A6A6A8',borderEndStartRadius:5,borderEndEndRadius:5}}>
+        <View style={[styles.drawerItemWrap,isViewSelected('sport') && styles.selectedItem,{ borderTopRightRadius: windowWidth*0.25, borderBottomRightRadius: windowWidth*0.25}]} >
         <DrawerItem
           label="sport"
-          onPress={() => props.navigation.navigate('sport',{cat: 'sport'})}
+          onPress={() => {
+          setSelectedView('sport');
+          props.navigation.navigate('sport',{cat: 'sport'})}}
           style={styles.drawerItem}
+          pressColor="transparent"
+          pressOpacity={0.8}
+          labelStyle={{
+            fontSize:windowWidth*0.05,
+            fontWeight:'bold',
+            color:'black'
+          }}
         />
         </View>
 
-        <View style={{width:'90%',backgroundColor:'#A6A6A8',borderEndStartRadius:5,borderEndEndRadius:5}}>
+        <View style={[styles.drawerItemWrap,isViewSelected('business') && styles.selectedItem,{ borderTopRightRadius: windowWidth*0.25, borderBottomRightRadius: windowWidth*0.25}]} >
         <DrawerItem
           label="business"
-          onPress={() => props.navigation.navigate('business',{cat: 'business'})}
+          onPress={() => {
+          setSelectedView('business');
+          props.navigation.navigate('business',{cat: 'business'})}}
           style={styles.drawerItem}
+          pressColor="transparent"
+          pressOpacity={0.8}
+          labelStyle={{
+            fontSize:windowWidth*0.05,
+            fontWeight:'bold',
+            color:'black'
+          }}
         />
         </View>
 
-        <View style={{width:'90%',backgroundColor:'#A6A6A8',borderEndStartRadius:5,borderEndEndRadius:5}}>
+        <View style={[styles.drawerItemWrap,isViewSelected('community') && styles.selectedItem,{ borderTopRightRadius: windowWidth*0.25, borderBottomRightRadius: windowWidth*0.25}]} >
         <DrawerItem
           label="community"
-          onPress={() => navigation.navigate('community')}
+          onPress={() => {
+          setSelectedView('community');
+          props.navigation.navigate('community')}}
           style={styles.drawerItem}
+          pressColor="transparent"
+          pressOpacity={0.8}
+          labelStyle={{
+            fontSize:windowWidth*0.05,
+            fontWeight:'bold',
+            color:'black'
+          }}
         />
         </View>
-        <View style={{width:'90%',backgroundColor:'#A6A6A8',borderEndStartRadius:5,borderEndEndRadius:5}}>
+        <View style={[styles.drawerItemWrap,isViewSelected('createPost') && styles.selectedItem,{ borderTopRightRadius: windowWidth*0.25, borderBottomRightRadius: windowWidth*0.25}]} >
         <DrawerItem
           label="createPost"
-          onPress={() => navigation.navigate('createPost')}
+          onPress={() => {
+          setSelectedView('createPost');
+          navigation.navigate('createPost')}}
           style={styles.drawerItem}
+          pressColor="transparent"
+          pressOpacity={0.8}
+          labelStyle={{
+            fontSize:windowWidth*0.05,
+            fontWeight:'bold',
+            color:'black'
+          }}
         />
         </View>
-        <View style={{width:'90%',backgroundColor:'#A6A6A8',borderEndStartRadius:5,borderEndEndRadius:5}}>
+        <View style={[styles.drawerItemWrap,isViewSelected('savedPost') && styles.selectedItem,{ borderTopRightRadius: windowWidth*0.25, borderBottomRightRadius: windowWidth*0.25}]} >
         <DrawerItem
           label="savedPost"
-          onPress={() => props.navigation.navigate('savedPost')}
+          onPress={() => {
+          setSelectedView('savedPost')
+          props.navigation.navigate('savedPost')}}
           style={styles.drawerItem}
+          pressColor="transparent"
+          pressOpacity={0.8}
+          labelStyle={{
+            fontSize:windowWidth*0.05,
+            fontWeight:'bold',
+            color:'black'
+          }}
         />
         </View>
-        <View style={{width:'90%',backgroundColor:'#A6A6A8',borderEndStartRadius:5,borderEndEndRadius:5}}>
+        <View style={[styles.drawerItemWrap,isViewSelected('search') && styles.selectedItem,{ borderTopRightRadius: windowWidth*0.25, borderBottomRightRadius: windowWidth*0.25}]} >
         <DrawerItem
           label="search"
-          onPress={() => props.navigation.navigate('search')}
+          onPress={() => {
+          setSelectedView('search')
+          props.navigation.navigate('search')}}
           style={styles.drawerItem}
+          pressColor="transparent"
+          pressOpacity={0.8}
+          labelStyle={{
+            fontSize:windowWidth*0.05,
+            fontWeight:'bold',
+            color:'black'
+          }}
         />
         </View>
-        <View style={{width:'90%',backgroundColor:'#A6A6A8',borderEndStartRadius:5,borderEndEndRadius:5}}>
+        <View style={[styles.drawerItemWrap,isViewSelected('notifications') && styles.selectedItem,{ borderTopRightRadius: windowWidth*0.25, borderBottomRightRadius: windowWidth*0.25}]} >
         <DrawerItem
           label="notifications"
-          onPress={() => props.navigation.navigate('notifications')}
+          onPress={() => {
+          setSelectedView('notifications');
+          props.navigation.navigate('notifications')}}
           style={styles.drawerItem}
+          pressColor="transparent"
+          pressOpacity={0.8}
+          labelStyle={{
+            fontSize:windowWidth*0.05,
+            fontWeight:'bold',
+            color:'black'
+          }}
         />
         </View>
-        <View style={{width:'90%',backgroundColor:'#A6A6A8',borderEndStartRadius:5,borderEndEndRadius:5}}>
+        <View style={[styles.drawerItemWrap,{borderTopRightRadius: windowWidth*0.25, borderBottomRightRadius: windowWidth*0.25}]} >
         <DrawerItem
           label="logout"
           onPress={signOut}
           style={styles.drawerItem}
+          pressColor="transparent"
+          pressOpacity={0.8}
+          labelStyle={{
+            fontSize:windowWidth*0.05,
+            fontWeight:'bold',
+            color:'black'
+          }}
         />
         </View>
       </DrawerContentScrollView>
@@ -116,13 +214,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor:'#ECF0F1'
   },
+  drawerItemWrap:{
+    width:'95%',
+  },
   drawerItem: {
-    width:'70%'
+    width:'80%'
   },
   drawerItemLabel: {
-    fontSize: 16,
-    color: 'black',
+    color: 'white',
     marginLeft: 10,
+    fontWeight:'bold'
+  },
+  selectedItem: {
+    backgroundColor:'#3B60E4'
   },
   header: {
     width:'100%',
