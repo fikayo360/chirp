@@ -3,10 +3,27 @@ import { View, Text, StyleSheet,Dimensions,Image } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 import useApp from '../hooks/useApp';
+import * as Font from 'expo-font'; 
+
 
 function Sidebar(props) {
     const windowWidth = Dimensions.get('window').width;
     const [selectedView, setSelectedView] = useState('topStories');
+    const [fontsLoaded, setFontsLoaded] = useState(false);
+
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      });
+      setFontsLoaded(true);
+    };
+
+    if (!fontsLoaded) {
+      loadFonts();
+      return null; 
+    }
+
     const isViewSelected = (view) => {
       return selectedView === view;
     };
@@ -19,7 +36,7 @@ function Sidebar(props) {
   return (
     <View style={[styles.container,{}]}>
       <View style={[styles.header, {height:'10%',paddingTop:windowWidth*0.05,paddingHorizontal:windowWidth*0.02}]}>
-        <Text style={[styles.headerTxt,{fontSize:windowWidth*0.06,marginLeft:windowWidth * 0.01}]}>Chirp</Text>
+        <Text style={[styles.headerTxt,{fontSize:windowWidth*0.05,marginLeft:windowWidth * 0.01,fontFamily:'Poppins-Black'}]}>Chirp</Text>
         <Image style={{ width:windowWidth *0.1, height:windowWidth*0.1, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
       </View>
       <DrawerContentScrollView {...props}>
@@ -34,9 +51,10 @@ function Sidebar(props) {
           }}
           style={[styles.drawerItem,{marginRight:windowWidth*0.05}]}
           labelStyle={{
-            fontSize:windowWidth*0.05,
+            fontSize:windowWidth*0.04,
             fontWeight:'bold',
-            color:'black'
+            color:'black',
+            fontFamily:'Poppins-Black'
           }}
         />
         </View>
@@ -52,9 +70,10 @@ function Sidebar(props) {
           pressColor="transparent"
           pressOpacity={0.8}
           labelStyle={{
-            fontSize:windowWidth*0.05,
+            fontSize:windowWidth*0.04,
             fontWeight:'bold',
-            color:'black'
+            color:'black',
+            fontFamily:'Poppins-Black'
           }}
         />
         </View>
@@ -69,9 +88,10 @@ function Sidebar(props) {
           pressColor="transparent"
           pressOpacity={0.8}
           labelStyle={{
-            fontSize:windowWidth*0.05,
+            fontSize:windowWidth*0.04,
             fontWeight:'bold',
-            color:'black'
+            color:'black',
+            fontFamily:'Poppins-Black'
           }}
         />
         </View>
@@ -86,9 +106,10 @@ function Sidebar(props) {
           pressColor="transparent"
           pressOpacity={0.8}
           labelStyle={{
-            fontSize:windowWidth*0.05,
+            fontSize:windowWidth*0.04,
             fontWeight:'bold',
-            color:'black'
+            color:'black',
+            fontFamily:'Poppins-Black'
           }}
         />
         </View>
@@ -103,9 +124,10 @@ function Sidebar(props) {
           pressColor="transparent"
           pressOpacity={0.8}
           labelStyle={{
-            fontSize:windowWidth*0.05,
+            fontSize:windowWidth*0.04,
             fontWeight:'bold',
-            color:'black'
+            color:'black',
+            fontFamily:'Poppins-Black'
           }}
         />
         </View>
@@ -120,9 +142,10 @@ function Sidebar(props) {
           pressColor="transparent"
           pressOpacity={0.8}
           labelStyle={{
-            fontSize:windowWidth*0.05,
+            fontSize:windowWidth*0.04,
             fontWeight:'bold',
-            color:'black'
+            color:'black',
+            fontFamily:'Poppins-Black'
           }}
         />
         </View>
@@ -136,9 +159,10 @@ function Sidebar(props) {
           pressColor="transparent"
           pressOpacity={0.8}
           labelStyle={{
-            fontSize:windowWidth*0.05,
+            fontSize:windowWidth*0.04,
             fontWeight:'bold',
-            color:'black'
+            color:'black',
+            fontFamily:'Poppins-Black'
           }}
         />
         </View>
@@ -152,9 +176,10 @@ function Sidebar(props) {
           pressColor="transparent"
           pressOpacity={0.8}
           labelStyle={{
-            fontSize:windowWidth*0.05,
+            fontSize:windowWidth*0.04,
             fontWeight:'bold',
-            color:'black'
+            color:'black',
+            fontFamily:'Poppins-Black'
           }}
         />
         </View>
@@ -168,9 +193,10 @@ function Sidebar(props) {
           pressColor="transparent"
           pressOpacity={0.8}
           labelStyle={{
-            fontSize:windowWidth*0.05,
+            fontSize:windowWidth*0.04,
             fontWeight:'bold',
-            color:'black'
+            color:'black',
+            fontFamily:'Poppins-Black'
           }}
         />
         </View>
@@ -184,9 +210,10 @@ function Sidebar(props) {
           pressColor="transparent"
           pressOpacity={0.8}
           labelStyle={{
-            fontSize:windowWidth*0.05,
+            fontSize:windowWidth*0.04,
             fontWeight:'bold',
-            color:'black'
+            color:'black',
+            fontFamily:'Poppins-Black'
           }}
         />
         </View>
@@ -198,9 +225,10 @@ function Sidebar(props) {
           pressColor="transparent"
           pressOpacity={0.8}
           labelStyle={{
-            fontSize:windowWidth*0.05,
+            fontSize:windowWidth*0.04,
             fontWeight:'bold',
-            color:'black'
+            color:'black',
+            fontFamily:'Poppins-Black'
           }}
         />
         </View>
@@ -237,7 +265,6 @@ const styles = StyleSheet.create({
   },
   headerTxt: {
     color:'#191919',
-    fontWeight:'bold',
   }
 });
 
