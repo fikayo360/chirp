@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     width:'95%',
   },
   drawerItem: {
-    width:'80%'
+    width:'70%'
   },
   drawerItemLabel: {
     color: 'white',
