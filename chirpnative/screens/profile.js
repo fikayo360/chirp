@@ -68,8 +68,7 @@ const Profile = () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
       console.log(response.data)
-      //setAroundYou(response.data);
-      
+      setAroundYou(response.data)
     } catch(error) {
       console.log(err.response);
     }

@@ -87,8 +87,8 @@ const EditProfile = () => {
 
     <View style={styles.secondContainer}>
     {profilepic?
-    (<View style={[{width:windowWidth *0.25,borderRadius:windowWidth * 0.5,alignSelf:'center',height:windowWidth * 0.25,borderWidth: 1,marginBottom:windowWidth * 0.05}]} >
-    <Image style={{width:'100%',height:'100%'}} resizeMode='cover' source={{ uri:profilepic }}/>
+    (<View style={[{width:windowWidth *0.38,alignSelf:'center',height:windowWidth * 0.35,marginBottom:windowWidth * 0.05}]} >
+    <Image style={{width:'100%',height:'100%',borderRadius:windowWidth * 0.5,}} resizeMode='cover' source={{ uri:profilepic }}/>
    </View>):
   (<TouchableOpacity style={{
     width:windowWidth*0.25,

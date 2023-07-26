@@ -49,9 +49,11 @@ export default function Register() {
         setEmail('') 
         setConfirm('')
         setError("")
+        navigation.navigate('Login')
       } catch (error) {
         if (error.response) {
-          setError(error.response.data);
+          setError("an error occurred");
+          setIsLoading(false)
         } 
       }
     };
@@ -97,8 +99,17 @@ export default function Register() {
          <TouchableOpacity style={[styles.button,ctaStyles]} onPress={handleLogin}>
         <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06}]}>signup</Text>
         </TouchableOpacity>
+        <View style={{width:'80%',alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
+        
        <Text style={[styles.footerTxt,{fontSize: windowWidth * 0.04,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03}]}>
-        already a user <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.footerOtherTxt}><Text style={styles.login}>Login</Text></TouchableOpacity> </Text>
+        already a user 
+        </Text>
+
+        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.footerOtherTxt}><Text style={[styles.login,{marginTop:windowWidth*0.054,
+          marginLeft:windowWidth*0.025,fontSize: windowWidth * 0.04}]}>Login</Text>
+        </TouchableOpacity> 
+
+        </View>
         </View>
     </ScrollView>
    
@@ -120,7 +131,7 @@ const styles = StyleSheet.create({
       height:'12%'
     },
     login:{
-      color:'red'
+      color:'#006992'
     },
     button: {
       backgroundColor: 'rgb(15, 20, 25)',
@@ -132,9 +143,6 @@ const styles = StyleSheet.create({
     },
     footerTxt:{
       color:'black'
-    },
-    footerOtherTxt:{
-      color:'#1D98F0'
     },
   input: {
     borderColor:'black',

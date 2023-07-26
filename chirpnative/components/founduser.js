@@ -3,7 +3,7 @@ import {View,TouchableOpacity,Text,StyleSheet,Image,Dimensions} from 'react-nati
 import ProfilePlaceholder from './Profiletextplace'
 import { useState,useEffect } from 'react'
 
-const Founduser = ({data}) => {
+const Founduser = ({data,follow}) => {
   const windowWidth = Dimensions.get('window').width;
   
   useEffect(()=>{
@@ -11,7 +11,7 @@ const Founduser = ({data}) => {
   },[])
 
   const handleFollow = () => {
-    props.follow(props.data.username); 
+    follow(data.username); 
   };
   return (  
     

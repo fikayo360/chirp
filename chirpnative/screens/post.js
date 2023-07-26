@@ -53,7 +53,7 @@ requestMediaLibraryPermissions();
       .then(async(downloadURL) => {
         console.log({postImg:downloadURL,postAuthor,postTitle,postBody});
         const response = await axios.post('api/v1/post/publish', {postImg:downloadURL,postAuthor,postTitle,postBody});
-        setError(response.data)
+        setError('post created')
         setSelectedImage('')
         setAuthor('')
         setPostTitle('')
