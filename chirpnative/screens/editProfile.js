@@ -63,6 +63,7 @@ const EditProfile = () => {
       setLoading(true);
       if(!phonenumber||!profilepic||!Bio,!country||!state||!zipcode){
         setError('fields cant be empty');
+        setLoading(false)
       }
         try {
          uploadImageToFirebase(profilepic)
