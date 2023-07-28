@@ -1,10 +1,12 @@
 import React from 'react'
-import {View,Text,TextInput,SafeAreaView,StyleSheet,Image,ScrollView,TouchableOpacity,Dimensions} from 'react-native'
+import {View,Text,TextInput,SafeAreaView,StyleSheet,Image,ScrollView,TouchableOpacity,Dimensions,ActivityIndicator} from 'react-native'
 import * as Icons from "react-native-heroicons/solid"
 import axios from 'axios'
 import * as ImagePicker from 'expo-image-picker';
 import uploadImageToFirebase from '../utils/uploadImage'
 import { useState,useEffect } from 'react';
+import ErrorComponent from '../components/errorComponent';
+import NotificationAlert from '../components/notificationAlert';
 import useApp from '../hooks/useApp';
 
 const EditProfile = () => {
@@ -21,7 +23,16 @@ const EditProfile = () => {
     const [country,setCountry] = useState('')
     const [state,setState] = useState('')
     const [zipcode,setZipcode] = useState('')
-    const [error,setError] = useState("")
+    const [error,setError] = useState("");
+    const [notification,setNotification] = useState("")
+    const [loading,setLoading] = useState(false)
+
+    const clearError = () => {
+      setError("")
+    }
+    const clearNotification = () => {
+      setNotification("")
+    }
 
     const handleImageSelection = async () => {
         try {
@@ -49,14 +60,15 @@ const EditProfile = () => {
       requestMediaLibraryPermissions();
 
       const submit = async () => {
-        //if(!phonenumber || !profilepic || !Bio || !country || !state || !zipcode){
-         //   setError('fields cant be empty');
-        //}
+      setLoading(true);
+      if(!phonenumber||!profilepic||!Bio,!country||!state||!zipcode){
+        setError('fields cant be empty');
+      }
         try {
          uploadImageToFirebase(profilepic)
          .then(async(downloadURL) => {
            const response = await axios.post('api/v1/user/updateProfile', {phonenumber,profilepic:downloadURL,Bio,country,state,zipcode});
-           setError(response.data)
+           setNotification(response.data)
            setPhonenumber("")
            setProfilePic("")
            setBio("")
@@ -64,6 +76,7 @@ const EditProfile = () => {
            setState("")
            setZipcode("")
            console.log(response.data);
+           setLoading(false)
        })
        .catch((error) => {
          console.log('Error:', error);
@@ -71,13 +84,16 @@ const EditProfile = () => {
        } catch (error) {
          if (error.response) {
            setError(error.response.data);
+           setLoading(false);
          } 
        }
      };
 
   return (
     <SafeAreaView  >
-     {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+    {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
+    {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
+    {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}
     <View style={[styles.header,{height:'10%',paddingHorizontal:windowWidth*0.03,marginTop:windowWidth*0.02}]}>
     <Text style={{fontSize:windowWidth*0.05}}>complete profile </Text>
     <TouchableOpacity onPress={submit}>< Icons.CheckIcon width={windowWidth*0.08} height={windowWidth*0.08} color="black" /></TouchableOpacity>

@@ -4,6 +4,8 @@ import Header from '../components/header'
 import Savedposts from '../components/savedposts'
 import { useState,useEffect,useCallback } from 'react'
 import axios from 'axios'
+import ErrorComponent from '../components/errorComponent';
+import NotificationAlert from '../components/notificationAlert';
 import useApp from '../hooks/useApp'
 
 const Savedpost = () => {
@@ -11,20 +13,36 @@ const Savedpost = () => {
   const {token} = useApp();
   const [items,setItems] = useState([])
   const [error,setError] = useState("")
+  const [notification,setNotification] = useState("")
   const [refreshing, setRefreshing] = useState(false);
+  const [loading,setLoading] = useState(true)
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },[])
 
+  const clearError = () => {
+    setError("")
+  }
+  const clearNotification = () => {
+    setNotification("")
+  }
+
 const getSavedPost = async () => {
   try {
     const response = await axios.get('api/v1/savedPost/getSavedPosts')
+    if(response.data === 'no posts found'){
+      setNotification('no posts found')
+      setLoading(false)
+      return
+    }
     setItems(response.data)
+    setLoading(false)
     console.log(items);
   } catch (error) {
     if (error.response) {
       setError(error.response.data)
+      setLoading(false)
     } 
   }
 };
@@ -34,7 +52,7 @@ const deleteSavedPost = async (id) => {
     const response = await axios.delete(`api/v1/savedPost/deleteSavedPost/${id}`)
     console.log(response.data);
     setItems(items => items.filter(item => item.id !== id));
-    setError(response.data)
+    setNotification(response.data)
   } catch (error) {
     if (error.response) {
       setError(error.response.data)
@@ -43,6 +61,7 @@ const deleteSavedPost = async (id) => {
  }
 
  const onRefresh = useCallback(async()=>{
+  setLoading(true)
   setRefreshing(true);
   getSavedPost()
   setRefreshing(false);
@@ -55,11 +74,13 @@ const flattenedArray = [].concat(...items);
 
 return (
   <SafeAreaView style={styles.container}>
-    {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+     {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
+      {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
+      {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}
     <Header title={'SavedPosts'} />
-    {items.length > 0?(<ScrollView style={styles.friendsComponent} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+    {items.length > 0 && (<ScrollView style={styles.friendsComponent} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
     <Savedposts data={flattenedArray} deleteSavedPost={deleteSavedPost}/>
-    </ScrollView>):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}}/>
+    </ScrollView>)
     }
   </SafeAreaView>
 )

@@ -9,6 +9,8 @@ import * as Icons from "react-native-heroicons/solid"
 import { useState,useEffect } from 'react'
 import axios from "axios";
 import useApp from '../hooks/useApp'
+import ErrorComponent from '../components/errorComponent';
+import NotificationAlert from '../components/notificationAlert';
 /* import spinner component */
 
 const Aroundyou = () => {
@@ -16,8 +18,10 @@ const Aroundyou = () => {
   const windowWidth = Dimensions.get('window').width;
   const [items,setItems] = useState([])
   const [username,setUsername] = useState('')
-  const [error,setError] = useState("")
+  const [error,setError] = useState("");
+  const [notification,setNotification] = useState("")
   const [discovered,setDiscovered] = useState({})
+  const [loading,setLoading] = useState(false)
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -26,10 +30,13 @@ const Aroundyou = () => {
   const getAround = async () => {
     try {
       const response = await axios.get('api/v1/user/aroundYou');
+      if(response.data === "no items found"){
+        setNotification('no items found')
+      }
       setItems(response.data);
       console.log(response.data); 
     } catch (error) {
-      console.log(err.response);
+      setError(error.response.data)
     }
   };
 
@@ -37,20 +44,33 @@ const Aroundyou = () => {
     getAround()
   },[])
   
+  const clearError = () => {
+    setError("")
+  }
+  const clearNotification = () => {
+    setNotification("")
+  }
+
   const search = async () => {
+    setLoading(true)
     const formData = {username}
-    console.log(formData);
     if(!username){
       setError('fields cant be empty')
+      setLoading(false)
+      return
     }
     try {
       const response = await axios.post('api/v1/user/search', formData);
-      console.log(response.data);
+      if(response.data === 'user not does not exist'){
+        setLoading(false)
+        setError('user not does not exist')
+      }
       setDiscovered(response.data);
-      console.log(discovered);
       setUsername('')
+      setLoading(false)
     } catch (error) {
       if (error.response) {
+        setLoading(false)
         setError(error.response.data)
       } 
     }
@@ -60,7 +80,7 @@ const Aroundyou = () => {
     console.log('hi you got here');
     try {
       const response = await axios.get(`api/v1/user/follow/${username}`);
-      setError(response.data)
+      setNotification(response.data)
     } catch (error) {
       if (error.response) {
         setError(error.response.data)
@@ -70,7 +90,9 @@ const Aroundyou = () => {
 
   return (
     <SafeAreaView>
-      {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+      {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
+      {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
+      {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}
         <Header title={'Search'} />
         <ScrollView style={[styles.bodyContainer,{height:'90%',padding:windowWidth *0.03}]}>
         <View style={[styles.customSearchInput,{
@@ -95,7 +117,7 @@ const Aroundyou = () => {
           <Image source={require('../assets/search3.png')} resizeMode='cover' style={{ width: '100%', height: '100%' }}  />
         </View>)}</>
 
-       {items && (<View style={[styles.discoverContainer,{marginTop:windowWidth*0.20}]}>
+       {items.length > 0 && (<View style={[styles.discoverContainer,{marginTop:windowWidth*0.15}]}>
         <Text style={{fontSize:windowWidth * 0.06,marginBottom:windowWidth * 0.05}}> People </Text>
         {items.length>0?(<Discoveredusers data={items} follow={follow} />):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
         </View>)}

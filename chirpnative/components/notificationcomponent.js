@@ -7,8 +7,8 @@ const Notificationcomponent = (props) => {
   return (
     <View style={[styles.container,{height:windowWidth * 0.23,padding:windowWidth * 0.02}]}>
       {
-        props.data.profilepic?<Image style={{borderRadius:windowWidth * 0.5,borderWidth:2,borderColor:'#0B0500', 
-        width:windowWidth * 0.09, height:windowWidth * 0.09}} source={{ uri: props.data.profilepic }} resizeMode='cover' /> :
+        props.data.ProfilePic?<Image style={{borderRadius:windowWidth * 0.5,borderWidth:2,borderColor:'#0B0500', 
+        width:windowWidth * 0.1, height:windowWidth * 0.1}} source={{ uri: props.data.ProfilePic }} resizeMode='cover' /> :
         (<ProfilePlaceholder username={props.data.username} width={windowWidth * 0.1} height={windowWidth * 0.1} />)
       }
     

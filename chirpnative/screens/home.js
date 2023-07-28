@@ -14,7 +14,8 @@ const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
   const { token} = useApp();
   const [error,setError] = useState("");
-  const [notification,setNotification] = useState("no news items")
+  const [notification,setNotification] = useState("")
+  const [loading,setLoading] = useState(true)
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -25,8 +26,11 @@ const Home = () => {
       const response = await axios.get('api/v1/news/getTopStories');
       setNewsItems(response.data);
       console.log(response.data);
+      setLoading(false)
     } catch (error) {
-      if (error.response) {
+      if (error.response.data) {
+        setError(error.response.data)
+        setLoading(false)
         console.log(error.response.data);
       } 
     }
@@ -40,6 +44,7 @@ const Home = () => {
   }
 
   const onRefresh = useCallback(async()=>{
+    setLoading(true)
     setRefreshing(true);
     submit()
     setRefreshing(false);
@@ -48,18 +53,20 @@ const Home = () => {
  useEffect(() => {
   submit()
  },[])
- 
+
   return (
     
     <SafeAreaView style={styles.container}> 
+      {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
       {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
       {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}
+      
        <Header title={'Home'} /> 
         {
-          newsItems.length > 0?( 
+          newsItems.length > 0 && ( 
           <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
             <HomeComponents data={newsItems} />
-            </ScrollView> ):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}}/>
+            </ScrollView> )
         }       
     </SafeAreaView>
     

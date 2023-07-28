@@ -1,6 +1,6 @@
 import React from 'react'
 import ProfilePlaceholder from './Profiletextplace'
-import {View,Text,StyleSheet,Dimensions} from 'react-native'
+import {View,Text,StyleSheet,Dimensions,Image} from 'react-native'
 
 
 
@@ -8,7 +8,9 @@ const CommentComponent = (props) => {
     const windowWidth = Dimensions.get('window').width;
     return (
         <View style={[styles.container,{height:windowWidth * 0.20,padding:windowWidth * 0.02}]}>     
-        <ProfilePlaceholder username={props.data.PostcommentAuthor} />
+        {props.data.PostcommentProfilePic?(<Image resizeMode='cover' style={{ width: windowWidth*0.1, height: windowWidth*0.1,borderRadius:windowWidth * 0.5 }}
+         source={{ uri:props.data.PostcommentProfilePic }} />):
+        <ProfilePlaceholder username={props.data.PostcommentAuthor} width={windowWidth*0.1} height={windowWidth*0.1}/>}
         <View>
 
         <View style={[styles.textHeader,{marginBottom:windowWidth * 0.03}]}>

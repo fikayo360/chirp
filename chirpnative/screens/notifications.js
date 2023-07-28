@@ -4,26 +4,39 @@ import Header from '../components/header'
 import Notifications from '../components/notifications'
 import axios from 'axios'
 import { useState,useEffect,useCallback } from 'react'
+import ErrorComponent from '../components/errorComponent';
+import NotificationAlert from '../components/notificationAlert';
 import useApp from '../hooks/useApp'
 
 const AppNotifications = () => {
   const {token} = useApp();
   const [items,setItems] = useState([])
   const [refreshing, setRefreshing] = useState(false);
-  const [error,setError] = useState("")
+  const [error,setError] = useState("");
+  const [notification,setNotification] = useState("")
+  const [loading,setLoading] = useState(true)
   const windowWidth = Dimensions.get('window').width;
+
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },[])
   
+  const clearError = () => {
+    setError("")
+  }
+  const clearNotification = () => {
+    setNotification("")
+  }
+
 const getNotifications = async () => {
   try {
     const response = await axios.get('api/v1/notification/getAll')
     setItems(response.data)
-    console.log(items);
+    setLoading(false)
   } catch (error) {
     if (error.response) {
       setError(error.response.data)
+      setLoading(false)
     } 
   }
 };
@@ -33,6 +46,7 @@ useEffect(()=>{
 },[])
 
 const onRefresh = useCallback(async ()=>{
+  setLoading(true)
   setRefreshing(true);
   getNotifications()
   setRefreshing(false);
@@ -40,12 +54,14 @@ const onRefresh = useCallback(async ()=>{
 
   return (
     <SafeAreaView style={styles.container}>
-      {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+      {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
+     {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
+      {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}
     <Header title={'Notifications'}/>
-    {items.length > 0?
+    {items.length > 0 &&
     (<ScrollView style={styles.body} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
       <Notifications data={items}/>
-    </ScrollView>):<ActivityIndicator size="large" color="black" style={{marginTop:'70%'}}/>}
+    </ScrollView>)}
       
     </SafeAreaView>
   )

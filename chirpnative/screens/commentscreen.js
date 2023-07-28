@@ -1,19 +1,25 @@
-import {React,useState,useEffect} from 'react'
+import {React,useState,useEffect,useCallback} from 'react'
 import * as Icons from "react-native-heroicons/solid"
-import {SafeAreaView,TextInput,ScrollView,StyleSheet,View,TouchableOpacity,Text,Dimensions} from 'react-native'
+import {SafeAreaView,TextInput,ScrollView,StyleSheet,View,TouchableOpacity,Text,Dimensions,ActivityIndicator,Image} from 'react-native'
 import Header from '../components/header'
 import ProfilePlaceholder from '../components/Profiletextplace'
 import axios from 'axios'
 import CommentItems from '../components/comments'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { RefreshControl } from "react-native";
+import ErrorComponent from '../components/errorComponent';
+import NotificationAlert from '../components/notificationAlert';
 import useApp from '../hooks/useApp'
 
 const Commentscreen = () => {
   const { token,postId,currentUser } = useApp()
   const [PostId,setPostId] = useState('')
-  const [error,setError] = useState("")
+  const [error,setError] = useState("");
+  const [notification,setNotification] = useState("")
+  const [refreshing, setRefreshing] = useState(false);
+  const [loading,setLoading] = useState(true)
   const [PostcommentAuthor,setPostCommentAuthor] = useState("")
   const [PostcommentBody,setPostcommentBody] = useState("")
+  const [PostcommentProfilePic,setpic] = useState("")
   const [items,setItems] = useState([])
   const [ProfilePic,setProfilePic] = useState("")
   const windowWidth = Dimensions.get('window').width;
@@ -22,29 +28,42 @@ const Commentscreen = () => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },[])
 
+  const clearError = () => {
+    setError("")
+  }
+  const clearNotification = () => {
+    setNotification("")
+  }
+
   const getUser = () => {
-    setPostId(postId)
+    setPostId(postId) 
     setPostCommentAuthor(currentUser.user.username)
     setProfilePic(currentUser.user.profilepic || '')
+    setpic(ProfilePic)
   };
 
   useEffect(()=> {
     getUser()
   },[])
 
-
- 
-
   const createComment = async () => {
+    setLoading(true)
     try {
       console.log({PostId,PostcommentAuthor,PostcommentBody,ProfilePic});
-      const response = await axios.post('api/v1/post/commentPost', {PostId,PostcommentAuthor,PostcommentBody,ProfilePic})
+      if(!PostcommentBody){
+        setError('fields cant be empty')
+        setLoading(false)
+        return
+      }
+      const response = await axios.post('api/v1/post/commentPost', {PostId,PostcommentAuthor,PostcommentBody,PostcommentProfilePic})
       console.log(response.data);
-      setError('Saved')
       setPostcommentBody('')
+      setNotification(response.data)
+      setLoading(false)
     } catch (error) {
       if (error.response) {
         setError(error.response.data)
+        setLoading(false)
       } 
     }
   };
@@ -53,16 +72,28 @@ const Commentscreen = () => {
     try {
       console.log(postId);
       const response = await axios.get('api/v1/post/getComments', {params: {PostId:postId}});
-      //console.log(response.data.postComments);
+      if(response.data.postComments.length === 0){
+        setError('no items found yet')
+        return
+      }
+      console.log(response.data.postComments);
        setItems(response.data.postComments)
+       setLoading(false)
     } catch (error) {
       if (error.response) {
         console.log(error.response.data);
-        //setError(error.response.data)
+        setError(error.response.data)
+        setLoading(false)
       } 
     }
   }
 
+  const onRefresh = useCallback(async()=>{
+    setLoading(true)
+    setRefreshing(true);
+    getComments()
+    setRefreshing(false);
+  },[])
 
   useEffect(() => {
     getComments();
@@ -70,11 +101,14 @@ const Commentscreen = () => {
   
   return (
         <SafeAreaView style={styles.container}>
-          {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+          {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
+          {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
+          {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}       
 
         <View style={styles.body}>
-        <View style={[styles.upperContainer,{height:windowWidth * 0.40,padding:windowWidth * 0.04}]}>
-        <ProfilePlaceholder username={'fikayo'}/>
+        <View style={[styles.upperContainer,{height:windowWidth * 0.40,padding:windowWidth * 0.04,paddingRight:windowWidth*0.03}]}>
+        {ProfilePic?(<Image resizeMode='cover' style={{ width: windowWidth*0.1, height: windowWidth*0.1,borderRadius:windowWidth * 0.5 }} source={{ uri:ProfilePic }} />):
+        <ProfilePlaceholder username={'fikayo'} width={windowWidth*0.1} height={windowWidth*0.1}/>}
 
         <View style={[styles.textinputContainer,{height:windowWidth * 0.25,borderRadius:windowWidth* 0.01,
         padding:windowWidth * 0.02,marginRight:windowWidth*0.03,marginLeft:windowWidth * 0.01}]}>
@@ -90,11 +124,10 @@ const Commentscreen = () => {
         <TouchableOpacity style={[styles.paperIconCont,{top:windowWidth * 0.04, right:windowWidth * 0.02}]} onPress={createComment}><Icons.PaperAirplaneIcon width={windowWidth * 0.06} height={windowWidth * 0.06} color="black" /></TouchableOpacity>
         </View>
         </View>
-        
-        <ScrollView style={styles.scrollContainer}>
+        {items.length > 0 && ( 
+        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
           <CommentItems data={items} />
-        </ScrollView>  
-
+        </ScrollView>)}
         </View>
 
         </SafeAreaView>
@@ -130,7 +163,7 @@ const styles = StyleSheet.create({
     position:'absolute'
   },
   textinputContainer:{
-    width:'90%',
+    width:'88%',
     borderWidth:1,
     borderColor:'grey',
     flexDirection:'row',

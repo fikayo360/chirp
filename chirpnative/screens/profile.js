@@ -11,6 +11,8 @@ import Following from '../components/following'
 import Wallcomponents from '../components/wallcomponent'
 import axios from 'axios'
 import {useEffect,useCallback }from 'react'
+import ErrorComponent from '../components/errorComponent';
+import NotificationAlert from '../components/notificationAlert';
 import useApp from '../hooks/useApp'
 
 const Profile = () => {
@@ -26,7 +28,17 @@ const Profile = () => {
   const [sessionUser,setSessionUser] = useState({})
   const [posts,setPosts] = useState([])
   const [aroundYou,setAroundYou] = useState([])
-  const [error,setError] = useState("")
+  const [error,setError] = useState("");
+  const [notification,setNotification] = useState("")
+  const [loading,setLoading] = useState(true)
+
+
+  const clearError = () => {
+    setError("")
+  }
+  const clearNotification = () => {
+    setNotification("")
+  }
 
   const getFriends = async () => {
     try {
@@ -42,12 +54,15 @@ const Profile = () => {
   
   const getUserProfile = async () => {
     try{
+      
       const response = await axios.get('api/v1/user/getUser');
        setSessionUser(response.data)
        console.log(response.data);
+       setLoading(false)
     }catch(error) {
       if (error.response) {
         setError(error.response.data)
+        setLoading(false)
       } 
     }
   }
@@ -70,15 +85,14 @@ const Profile = () => {
       console.log(response.data)
       setAroundYou(response.data)
     } catch(error) {
-      console.log(err.response);
+      setError(error.response.data)
     }
   };
 
   const follow = async (username) => {
-    
     try {
       const response = await axios.get(`api/v1/user/follow/${username}`);
-      setError(response.data)
+      setNotification(response.data)
       console.log(response.data);
     } catch(error) {
       if (error.response) {
@@ -88,9 +102,10 @@ const Profile = () => {
   };
 
   const onRefresh = useCallback(async()=>{
+    setLoading(true)
     setRefreshing(true);
-    getFriends();
     getUserProfile()
+    getFriends();
     getUserPost()
     getAround()
     setRefreshing(false);
@@ -105,7 +120,9 @@ const Profile = () => {
 
   return (
     <SafeAreaView style={[styles.container,{padding:windowWidth * 0.02}]}>
-      {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+      {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
+      {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
+      {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}
       
         <ScrollView style={styles.wrapper} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
           <View style={[styles.profileQuickInfo,{padding:windowWidth*0.03, height:windowWidth * 0.3,marginBottom:windowWidth * 0.07}]}>
@@ -122,12 +139,12 @@ const Profile = () => {
           <View style={styles.quickInfoContainer}>
              <View style={styles.profileQuickInfoAnalContainer}>
               <Text style={{fontSize:windowWidth * 0.045,marginBottom:windowWidth * 0.02}}>posts</Text>
-              <Text style={{fontSize:windowWidth * 0.045}}>{0}</Text>
+              <Text style={{fontSize:windowWidth * 0.045}}>{posts.length}</Text>
               </View>
 
             <View style={styles.profileQuickInfoAnalContainer}>
               <Text style={{fontSize:windowWidth * 0.045,marginBottom:windowWidth * 0.02}}>Following</Text>
-              <Text style={{fontSize:windowWidth * 0.045}}>{0}</Text>
+              <Text style={{fontSize:windowWidth * 0.045}}>{friends.length}</Text>
             </View>
           </View>
         </View>
@@ -148,15 +165,16 @@ const Profile = () => {
         </View>):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
        
 
-        {aroundYou && (<View style={{height:windowWidth*0.7,marginTop:windowWidth*0.07}}>
+        {aroundYou.length === 0 && (<View style={{height:windowWidth*0.7,marginTop:windowWidth*0.07}}>
           <Text style={{fontSize:windowWidth*0.05}}>Discover People</Text>
           {aroundYou.length>0?(<Discoveredusers data={aroundYou} follow={follow} />):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
         </View>)}
-
+        {friends.length>0 && ( 
         <View style={{height:windowWidth*0.4,width:'100%',marginBottom:windowWidth*0.03}}>
           <Text style={{fontSize:windowWidth*0.05}}>following</Text>
           {friends.length>0?(<Following data={friends} />):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
-        </View>
+        </View>)}
+       
         
       </ScrollView>
     </SafeAreaView>

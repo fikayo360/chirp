@@ -17,7 +17,7 @@ const Followingcomponent = (props) => {
           (<View style={{width:windowWidth * 0.15, height:windowWidth * 0.15}}>
           <Image resizeMode='cover' style={{ width: '100%', height: '100%',borderRadius:windowWidth * 0.5 }} source={{ uri: props.data.profilepic }} />
           </View>):
-          (<ProfilePlaceholder username={'fikayo'} width={windowWidth * 0.15} height={windowWidth * 0.15} />)
+          (<ProfilePlaceholder username={props.data.username} width={windowWidth * 0.15} height={windowWidth * 0.15} />)
           }
     <Text style={{fontSize:windowWidth * 0.03,marginTop:windowWidth*0.02}}>{props.data.username} </Text>
     </View>
@@ -29,8 +29,6 @@ const styles= StyleSheet.create({
   wrapper:{
     justifyContent:'center',
     alignItems:'center',
-    borderColor:'grey',
-    borderWidth:1
   }
 })
 

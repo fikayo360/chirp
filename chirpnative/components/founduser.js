@@ -16,30 +16,32 @@ const Founduser = ({data,follow}) => {
   return (  
     
     <View style={[styles.container,
-      {width:windowWidth * 0.5,
+      {width:'80%',
       height:windowWidth * 0.5,
-      margin: windowWidth * 0.009,
-      borderRadius:windowWidth * 0.02,
-      borderWidth:1}]}>
+      paddingLeft:windowWidth * 0.13,
+     }]}>
 
       {data.profilepic?(
         <View style={{
             width:windowWidth * 0.20,
-            height:windowWidth * 0.20
+            height:windowWidth * 0.20,
+            alignItems:'center',
+            
         }}>
         <Image resizeMode='cover' style={{ width: '100%', height: '100%',borderRadius:windowWidth * 0.5 }} source={{ uri: data.profilepic }} />
+        <Text>{data.username}</Text>
         </View>
         ):(
           <ProfilePlaceholder username={data.username} width={windowWidth * 0.2} height={windowWidth * 0.2}/>
         )}
       
-      <Text>{data.username}</Text>
+      
       <TouchableOpacity style={[styles.button,
       {
-        height:windowWidth* 0.1,
-        width:windowWidth * 0.35,
+        height:windowWidth* 0.08,
+        width:windowWidth * 0.25,
         borderRadius:windowWidth * 0.4,
-        marginTop:windowWidth * 0.05
+        marginTop:windowWidth * 0.05,
       }]} onPress={handleFollow}> 
         <Text style={[styles.buttonTxt,{fontSize:windowWidth * 0.04}]}>follow</Text>
       </TouchableOpacity>
@@ -52,9 +54,9 @@ const styles = StyleSheet.create({
   container:{
     borderColor:'grey',
     position:'relative',
-    justifyContent:'center',
+    justifyContent:'space-between',
+    flexDirection:'row',
     alignItems:'center',
-    
   },
   button:{
     alignItems: 'center',
