@@ -7,6 +7,8 @@ import * as Font from 'expo-font';
 
 
 function Sidebar(props) {
+    const navigation = useNavigation();
+    const { logout } = useApp();
     const windowWidth = Dimensions.get('window').width;
     const [selectedView, setSelectedView] = useState('topStories');
     const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -27,8 +29,7 @@ function Sidebar(props) {
     const isViewSelected = (view) => {
       return selectedView === view;
     };
-    const navigation = useNavigation();
-    const { logout } = useApp();
+   
     const signOut = async () => {
       logout()
       navigation.navigate('Login')

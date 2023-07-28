@@ -31,15 +31,22 @@ export default function Register() {
   const clearError = () => {
     setError("")
   }
+  const clearNotification = () => {
+    setNotification("")
+  }
 
     const handleLogin = async () => {
       try {
         const formData = { username, password, email };
         if(!username || !password || !email || !confirm) {
+          setIsLoading(false)
           setError("All fields are required")
+          return
         }
         else if(password!== confirm) {
+          setIsLoading(false)
           setError("Passwords do not match");
+          return
         }
         setIsLoading(true)
         const response = await axios.post('api/v1/user/signup', formData);
@@ -52,8 +59,8 @@ export default function Register() {
         navigation.navigate('Login')
       } catch (error) {
         if (error.response) {
-          setError("an error occurred");
           setIsLoading(false)
+          setError(error.response.data);
         } 
       }
     };
@@ -62,7 +69,7 @@ export default function Register() {
     
     <ScrollView style={styles.container}>
        {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
-       {notification !== "" && (<NotificationAlert text={notification}/>)}
+       {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}
        <Spinner visible={isLoading} textStyle={{ color: 'blue' }} />
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
         <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{`ChirpSignup`}</Text>

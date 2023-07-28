@@ -22,10 +22,11 @@ const Newscategory = ({route}) => {
     try {
       const response = await axios.get(`api/v1/news/getNewsCategory/${cat}`);
       console.log(response.data.articles);
-      setData(response.data.articles);
+      setData(response.data);
     } catch (error) {
       if (error.response) {
-        setError(error.response.data);
+        //setError(error.response.data);
+        console.log(error.response.data);
       } 
     }
   };

@@ -6,11 +6,15 @@ import axios from "axios";
 import { useState,useEffect,useCallback } from 'react'
 import { RefreshControl } from "react-native";
 import useApp from '../hooks/useApp';
+import ErrorComponent from '../components/errorComponent';
+import NotificationAlert from '../components/notificationAlert';
 
 const Home = () => {
   const [newsItems,setNewsItems] = useState([])
   const [refreshing, setRefreshing] = useState(false);
   const { token} = useApp();
+  const [error,setError] = useState("");
+  const [notification,setNotification] = useState("no news items")
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -19,14 +23,21 @@ const Home = () => {
   const submit = async () => {
     try {
       const response = await axios.get('api/v1/news/getTopStories');
-      setNewsItems(response.data.articles);
+      setNewsItems(response.data);
       console.log(response.data);
     } catch (error) {
       if (error.response) {
-        console.log(error.response);
+        console.log(error.response.data);
       } 
     }
   };
+
+  const clearError = () => {
+    setError("")
+  }
+  const clearNotification = () => {
+    setNotification("")
+  }
 
   const onRefresh = useCallback(async()=>{
     setRefreshing(true);
@@ -41,6 +52,8 @@ const Home = () => {
   return (
     
     <SafeAreaView style={styles.container}> 
+      {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
+      {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}
        <Header title={'Home'} /> 
         {
           newsItems.length > 0?( 

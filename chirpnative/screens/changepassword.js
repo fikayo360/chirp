@@ -3,8 +3,12 @@ import { useState, } from 'react';
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
+import ErrorComponent from '../components/errorComponent';
+import { useNavigation } from '@react-navigation/native';
 
 export default function ChangePassword() {
+  
+  const navigation = useNavigation();
   const windowWidth = Dimensions.get('window').width;
   const headerFontSize = windowWidth * 0.07;
   const imageWidth = windowWidth * 0.14
@@ -18,39 +22,44 @@ export default function ChangePassword() {
   }
   const ctaStyles = {height:windowWidth * 0.18,borderRadius: windowWidth * 0.5,padding:windowWidth * 0.03,alignItems:'center',marginTop: windowWidth * 0.09}
     const [newPassword,setNewPassword] = useState("")
+    const [emailaddress,setEmailaddress] = useState("")
     const [token,setToken] = useState("")
     const [error,setError] = useState("")
     const [isLoading, setIsLoading] = useState(false);
-
+    const clearError = () => {
+      setIsLoading(false)
+      setError("")
+    }
     const submit = async () => {
       try {
-        const emailaddress = await AsyncStorage.getItem('email');
+        
         const formData = { emailaddress,newPassword,token };
         console.log(formData);
-        if(!emailaddress || !newPassword || !token) {
+
+        if(!newPassword || !token) {
+          setIsLoading(false)
           setError(" fields cant be empty")
+          return
         }
+
         setIsLoading(true)
         const response = await axios.post('api/v1/user/changePassword',formData);
         setIsLoading(false)
-        await AsyncStorage.removeItem('email');
-        setError(response.data)
-        setNewPassword('')
-        setToken('')
-        setIsLoading(false)
+        //setNewPassword('')
+        //setToken('')
+        //setIsLoading(false)
+        navigation.navigate('Login')
       } catch (error) {
-        if (error.response) {
+        if (error.response.data) {
           setIsLoading(false)
           setError(error.response.data);
-        } else{
-          setError(error.Error)
-        }
+        } 
       }
     };
 
   return (
     <ScrollView style={styles.container}>
-      {error && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+      {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
       <Spinner visible={isLoading} textStyle={{ color: '#FFF' }} />
       <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
         <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{'changePassword'}</Text>
@@ -58,6 +67,12 @@ export default function ChangePassword() {
         </View>
 
         <View style={[styles.rinputs,{paddingTop:windowWidth * 0.4}]}>
+        <TextInput
+        style={[styles.rinput, inputStyles ]}
+        onChangeText={text => setEmailaddress(text)}
+        value={emailaddress}
+        placeholder="enter email address"
+        />
         <TextInput
         style={[styles.rinput, inputStyles ]}
         onChangeText={text => setNewPassword(text)}
@@ -87,22 +102,7 @@ export default function ChangePassword() {
 }
 
 const styles = StyleSheet.create({
-  errorContainer:{
-    alignItems: 'center',
-    marginTop:60,
-    backgroundColor: 'rgb(15, 20, 25)',
-    padding: 10,
-    height: 40,
-    position:"absolute",
-    width:'90%',
-    top:50,
-    left:15,
-    borderRadius:10
-  },
-  errorText:{
-    fontSize: 15,
-    color:'white'
-  },
+ 
   container:{
     flex: 1,
     position:'relative'

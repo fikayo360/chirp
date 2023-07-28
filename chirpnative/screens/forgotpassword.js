@@ -4,9 +4,15 @@ import { useState, } from 'react';
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
+import ErrorComponent from '../components/errorComponent';
+import { useNavigation } from '@react-navigation/native';
+import useApp from '../hooks/useApp';
+import { useEffect } from 'react';
 
 export default function Forgotpassword() {
+  
   const windowWidth = Dimensions.get('window').width;
+  const navigation = useNavigation();
   const headerFontSize = windowWidth * 0.07;
   const imageWidth = windowWidth * 0.14
   const headerHeight = windowWidth * 0.2
@@ -22,29 +28,31 @@ export default function Forgotpassword() {
     const [emailaddress,setEmailaddress] = useState("")
     const [error,setError] = useState("")
     const [isLoading, setIsLoading] = useState(false);
-    const setTokenToAsyncStorage = async (value) => {
-      try {
-        await AsyncStorage.setItem('email', value);
-        console.log('email saved successfully');
-      } catch (error) {
-        console.log('Error saving token:', error);
-      }
-    };
+  
+    const clearError = () => {
+      setIsLoading(false)
+      setError("")
+    }
+
+    useEffect(()=>{
+      //console.log(currentUser);
+    },[])
 
     const submit = async () => {
       try {
         const formData = { emailaddress };
         if(!emailaddress ) {
+          setIsLoading(false)
           setError(" field cant be empty")
+          return
         }
         setIsLoading(true)
         const response = await axios.post('api/v1/user/forgotPassword', formData);
         setIsLoading(false)
-        setError(response.data)
-        setTokenToAsyncStorage(emailaddress)
         setEmailaddress('')
+        navigation.navigate("changePassword")
       } catch (error) {
-        if (error.response) {
+        if (error.response.data) {
           setIsLoading(false)
           setError(error.response.data);
         } 
@@ -53,7 +61,7 @@ export default function Forgotpassword() {
 
   return (
     <ScrollView style={styles.container}>
-        {error !== "" && (<View style={styles.errorContainer}><Text style={styles.errorText}>{error}</Text></View>)}
+       {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
         <Spinner visible={isLoading} textStyle={{ color: '#FFF' }} />
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
         <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{'ForgotPassword'}</Text>
@@ -84,22 +92,6 @@ const styles = StyleSheet.create({
     flex: 1,
     position:'relative'
   },
-    errorContainer:{
-      alignItems: 'center',
-      marginTop:60,
-      backgroundColor: 'rgb(15, 20, 25)',
-      padding: 10,
-      height: 40,
-      position:"absolute",
-      width:'90%',
-      top:50,
-      left:15,
-      borderRadius:10
-    },
-    errorText:{
-      fontSize: 15,
-      color:'white'
-    },
     fpbutton: {
       backgroundColor: 'rgb(15, 20, 25)',
       justifyContent: 'center',
