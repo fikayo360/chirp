@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
 import ErrorComponent from '../components/errorComponent';
 import { useNavigation } from '@react-navigation/native';
+import * as Font from 'expo-font'; 
 
 export default function ChangePassword() {
   
@@ -19,6 +20,7 @@ export default function ChangePassword() {
       borderRadius: windowWidth * 0.03,
       margin: windowWidth * 0.05,
       fontSize: windowWidth * 0.05,
+      fontFamily:'Poppins-Black'
   }
   const ctaStyles = {height:windowWidth * 0.18,borderRadius: windowWidth * 0.5,padding:windowWidth * 0.03,alignItems:'center',marginTop: windowWidth * 0.09}
     const [newPassword,setNewPassword] = useState("")
@@ -26,6 +28,8 @@ export default function ChangePassword() {
     const [token,setToken] = useState("")
     const [error,setError] = useState("")
     const [isLoading, setIsLoading] = useState(false);
+    const [fontsLoaded, setFontsLoaded] = useState(false);
+
     const clearError = () => {
       setIsLoading(false)
       setError("")
@@ -45,9 +49,9 @@ export default function ChangePassword() {
         setIsLoading(true)
         const response = await axios.post('api/v1/user/changePassword',formData);
         setIsLoading(false)
-        //setNewPassword('')
-        //setToken('')
-        //setIsLoading(false)
+        setNewPassword('')
+        setToken('')
+        setIsLoading(false)
         navigation.navigate('Login')
       } catch (error) {
         if (error.response.data) {
@@ -57,12 +61,25 @@ export default function ChangePassword() {
       }
     };
 
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      });
+      setFontsLoaded(true);
+    };
+  
+    if (!fontsLoaded) {
+      loadFonts();
+      return null; 
+    }
+
   return (
     <ScrollView style={styles.container}>
       {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
       <Spinner visible={isLoading} textStyle={{ color: '#FFF' }} />
       <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
-        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{'changePassword'}</Text>
+        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01,fontFamily:'Poppins-Black'}]}>{'changePassword'}</Text>
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
         </View>
 
@@ -92,7 +109,7 @@ export default function ChangePassword() {
         />
         
         <TouchableOpacity style={[styles.button,ctaStyles]} onPress={submit}>
-        <Text style={[styles.signuptxt,{fontSize:windowWidth * 0.05}]}>change password</Text>
+        <Text style={[styles.signuptxt,{fontSize:windowWidth * 0.05,fontFamily:'Poppins-Black'}]}>change password</Text>
         </TouchableOpacity>
 
         </View>

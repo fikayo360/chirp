@@ -1,10 +1,13 @@
 import { StyleSheet, Text,View,TouchableOpacity,TextInput,Image,Dimensions,ScrollView} from 'react-native';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import axios from "axios";
 import Spinner from 'react-native-loading-spinner-overlay';
 import { useNavigation } from '@react-navigation/native';
 import ErrorComponent from '../components/errorComponent';
 import NotificationAlert from '../components/notificationAlert';
+import { BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import * as Font from 'expo-font'; 
 
 export default function Register() {
   const navigation = useNavigation();
@@ -27,6 +30,7 @@ export default function Register() {
   const [error,setError] = useState("")
   const [notification,setNotification] = useState("")
   const [isLoading, setIsLoading] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   
   const clearError = () => {
     setError("")
@@ -64,6 +68,26 @@ export default function Register() {
         } 
       }
     };
+    useFocusEffect(() => {
+      const handleBackPress = () => {
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+      return () => backHandler.remove();
+    });
+
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      });
+      setFontsLoaded(true);
+    };
+
+    if (!fontsLoaded) {
+      loadFonts();
+      return null; 
+    }
 
   return (
     
@@ -72,7 +96,7 @@ export default function Register() {
        {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}
        <Spinner visible={isLoading} textStyle={{ color: 'blue' }} />
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
-        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{`ChirpSignup`}</Text>
+        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01, fontFamily:'Poppins-Black'}]}>{`ChirpSignup`}</Text>
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
         </View>
 
@@ -104,16 +128,16 @@ export default function Register() {
         placeholder="confirm password"
         />
          <TouchableOpacity style={[styles.button,ctaStyles]} onPress={handleLogin}>
-        <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06}]}>signup</Text>
+        <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06, fontFamily:'Poppins-Black'}]}>signup</Text>
         </TouchableOpacity>
         <View style={{width:'80%',alignItems:'center',flexDirection:'row',justifyContent:'center'}}>
         
-       <Text style={[styles.footerTxt,{fontSize: windowWidth * 0.04,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03}]}>
+       <Text style={[styles.footerTxt,{fontSize: windowWidth * 0.04,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03, fontFamily:'Poppins-Black'}]}>
         already a user 
         </Text>
 
         <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.footerOtherTxt}><Text style={[styles.login,{marginTop:windowWidth*0.054,
-          marginLeft:windowWidth*0.025,fontSize: windowWidth * 0.04}]}>Login</Text>
+          marginLeft:windowWidth*0.025,fontSize: windowWidth * 0.04, fontFamily:'Poppins-Black'}]}>Login</Text>
         </TouchableOpacity> 
 
         </View>
@@ -155,6 +179,7 @@ const styles = StyleSheet.create({
     borderColor:'black',
     width:'95%',
     borderWidth: 2,
+    fontFamily:'Poppins-Black'
   },
   header: {
     width:'100%',

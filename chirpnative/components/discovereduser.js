@@ -1,13 +1,31 @@
 import React from 'react'
 import {View,TouchableOpacity,Text,StyleSheet,Image,Dimensions} from 'react-native'
+import { useState } from 'react'
 import * as Icons from "react-native-heroicons/solid"
 import ProfilePlaceholder from './Profiletextplace'
+import * as Font from 'expo-font'; 
 
 const Discovereduser = (props) => {
   const windowWidth = Dimensions.get('window').width;
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
   const handleFollow = () => {
     props.follow(props.data.username); 
   };
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    });
+    setFontsLoaded(true);
+  };
+
+  if (!fontsLoaded) {
+    loadFonts();
+    return null; 
+  }
+
   return (
     <View style={[styles.container,
       {
@@ -26,7 +44,7 @@ const Discovereduser = (props) => {
         )
         }
       
-      <Text>{props.data.username}</Text>
+      <Text style={{fontFamily:'Poppins-Black'}}>{props.data.username}</Text>
       <TouchableOpacity style={[styles.button,
       {
         height:windowWidth* 0.1,
@@ -34,7 +52,7 @@ const Discovereduser = (props) => {
         borderRadius:windowWidth * 0.4,
         marginTop:windowWidth * 0.05
       }]} onPress={handleFollow}> 
-        <Text style={[styles.buttonTxt,{fontSize:windowWidth * 0.04}]}>follow</Text>
+        <Text style={[styles.buttonTxt,{fontSize:windowWidth * 0.04,fontFamily:'Poppins-Black'}]}>follow</Text>
       </TouchableOpacity>
     </View>
   )

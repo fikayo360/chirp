@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { Dimensions } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -22,6 +23,7 @@ import Profile from './screens/profile';
 import Webview from './screens/webview';
 import Sidebar from './components/sidebar';
 import { AppProvider } from './appContext';
+import Protected from './screens/protected';
 
 axios.defaults.baseURL = 'https://chirpserver.onrender.com/';
 
@@ -29,7 +31,7 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 const App =  () => {
-  
+  const windowWidth = Dimensions.get('window').width;
   const MainFlow = () => (
     <Drawer.Navigator
         initialRouteName="topStories"
@@ -55,18 +57,52 @@ const App =  () => {
         <Stack.Screen
           name="Splash"
           component={Splashscreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: false,gestureEnabled: false }}
         />
-        <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
-        <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-        <Stack.Screen name="changePassword" component={ChangePassword} options={{ headerShown: false }}/>
+        <Stack.Screen name="Register" component={Register} options={{ headerShown: false,gestureEnabled: false }}/>
+        <Stack.Screen name="Login" component={Login} options={{ headerShown: false,gestureEnabled: false }} />
         <Stack.Screen name="forgotPassword" component={Forgotpassword} options={{ headerShown: false }} />
-        <Stack.Screen name="article" component={Article} options={{ headerShown: false }}/>
-        <Stack.Screen name="comment" component={Commentscreen}  />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="editProfile" component={EditProfile} options={{ headerShown: false }}/>
-        <Stack.Screen name="webview" component={Webview} />
-        <Stack.Screen name="Home" component={MainFlow} options={{ headerShown: false }} />
+        <Stack.Screen name="changePassword" component={ChangePassword} options={{ headerShown: false }}/>
+        <Stack.Screen name="Home" component={Protected(MainFlow)} options={{ headerShown: false,gestureEnabled:false }} />
+        <Stack.Screen name="article" component={Protected(Article)} options={{ headerShown: false }}/>
+        <Stack.Screen name="comment" component={Protected(Commentscreen)}  options={{
+        headerStyle: {
+          backgroundColor: '#274C77',
+        },
+        headerTintColor: 'white',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize:windowWidth*0.05,
+          color:'white'
+        },
+        headerTitleAlign: 'center',
+        }} />
+        <Stack.Screen name="Profile" component={Protected(Profile)} options={{
+        headerStyle: {
+          backgroundColor: '#274C77',
+        },
+        headerTintColor: 'white',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize:windowWidth*0.05,
+          color:'white'
+        },
+        headerTitleAlign: 'center',
+        }}/>
+        <Stack.Screen name="editProfile" component={Protected(EditProfile)} options={{ headerShown: false }}/>
+        <Stack.Screen name="webview" component={Protected(Webview)} options={{
+        headerStyle: {
+          backgroundColor: '#274C77',
+        },
+        headerTintColor: 'white',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize:windowWidth*0.05,
+          color:'white'
+        },
+        headerTitleAlign: 'center',
+      }}/>
+        
         <Stack.Screen name="logout" component={Login} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>

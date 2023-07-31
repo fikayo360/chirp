@@ -8,6 +8,7 @@ import uploadImageToFirebase from '../utils/uploadImage'
 import ErrorComponent from '../components/errorComponent';
 import NotificationAlert from '../components/notificationAlert';
 import useApp from '../hooks/useApp';
+import * as Font from 'expo-font'; ; 
 
 const Post = () => {
   const windowWidth = Dimensions.get('window').width;
@@ -19,6 +20,7 @@ const Post = () => {
   const [error,setError] = useState("")
   const [notification,setNotification] = useState("")
   const [loading,setLoading] = useState(false)
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -88,6 +90,20 @@ requestMediaLibraryPermissions();
     }
   };
 
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    });
+    setFontsLoaded(true);
+  };
+
+  if (!fontsLoaded) {
+    loadFonts();
+    return null; 
+  }
+
+
   return (
     <>
     {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
@@ -111,7 +127,10 @@ requestMediaLibraryPermissions();
           paddingVertical:windowWidth * 0.02,
           height:windowWidth * 0.6,
           fontSize: windowWidth * 0.05,
-          marginBottom: windowWidth * 0.1}]}
+          marginBottom: windowWidth * 0.1,
+          fontFamily:'Poppins-Black'
+          
+          }]}
         multiline={true}
         numberOfLines={4}
         value={postBody}
@@ -127,7 +146,8 @@ requestMediaLibraryPermissions();
             paddingVertical:windowWidth * 0.02,
             height:windowWidth * 0.15,
             fontSize: windowWidth * 0.05,
-            marginBottom: windowWidth * 0.06}]}
+            marginBottom: windowWidth * 0.1,
+            fontFamily:'Poppins-Black'}]}
         onChangeText={text => setPostTitle(text)}
         value={postTitle}
         placeholder="title"
@@ -141,14 +161,14 @@ requestMediaLibraryPermissions();
         height: windowWidth * 0.16,
         width:windowWidth * 0.48,
         borderRadius:windowWidth * 0.4,}]} onPress={handleImageSelection}>
-          <Text style={[styles.buttonTxt,{ fontSize:windowWidth*0.03}]}>AttachMedia</Text> 
+          <Text style={[styles.buttonTxt,{ fontSize:windowWidth*0.03,fontFamily:'Poppins-Black'}]}>AttachMedia</Text> 
         </TouchableOpacity>  
         <TouchableOpacity style={[styles.button,{
         padding: windowWidth * 0.05,
         height: windowWidth * 0.16,
         width:windowWidth * 0.48,
         borderRadius:windowWidth * 0.4,}]} onPress={submit}>
-          <Text style={[styles.buttonTxt,{ fontSize:windowWidth*0.03}]}>Publish</Text>
+          <Text style={[styles.buttonTxt,{ fontSize:windowWidth*0.03,fontFamily:'Poppins-Black'}]}>Publish</Text>
         </TouchableOpacity>
         </View>
     </ScrollView>

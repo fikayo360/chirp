@@ -9,6 +9,7 @@ import useApp from '../hooks/useApp';
 import ErrorComponent from '../components/errorComponent';
 import NotificationAlert from '../components/notificationAlert';
 
+
 const Home = () => {
   const [newsItems,setNewsItems] = useState([])
   const [refreshing, setRefreshing] = useState(false);

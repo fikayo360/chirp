@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { useState,useEffect } from "react";
 import useApp from "../hooks/useApp";
+import * as Font from 'expo-font'; 
+
 
 const Wallcomponent = ({data,likePost,savePost}) => {
   const {savePostId,article,saveArticle} = useApp()
@@ -16,6 +18,19 @@ const Wallcomponent = ({data,likePost,savePost}) => {
   const otherFontSize = windowWidth * 0.04
   const [likes,setLikes] =useState([])
   const [comments,setComments] = useState([])
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    });
+    setFontsLoaded(true);
+  };
+
+  if (!fontsLoaded) {
+    loadFonts();
+    return null; 
+  }
 
   const navigate2Article = () => {
     saveArticle(data)
@@ -53,11 +68,11 @@ const Wallcomponent = ({data,likePost,savePost}) => {
       <TouchableOpacity onPress={navigate2Article} style={[styles.imgContainer,{alignSelf:'center',height:windowWidth * 0.8}]} >
       <Image style={[styles.img,{borderRadius:windowWidth * 0.03}]} resizeMode='cover' source={{uri:data.postImg}} />
       </TouchableOpacity>
-      <Text style={[{fontSize:authorFontSize}]}>{data.postAuthor}</Text>
+      <Text style={[{fontSize:authorFontSize,fontFamily:'Poppins-Black',fontFamily:'Poppins-Black'}]}>{data.postAuthor}</Text>
       <View style={[styles.bodyContainer]}><Text style={[{fontSize:otherFontSize}]}>{truncateText(data.postBody,120)}</Text></View>
 
       <View style={[styles.footer,{paddingHorizontal:windowWidth * 0.0}]}>
-        <Text style={[{fontSize:otherFontSize}]}>{timeAgo(data.createdAt)}</Text>
+        <Text style={[{fontSize:otherFontSize,fontFamily:'Poppins-Black'}]}>{timeAgo(data.createdAt)}</Text>
         <View style={styles.icons}>
         <TouchableOpacity style={[styles.iconContainer,{marginRight:windowWidth * 0.02}]} onPress={handleFollow}>
           <Icons.HeartIcon width={windowWidth * 0.05} height={windowWidth * 0.05} color="black" /><Text>{likes.length}</Text>

@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import useApp from '../hooks/useApp';
 import ErrorComponent from '../components/errorComponent';
 import NotificationAlert from '../components/notificationAlert';
+import * as Font from 'expo-font'; 
 
 export default function Login() {
   const { token, currentUser, setToken, setCurrentUser,login, logout} = useApp();
@@ -20,15 +21,16 @@ export default function Login() {
       borderRadius: windowWidth * 0.03,
       margin: windowWidth * 0.05,
       fontSize: windowWidth * 0.05,
+      fontFamily:'Poppins-Black'
   }
   const ctaStyles = {height:windowWidth * 0.18,borderRadius: windowWidth * 0.5,padding:windowWidth * 0.03,alignItems:'center',marginTop: windowWidth * 0.09}
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
     const [error,setError] = useState("")
-  const [notification,setNotification] = useState("")
-  const [passwordAttempt,setPasAttempt] = useState(0)
-    const [isLoading, setIsLoading] = useState(false);
-
+    const [notification,setNotification] = useState("")
+    const [passwordAttempt,setPasAttempt] = useState(0)
+    const [isLoading, setIsLoading] = useState(false)
+    const [fontsLoaded, setFontsLoaded] = useState(false);
     const getDetails = () => {
       console.log({ token, currentUser, setToken, setCurrentUser });
     };
@@ -73,13 +75,26 @@ export default function Login() {
       getDetails()
     },[])
 
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      });
+      setFontsLoaded(true);
+    };
+  
+    if (!fontsLoaded) {
+      loadFonts();
+      return null; 
+    }
+
   return (
     <ScrollView style={styles.container}>
       {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
       {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}
       <Spinner visible={isLoading} textStyle={{ color: '#FFF' }} />
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
-        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>ChirpLogin</Text>
+        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01,fontFamily:'Poppins-Black'}]}>ChirpLogin</Text>
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
         </View>
 
@@ -100,14 +115,14 @@ export default function Login() {
         />
         
         <TouchableOpacity style={[styles.button,ctaStyles]} onPress={handleLogin}>
-        <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06}]}>Login</Text>
+        <Text style={[styles.signuptxt,{fontSize: windowWidth * 0.06,fontFamily:'Poppins-Black'}]}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity 
         onPress={() =>{ 
           setError("")
           navigation.navigate('forgotPassword')
         }
-          }><Text style={[styles.footerTxt,{fontSize: windowWidth * 0.05,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03,color:'red'}]}>
+          }><Text style={[styles.footerTxt,{fontSize: windowWidth * 0.05,marginTop:windowWidth * 0.08,marginBottom:windowWidth * 0.03,color:'red',fontFamily:'Poppins-Black'}]}>
           {passwordAttempt >= 2 && ('forgot password')}</Text></TouchableOpacity>
         </View>
        

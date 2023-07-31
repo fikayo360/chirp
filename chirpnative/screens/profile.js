@@ -14,6 +14,7 @@ import {useEffect,useCallback }from 'react'
 import ErrorComponent from '../components/errorComponent';
 import NotificationAlert from '../components/notificationAlert';
 import useApp from '../hooks/useApp'
+import * as Font from 'expo-font'; 
 
 const Profile = () => {
   const windowWidth = Dimensions.get('window').width;
@@ -31,6 +32,7 @@ const Profile = () => {
   const [error,setError] = useState("");
   const [notification,setNotification] = useState("")
   const [loading,setLoading] = useState(true)
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
 
   const clearError = () => {
@@ -118,6 +120,20 @@ const Profile = () => {
     getAround()
   }, []);
 
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    });
+    setFontsLoaded(true);
+  };
+
+  if (!fontsLoaded) {
+    loadFonts();
+    return null; 
+  }
+
+
   return (
     <SafeAreaView style={[styles.container,{padding:windowWidth * 0.02}]}>
       {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
@@ -138,66 +154,48 @@ const Profile = () => {
 
           <View style={styles.quickInfoContainer}>
              <View style={styles.profileQuickInfoAnalContainer}>
-              <Text style={{fontSize:windowWidth * 0.045,marginBottom:windowWidth * 0.02}}>posts</Text>
-              <Text style={{fontSize:windowWidth * 0.045}}>{posts.length}</Text>
+              <Text style={{fontSize:windowWidth * 0.045,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>posts</Text>
+              <Text style={{fontSize:windowWidth * 0.045, fontFamily:'Poppins-Black'}}>{posts.length}</Text>
               </View>
 
             <View style={styles.profileQuickInfoAnalContainer}>
-              <Text style={{fontSize:windowWidth * 0.045,marginBottom:windowWidth * 0.02}}>Following</Text>
-              <Text style={{fontSize:windowWidth * 0.045}}>{friends.length}</Text>
+              <Text style={{fontSize:windowWidth * 0.045,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>Following</Text>
+              <Text style={{fontSize:windowWidth * 0.045, fontFamily:'Poppins-Black'}}>{friends.length}</Text>
             </View>
           </View>
         </View>
           
-        {sessionUser?( <View style={styles.bioContainer}>
-          <Text style={[styles.contHeaderTxt, {marginBottom:windowWidth * 0.02,fontSize:windowWidth*0.05}]}>Bio</Text>
-          <Text style={{fontSize:windowWidth * 0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.Bio?sessionUser.Bio:<Text>no Bio</Text>}</Text>
-          <Text style={[styles.contHeaderTxt,{fontSize:windowWidth*0.05,marginBottom:windowWidth * 0.02}]}>Username</Text>
-          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.username?sessionUser.username:<Text>no username</Text>}</Text>
-          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02}}>Email</Text>
-          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.email?sessionUser.email:<Text>no email</Text>}</Text>
-          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02}}>State</Text>
-          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.state?sessionUser.state:<Text>no state</Text>}</Text>
-          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02}}>Country</Text>
-          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.country?sessionUser.country:<Text>no country</Text>}</Text>
-          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02}}>Zip</Text>
-          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02}}>{sessionUser.zipcode?sessionUser.zipcode:<Text>no zipcode</Text>}</Text>
+        {sessionUser?( <View style={[styles.bioContainer,{paddingLeft:windowWidth*0.03}]}>
+          <Text style={[styles.contHeaderTxt, {marginBottom:windowWidth * 0.02,fontSize:windowWidth*0.05, fontFamily:'Poppins-Black'}]}>Bio</Text>
+          <Text style={{fontSize:windowWidth * 0.03,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>{sessionUser.Bio?sessionUser.Bio:<Text>no Bio</Text>}</Text>
+          <Text style={[styles.contHeaderTxt,{fontSize:windowWidth*0.05,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}]}>Username</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>{sessionUser.username?sessionUser.username:<Text>no username</Text>}</Text>
+          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>Email</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>{sessionUser.email?sessionUser.email:<Text>no email</Text>}</Text>
+          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>State</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>{sessionUser.state?sessionUser.state:<Text>no state</Text>}</Text>
+          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>Country</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>{sessionUser.country?sessionUser.country:<Text>no country</Text>}</Text>
+          <Text style={{fontSize:windowWidth*0.05, fontSize:20,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>Zip</Text>
+          <Text style={{fontSize:windowWidth*0.03,marginBottom:windowWidth * 0.02, fontFamily:'Poppins-Black'}}>{sessionUser.zipcode?sessionUser.zipcode:<Text>no zipcode</Text>}</Text>
         </View>):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
        
 
         {aroundYou.length === 0 && (<View style={{height:windowWidth*0.7,marginTop:windowWidth*0.07}}>
-          <Text style={{fontSize:windowWidth*0.05}}>Discover People</Text>
+          <Text style={{fontSize:windowWidth*0.05, fontFamily:'Poppins-Black'}}>Discover People</Text>
           {aroundYou.length>0?(<Discoveredusers data={aroundYou} follow={follow} />):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
         </View>)}
         {friends.length>0 && ( 
         <View style={{height:windowWidth*0.4,width:'100%',marginBottom:windowWidth*0.03}}>
-          <Text style={{fontSize:windowWidth*0.05}}>following</Text>
+          <Text style={{fontSize:windowWidth*0.05, fontFamily:'Poppins-Black'}}>following</Text>
           {friends.length>0?(<Following data={friends} />):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
         </View>)}
-       
-        
       </ScrollView>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  errorContainer:{
-    alignItems: 'center',
-    marginTop:60,
-    backgroundColor: 'rgb(15, 20, 25)',
-    padding: 10,
-    height: 40,
-    position:"absolute",
-    width:'90%',
-    top:50,
-    left:15,
-    borderRadius:10
-  },
-  errorText:{
-    fontSize: 15,
-    color:'white'
-  },
   container:{
     flex: 1
   },
@@ -211,7 +209,8 @@ const styles = StyleSheet.create({
     justifyContent:'space-between'
   },
   imgtext:{
-    fontSize:18
+    fontSize:18,
+    fontFamily:'Poppins-Black'
   },
   profileQuickInfoAnalContainer:{
   flexDirection:'column',

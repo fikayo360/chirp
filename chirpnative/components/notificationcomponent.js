@@ -1,9 +1,24 @@
 import React from 'react'
 import {View,Text,StyleSheet,Dimensions,Image} from 'react-native'
 import ProfilePlaceholder from './Profiletextplace'
+import * as Font from 'expo-font'; 
+import { useState } from 'react';
 
 const Notificationcomponent = (props) => {
   const windowWidth = Dimensions.get('window').width;
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    });
+    setFontsLoaded(true);
+  };
+
+  if (!fontsLoaded) {
+    loadFonts();
+    return null; 
+  }
   return (
     <View style={[styles.container,{height:windowWidth * 0.23,padding:windowWidth * 0.02}]}>
       {
@@ -13,8 +28,8 @@ const Notificationcomponent = (props) => {
       }
     
     <View style={{marginLeft:windowWidth * 0.03}}>
-    <Text style={[styles.notificationTitle,{fontSize:windowWidth * 0.06,marginBottom:windowWidth * 0.02}]}> {props.data.username} </Text>
-    <Text style={[styles.otherTxt,{fontSize:windowWidth * 0.04}]}> {props.data.body} </Text>
+    <Text style={[styles.notificationTitle,{fontSize:windowWidth * 0.06,marginBottom:windowWidth * 0.02,fontFamily:'Poppins-Black'}]}> {props.data.username} </Text>
+    <Text style={[styles.otherTxt,{fontSize:windowWidth * 0.04,fontFamily:'Poppins-Black'}]}> {props.data.body} </Text>
     </View>
     </View>
   )

@@ -11,6 +11,7 @@ import axios from "axios";
 import useApp from '../hooks/useApp'
 import ErrorComponent from '../components/errorComponent';
 import NotificationAlert from '../components/notificationAlert';
+import * as Font from 'expo-font'; 
 /* import spinner component */
 
 const Aroundyou = () => {
@@ -22,6 +23,7 @@ const Aroundyou = () => {
   const [notification,setNotification] = useState("")
   const [discovered,setDiscovered] = useState({})
   const [loading,setLoading] = useState(false)
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -88,6 +90,19 @@ const Aroundyou = () => {
     }
   };
 
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    });
+    setFontsLoaded(true);
+  };
+
+  if (!fontsLoaded) {
+    loadFonts();
+    return null; 
+  }
+
   return (
     <SafeAreaView>
       {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
@@ -104,7 +119,7 @@ const Aroundyou = () => {
           height:windowWidth * 0.15}]}> 
         <Icons.MagnifyingGlassIcon width={windowWidth * 0.07} height={windowWidth * 0.07} color="black"/> 
         <TextInput
-        style={[styles.searchInput,{fontSize:windowWidth * 0.04}]}
+        style={[styles.searchInput,{fontSize:windowWidth * 0.04,fontFamily:'Poppins-Black'}]}
         onChangeText={text => setUsername(text)}
         value={username}
         placeholder="username"
@@ -118,7 +133,7 @@ const Aroundyou = () => {
         </View>)}</>
 
        {items.length > 0 && (<View style={[styles.discoverContainer,{marginTop:windowWidth*0.15}]}>
-        <Text style={{fontSize:windowWidth * 0.06,marginBottom:windowWidth * 0.05}}> People </Text>
+        <Text style={{fontSize:windowWidth * 0.06,marginBottom:windowWidth * 0.05,fontFamily:'Poppins-Black'}}> People </Text>
         {items.length>0?(<Discoveredusers data={items} follow={follow} />):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
         </View>)}
 

@@ -8,10 +8,12 @@ import { useState,useEffect } from 'react';
 import ErrorComponent from '../components/errorComponent';
 import NotificationAlert from '../components/notificationAlert';
 import useApp from '../hooks/useApp';
+import * as Font from 'expo-font'; 
 
 const EditProfile = () => {
   const windowWidth = Dimensions.get('window').width;
   const {token} = useApp();
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -90,13 +92,26 @@ const EditProfile = () => {
        }
      };
 
+     const loadFonts = async () => {
+      await Font.loadAsync({
+        'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      });
+      setFontsLoaded(true);
+    };
+  
+    if (!fontsLoaded) {
+      loadFonts();
+      return null; 
+    }
+
   return (
     <SafeAreaView  >
     {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
     {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
     {notification !== "" && (<NotificationAlert text={notification} clearNotification={clearNotification}/>)}
     <View style={[styles.header,{height:'10%',paddingHorizontal:windowWidth*0.03,marginTop:windowWidth*0.02}]}>
-    <Text style={{fontSize:windowWidth*0.05}}>complete profile </Text>
+    <Text style={{fontSize:windowWidth*0.05,fontFamily:'Poppins-Black'}}>complete profile </Text>
     <TouchableOpacity onPress={submit}>< Icons.CheckIcon width={windowWidth*0.08} height={windowWidth*0.08} color="black" /></TouchableOpacity>
     </View>
 
@@ -117,9 +132,10 @@ const EditProfile = () => {
   </TouchableOpacity>)
     }
     </View>
+
     <View style={styles.formComponents}>
     <View style={[styles.formComponent,{height:windowWidth*0.15, marginBottom:windowWidth*0.15}]}>
-        <Text style={{ fontSize:windowWidth*0.05}} >Phone Number </Text>
+        <Text style={{ fontSize:windowWidth*0.05,fontFamily:'Poppins-Black'}} >Phone Number </Text>
         <TextInput style={[ styles.formInput,{
         padding:windowWidth*0.03,
         fontSize: windowWidth*0.05,
@@ -127,8 +143,9 @@ const EditProfile = () => {
       }]}
        placeholder='enter number' value={phonenumber} onChangeText={text => setPhonenumber(text)}/>
     </View>
+
     <View style={[styles.formComponent,{height:windowWidth*0.15, marginBottom:windowWidth*0.15}]}>
-    <Text style={{ fontSize:windowWidth*0.05}}>Bio</Text>
+    <Text style={{ fontSize:windowWidth*0.05,fontFamily:'Poppins-Black'}}>Bio</Text>
         <TextInput
         style={[styles.input,{
           padding:windowWidth*0.03,
@@ -143,7 +160,7 @@ const EditProfile = () => {
     </View>
 
     <View style={[styles.formComponent,{height:windowWidth*0.15, marginBottom:windowWidth*0.15}]}>
-        <Text style={{ fontSize:windowWidth*0.05}}>country</Text>
+        <Text style={{ fontSize:windowWidth*0.05,fontFamily:'Poppins-Black'}}>country</Text>
         <TextInput style={[ styles.formInput,{
         padding:windowWidth*0.03,
         fontSize: windowWidth*0.05,
@@ -152,7 +169,7 @@ const EditProfile = () => {
     </View>
 
     <View style={[styles.formComponent,{height:windowWidth*0.15, marginBottom:windowWidth*0.15}]}>
-    <Text style={{ fontSize:windowWidth*0.05}}>state</Text>
+    <Text style={{ fontSize:windowWidth*0.05,fontFamily:'Poppins-Black'}}>state</Text>
         <TextInput style={[ styles.formInput,{
         padding:windowWidth*0.03,
         fontSize: windowWidth*0.05,
@@ -161,7 +178,7 @@ const EditProfile = () => {
     </View>
 
     <View style={[styles.formComponent,{height:windowWidth*0.15, marginBottom:windowWidth*0.15}]}>
-    <Text style={{ fontSize:windowWidth*0.05}}>Zip code</Text>
+    <Text style={{ fontSize:windowWidth*0.05,fontFamily:'Poppins-Black'}}>Zip code</Text>
         <TextInput style={[ styles.formInput,{
         padding:windowWidth*0.03,
         fontSize: windowWidth*0.05,

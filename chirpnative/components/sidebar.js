@@ -32,7 +32,6 @@ function Sidebar(props) {
    
     const signOut = async () => {
       logout()
-      navigation.navigate('Login')
     }
   return (
     <View style={[styles.container,{}]}>

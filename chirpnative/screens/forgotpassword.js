@@ -8,6 +8,7 @@ import ErrorComponent from '../components/errorComponent';
 import { useNavigation } from '@react-navigation/native';
 import useApp from '../hooks/useApp';
 import { useEffect } from 'react';
+import * as Font from 'expo-font'; 
 
 export default function Forgotpassword() {
   
@@ -22,21 +23,19 @@ export default function Forgotpassword() {
       borderRadius: windowWidth * 0.03,
       margin: windowWidth * 0.05,
       fontSize: windowWidth * 0.05,
+      fontFamily:'Poppins-Black'
   }
   const ctaStyles = {height:windowWidth * 0.18,borderRadius: windowWidth * 0.5,padding:windowWidth * 0.03,alignItems:'center',marginTop: windowWidth * 0.09}
 
     const [emailaddress,setEmailaddress] = useState("")
     const [error,setError] = useState("")
     const [isLoading, setIsLoading] = useState(false);
+    const [fontsLoaded, setFontsLoaded] = useState(false);
   
     const clearError = () => {
       setIsLoading(false)
       setError("")
     }
-
-    useEffect(()=>{
-      //console.log(currentUser);
-    },[])
 
     const submit = async () => {
       try {
@@ -59,17 +58,30 @@ export default function Forgotpassword() {
       }
     };
 
+    const loadFonts = async () => {
+      await Font.loadAsync({
+        'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+        'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+      });
+      setFontsLoaded(true);
+    };
+  
+    if (!fontsLoaded) {
+      loadFonts();
+      return null; 
+    }
+
   return (
     <ScrollView style={styles.container}>
        {error !== "" && (<ErrorComponent text={error} clearError={clearError}/>)}
         <Spinner visible={isLoading} textStyle={{ color: '#FFF' }} />
         <View style={[styles.header, {height:headerHeight,padding:windowWidth * 0.01,paddingTop:windowWidth * 0.07}]}>
-        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01}]}>{'ForgotPassword'}</Text>
+        <Text style={[styles.headerTxt,{fontSize:headerFontSize,marginLeft:windowWidth * 0.01,fontFamily:'Poppins-Black'}]}>{'ForgotPassword'}</Text>
         <Image style={{ width:imageWidth, height:imageWidth, marginRight:windowWidth * 0.01}} source={require('../assets/anime2.png')} resizeMode='cover' />
         </View>
 
         <View style={[styles.rinputs,{paddingTop:windowWidth * 0.4}]}>
-        <Text style={[styles.forgotTxt,{fontSize:windowWidth * 0.07}]}>  *** enter your email *** </Text> 
+        <Text style={[styles.forgotTxt,{fontSize:windowWidth * 0.07,fontFamily:'Poppins-Black'}]}>  *** enter your email *** </Text> 
 
         <TextInput
         style={[styles.rinput, inputStyles ]}
@@ -79,7 +91,7 @@ export default function Forgotpassword() {
         />
         
         <TouchableOpacity style={[styles.fpbutton,ctaStyles]} onPress={submit}>
-        <Text style={[styles.fpsignuptxt,{fontSize:windowWidth * 0.05}]}> submit </Text>
+        <Text style={[styles.fpsignuptxt,{fontSize:windowWidth * 0.05,fontFamily:'Poppins-Black'}]}> submit </Text>
         </TouchableOpacity>
         </View>
        

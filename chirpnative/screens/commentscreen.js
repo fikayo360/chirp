@@ -9,6 +9,7 @@ import { RefreshControl } from "react-native";
 import ErrorComponent from '../components/errorComponent';
 import NotificationAlert from '../components/notificationAlert';
 import useApp from '../hooks/useApp'
+import * as Font from 'expo-font'; 
 
 const Commentscreen = () => {
   const { token,postId,currentUser } = useApp()
@@ -23,6 +24,7 @@ const Commentscreen = () => {
   const [items,setItems] = useState([])
   const [ProfilePic,setProfilePic] = useState("")
   const windowWidth = Dimensions.get('window').width;
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(()=>{
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -38,8 +40,7 @@ const Commentscreen = () => {
   const getUser = () => {
     setPostId(postId) 
     setPostCommentAuthor(currentUser.user.username)
-    setProfilePic(currentUser.user.profilepic || '')
-    setpic(ProfilePic)
+    setpic(currentUser.user.profilepic)
   };
 
   useEffect(()=> {
@@ -74,6 +75,7 @@ const Commentscreen = () => {
       const response = await axios.get('api/v1/post/getComments', {params: {PostId:postId}});
       if(response.data.postComments.length === 0){
         setError('no items found yet')
+        setLoading(false)
         return
       }
       console.log(response.data.postComments);
@@ -99,6 +101,19 @@ const Commentscreen = () => {
     getComments();
   }, []);
   
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    });
+    setFontsLoaded(true);
+  };
+
+  if (!fontsLoaded) {
+    loadFonts();
+    return null; 
+  }
+
   return (
         <SafeAreaView style={styles.container}>
           {loading && <ActivityIndicator size="large" color="black" style={{position:'absolute',top:'50%',left:'50%'}}/>}
@@ -113,7 +128,7 @@ const Commentscreen = () => {
         <View style={[styles.textinputContainer,{height:windowWidth * 0.25,borderRadius:windowWidth* 0.01,
         padding:windowWidth * 0.02,marginRight:windowWidth*0.03,marginLeft:windowWidth * 0.01}]}>
         <TextInput
-        style={[styles.input,{fontSize:windowWidth * 0.05}]}
+        style={[styles.input,{fontSize:windowWidth * 0.05,fontFamily:'Poppins-Black'}]}
         multiline={true}
         value={PostcommentBody}
         onChangeText={(value) => setPostcommentBody(value)}

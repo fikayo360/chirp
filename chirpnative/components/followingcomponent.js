@@ -1,9 +1,26 @@
 import React from 'react'
 import {View,Text,Dimensions,StyleSheet,Image} from 'react-native'
 import ProfilePlaceholder from './Profiletextplace'
+import { useState } from 'react'
+import * as Font from 'expo-font'; 
 
 const Followingcomponent = (props) => {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   const windowWidth = Dimensions.get('window').width;
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      'Poppins-Black': require('../assets/fonts/Poppins-Black.ttf'),
+      'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    });
+    setFontsLoaded(true);
+  };
+
+  if (!fontsLoaded) {
+    loadFonts();
+    return null; 
+  }
+
   return (
     
     <View style={[styles.wrapper,{
@@ -19,7 +36,7 @@ const Followingcomponent = (props) => {
           </View>):
           (<ProfilePlaceholder username={props.data.username} width={windowWidth * 0.15} height={windowWidth * 0.15} />)
           }
-    <Text style={{fontSize:windowWidth * 0.03,marginTop:windowWidth*0.02}}>{props.data.username} </Text>
+    <Text style={{fontSize:windowWidth * 0.03,marginTop:windowWidth*0.02,fontFamily:'Poppins-Black'}}>{props.data.username} </Text>
     </View>
    
   )

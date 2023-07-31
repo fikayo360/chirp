@@ -7,6 +7,7 @@ import axios from 'axios'
 import ErrorComponent from '../components/errorComponent';
 import NotificationAlert from '../components/notificationAlert';
 import useApp from '../hooks/useApp'
+import * as Font from 'expo-font'; 
 
 const Savedpost = () => {
 
