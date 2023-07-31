@@ -119,7 +119,7 @@ const Aroundyou = () => {
           height:windowWidth * 0.15}]}> 
         <Icons.MagnifyingGlassIcon width={windowWidth * 0.07} height={windowWidth * 0.07} color="black"/> 
         <TextInput
-        style={[styles.searchInput,{fontSize:windowWidth * 0.04,fontFamily:'Poppins-Black'}]}
+        style={[styles.searchInput,{fontSize:windowWidth * 0.038,fontFamily:'Poppins-Black'}]}
         onChangeText={text => setUsername(text)}
         value={username}
         placeholder="username"
@@ -132,7 +132,7 @@ const Aroundyou = () => {
           <Image source={require('../assets/search3.png')} resizeMode='cover' style={{ width: '100%', height: '100%' }}  />
         </View>)}</>
 
-       {items.length > 0 && (<View style={[styles.discoverContainer,{marginTop:windowWidth*0.15}]}>
+       {items.length > 0 && (<View style={[styles.discoverContainer,{marginTop:windowWidth*0.05}]}>
         <Text style={{fontSize:windowWidth * 0.06,marginBottom:windowWidth * 0.05,fontFamily:'Poppins-Black'}}> People </Text>
         {items.length>0?(<Discoveredusers data={items} follow={follow} />):<ActivityIndicator size="large" color="black" style={{marginTop:'10%'}}/>}
         </View>)}

@@ -8,7 +8,7 @@ const Notifications = (props) => {
     {
       props.data && props.data.map((item,index) =>
      (
-        <Notificationcomponent data={item} key={index}/>
+        <Notificationcomponent data={item} key={index.toString()}/>
     ))
     }
 </View>

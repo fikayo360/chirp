@@ -12,7 +12,7 @@ const CommentItems = (props) => {
     props.data && props.data.map((item,index) =>
      (
         
-        <CommentComponent data={item} key={index} />
+        <CommentComponent data={item} key={index.toString()} />
     ))
     }
 </View>

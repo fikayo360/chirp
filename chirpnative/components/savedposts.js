@@ -7,7 +7,7 @@ const Savedposts = (props) => {
     <View>
       {
           props.data && props.data.map((item,index) => (
-            <Savedpost data={item} key={index} deleteSavedPost={props.deleteSavedPost} />
+            <Savedpost data={item} key={index.toString()} deleteSavedPost={props.deleteSavedPost} />
            ))
       }
   </View>

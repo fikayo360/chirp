@@ -35,9 +35,9 @@ const NewscategoryItem = (props) => {
       <Image style={{borderRadius:windowWidth * 0.5,width:windowWidth * 0.12, height:windowWidth * 0.12}} source={require('../assets/anime2.png')} resizeMode='cover' />
         
         <View style={[styles.body]}>
-        <Text style={[styles.textSize,{fontSize:windowWidth * 0.05,fontFamily:'Poppins-Black'}]}>{props.data.author || props.data.source.name || props.data.source.name}</Text>
-         <Text style={[styles.textSize,{fontSize:windowWidth * 0.035,fontFamily:'Poppins-Black'}]}>{ truncateText(props.data.title,41)}</Text>
-          <Text style={[styles.textSize,{fontSize:windowWidth * 0.031,fontFamily:'Poppins-Black'}]}>{props.data.publishedAt.slice(0,10)}</Text>
+        <Text style={[styles.textSize,{fontSize:windowWidth * 0.04,fontFamily:'Poppins-Black'}]}>{props.data.author || props.data.source.name || props.data.source.name}</Text>
+         <Text style={[styles.textSize,{fontSize:windowWidth * 0.030,fontFamily:'Poppins-Black'}]}>{ truncateText(props.data.title,41)}</Text>
+          <Text style={[styles.textSize,{fontSize:windowWidth * 0.030,fontFamily:'Poppins-Black'}]}>{props.data.publishedAt.slice(0,10)}</Text>
         </View>
 
     </TouchableOpacity>

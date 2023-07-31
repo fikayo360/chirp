@@ -7,8 +7,8 @@ const Discoveredusers = (props) => {
     return (
         <ScrollView style={styles.Discovered} horizontal={true} showsHorizontalScrollIndicator={false}>
         {
-         props.data.length > 0 && props.data.map((item) => (
-            <Discovereduser data={item} follow={props.follow}/>
+         props.data.length > 0 && props.data.map((item,index) => (
+            <Discovereduser data={item} follow={props.follow} key={index.toString()}/>
         ))
         }
         </ScrollView>

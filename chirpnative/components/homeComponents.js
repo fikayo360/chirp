@@ -8,7 +8,7 @@ const HomeComponents = (props) => {
     {
       props.data && props.data.map((item,index) =>
      (
-        <NewscategoryItem data={item} key={item._id}/>
+        <NewscategoryItem data={item} key={index.toString()}/>
     ))
     }
 </View>

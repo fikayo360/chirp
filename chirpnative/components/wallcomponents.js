@@ -10,8 +10,8 @@ const Wallcomponents = (props) => {
   return (
     <View>
     {
-       props.data.map((item) => (
-       <Wallcomponent key={item._id} data={item} likePost={props.likePost} savePost={props.savePost}/>
+       props.data.map((item,index) => (
+       <Wallcomponent key={index.toString()} data={item} likePost={props.likePost} savePost={props.savePost}/>
       ))
     }
   </View>

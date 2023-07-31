@@ -6,8 +6,8 @@ const Following = (props) => {
   return (
     <ScrollView horizontal={true} style={styles.container} showsHorizontalScrollIndicator={false}>
      {
-        props.data && props.data.map(item => (
-            <Followingcomponent data={item} key={item.id}/>
+        props.data && props.data.map((item,index) => (
+            <Followingcomponent data={item} key={index.toString()}/>
         ))
         }
     </ScrollView>
