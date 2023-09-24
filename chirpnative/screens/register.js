@@ -68,6 +68,7 @@ export default function Register() {
         } 
       }
     };
+    
     useFocusEffect(() => {
       const handleBackPress = () => {
         return true;
